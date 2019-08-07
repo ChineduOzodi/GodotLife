@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.8.6">
+  <compound refid="class_camera2_d" kind="class"><name>Camera2D</name>
+    <member refid="class_camera2_d_1a6d24de43f897893eddf3864387beb36d" kind="variable"><name>movementStrength</name></member>
+    <member refid="class_camera2_d_1a211152b107ceba9784702e7ae90217e0" kind="variable"><name>zoomStrength</name></member>
+    <member refid="class_camera2_d_1a611ad3035e233481fc237757ce9b80e2" kind="function"><name>_Ready</name></member>
+    <member refid="class_camera2_d_1a9a9b1dd57f2233ae7e7a4b27cef0a49a" kind="function"><name>_Process</name></member>
+  </compound>
+  <compound refid="class_city" kind="class"><name>City</name>
+    <member refid="class_city_1ab5511791f932d9fc103c326a68024069" kind="function"><name>_Ready</name></member>
+  </compound>
+  <compound refid="class_tile" kind="class"><name>Tile</name>
+    <member refid="class_tile_1ab6fac763af2fdb822d528caa8d528e89" kind="variable"><name>name</name></member>
+    <member refid="class_tile_1a42d31aa66e57a2342f297b61ffcd170b" kind="variable"><name>biome</name></member>
+    <member refid="class_tile_1a0e7bb304b54906b3cd4f2ec46cd7f189" kind="variable"><name>height</name></member>
+    <member refid="class_tile_1ad25ccfc042e2436c038b155c0bdb52e8" kind="variable"><name>speedMod</name></member>
+  </compound>
+  <compound refid="class_tile_map" kind="class"><name>TileMap</name>
+    <member refid="class_tile_map_1ac051cbd65aea44954c4996bd0e49a43b" kind="function"><name>_Ready</name></member>
+    <member refid="class_tile_map_1aeb8fc865a83298557eef3d2852fc4c06" kind="function"><name>CreateNoise</name></member>
+  </compound>
+  <compound refid="class_world" kind="class"><name>World</name>
+    <member refid="class_world_1a0408286a049cfccca1a0232dd80d42c5" kind="variable"><name>tileMap</name></member>
+    <member refid="class_world_1a98c85f06bd6ec1c6fe0895d0910338b2" kind="variable"><name>noise</name></member>
+    <member refid="class_world_1a5e799bc6b80dc2638ee54b78c56ac0be" kind="variable"><name>waterLevel</name></member>
+    <member refid="class_world_1aa861679cb371af259d6e1c298f7831e1" kind="variable"><name>tiles</name></member>
+    <member refid="class_world_1a97fd474cd587e59bafb2992a819a2774" kind="variable"><name>xOffset</name></member>
+    <member refid="class_world_1a1dbfb7eab105821ce8a772fa42cbde12" kind="variable"><name>yOffset</name></member>
+    <member refid="class_world_1a69fc3846355e0066866c1a20b8ad0cc2" kind="variable"><name>cityCount</name></member>
+    <member refid="class_world_1ad4cb1aaebb98c616801f857837a9292f" kind="variable"><name>peopleCount</name></member>
+    <member refid="class_world_1ae0441527937def98a753b7d3e62ac7f5" kind="function"><name>_Ready</name></member>
+    <member refid="class_world_1afe484709db88134f16e67aed42df4ad5" kind="function"><name>_Process</name></member>
+    <member refid="class_world_1a948e7d94a4fac2b932c17c4a1460d464" kind="function"><name>GenerateWorld</name></member>
+  </compound>
+  <compound refid="namespace_godot" kind="namespace"><name>Godot</name>
+  </compound>
+  <compound refid="namespace_system" kind="namespace"><name>System</name>
+  </compound>
+  <compound refid="namespace_system_1_1_reflection" kind="namespace"><name>System::Reflection</name>
+  </compound>
+  <compound refid="_assembly_info_8cs" kind="file"><name>AssemblyInfo.cs</name>
+  </compound>
+  <compound refid="_camera2_d_8cs" kind="file"><name>Camera2D.cs</name>
+  </compound>
+  <compound refid="_city_8cs" kind="file"><name>City.cs</name>
+  </compound>
+  <compound refid="_tile_8cs" kind="file"><name>Tile.cs</name>
+  </compound>
+  <compound refid="_tile_map_8cs" kind="file"><name>TileMap.cs</name>
+    <member refid="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1" kind="enum"><name>TileType</name></member>
+    <member refid="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1ad4e3b74fb352a9f0977f9b86258daddb" kind="enumvalue"><name>Grassland</name></member>
+    <member refid="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1a27634ff8002b12e75d98e07ccd005d18" kind="enumvalue"><name>Water</name></member>
+  </compound>
+  <compound refid="_world_8cs" kind="file"><name>World.cs</name>
+  </compound>
+  <compound refid="dir_c94032acf24d5d2de0809c03ace4916b" kind="dir"><name>Scripts/Classes</name>
+  </compound>
+  <compound refid="dir_d051c76eebdc544d9c3d734575641c72" kind="dir"><name>Properties</name>
+  </compound>
+  <compound refid="dir_4edcbb236dfd51dd81727243a38df6a0" kind="dir"><name>Scripts</name>
+  </compound>
+</doxygenindex>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="dir_4edcbb236dfd51dd81727243a38df6a0" kind="dir">
+    <compoundname>Scripts</compoundname>
+    <innerdir refid="dir_c94032acf24d5d2de0809c03ace4916b">Scripts/Classes</innerdir>
+    <innerfile refid="_camera2_d_8cs">Camera2D.cs</innerfile>
+    <innerfile refid="_tile_map_8cs">TileMap.cs</innerfile>
+    <innerfile refid="_world_8cs">World.cs</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="E:/mygitrepos/GodotLife/Scripts/"/>
+  </compounddef>
+</doxygen>

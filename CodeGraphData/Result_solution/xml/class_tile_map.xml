@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_tile_map" kind="class" prot="public">
+    <compoundname>TileMap</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">TileMap</basecompoundref>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_tile_map_1ac051cbd65aea44954c4996bd0e49a43b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>override void</type>
+        <definition>override void TileMap._Ready</definition>
+        <argsstring>()</argsstring>
+        <name>_Ready</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/TileMap.cs" line="13" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/TileMap.cs" bodystart="13" bodyend="16"/>
+      </memberdef>
+      <memberdef kind="function" id="class_tile_map_1aeb8fc865a83298557eef3d2852fc4c06" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void TileMap.CreateNoise</definition>
+        <argsstring>(int width, int height, OpenSimplexNoise noise, float waterLevel)</argsstring>
+        <name>CreateNoise</name>
+        <param>
+          <type>int</type>
+          <declname>width</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>height</declname>
+        </param>
+        <param>
+          <type>OpenSimplexNoise</type>
+          <declname>noise</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>waterLevel</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/TileMap.cs" line="18" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/TileMap.cs" bodystart="18" bodyend="34"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="11">
+        <label>Godot::TileMap</label>
+      </node>
+      <node id="10">
+        <label>TileMap</label>
+        <link refid="class_tile_map"/>
+        <childnode refid="11" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="13">
+        <label>Godot::TileMap</label>
+      </node>
+      <node id="12">
+        <label>TileMap</label>
+        <link refid="class_tile_map"/>
+        <childnode refid="13" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="E:/mygitrepos/GodotLife/Scripts/TileMap.cs" line="5" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/TileMap.cs" bodystart="4" bodyend="41"/>
+    <listofallmembers>
+      <member refid="class_tile_map_1ac051cbd65aea44954c4996bd0e49a43b" prot="public" virt="non-virtual"><scope>TileMap</scope><name>_Ready</name></member>
+      <member refid="class_tile_map_1aeb8fc865a83298557eef3d2852fc4c06" prot="public" virt="non-virtual"><scope>TileMap</scope><name>CreateNoise</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

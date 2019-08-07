@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_tile" kind="class" prot="public">
+    <compoundname>Tile</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_tile_1ab6fac763af2fdb822d528caa8d528e89" prot="public" static="no" mutable="no">
+        <type>string</type>
+        <definition>string Tile.name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/Classes/Tile.cs" line="6" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/Classes/Tile.cs" bodystart="6" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_tile_1a42d31aa66e57a2342f297b61ffcd170b" prot="public" static="no" mutable="no">
+        <type><ref refid="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1" kindref="member">TileType</ref></type>
+        <definition>TileType Tile.biome</definition>
+        <argsstring></argsstring>
+        <name>biome</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/Classes/Tile.cs" line="7" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/Classes/Tile.cs" bodystart="7" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_tile_1a0e7bb304b54906b3cd4f2ec46cd7f189" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float Tile.height</definition>
+        <argsstring></argsstring>
+        <name>height</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/Classes/Tile.cs" line="8" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/Classes/Tile.cs" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_tile_1ad25ccfc042e2436c038b155c0bdb52e8" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float Tile.speedMod</definition>
+        <argsstring></argsstring>
+        <name>speedMod</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/Classes/Tile.cs" line="9" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/Classes/Tile.cs" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="E:/mygitrepos/GodotLife/Scripts/Classes/Tile.cs" line="5" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/Classes/Tile.cs" bodystart="4" bodyend="10"/>
+    <listofallmembers>
+      <member refid="class_tile_1a42d31aa66e57a2342f297b61ffcd170b" prot="public" virt="non-virtual"><scope>Tile</scope><name>biome</name></member>
+      <member refid="class_tile_1a0e7bb304b54906b3cd4f2ec46cd7f189" prot="public" virt="non-virtual"><scope>Tile</scope><name>height</name></member>
+      <member refid="class_tile_1ab6fac763af2fdb822d528caa8d528e89" prot="public" virt="non-virtual"><scope>Tile</scope><name>name</name></member>
+      <member refid="class_tile_1ad25ccfc042e2436c038b155c0bdb52e8" prot="public" virt="non-virtual"><scope>Tile</scope><name>speedMod</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
