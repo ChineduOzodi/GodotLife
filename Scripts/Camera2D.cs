@@ -7,7 +7,7 @@ public class Camera2D : Godot.Camera2D
     // private int a = 2;
     // private string b = "text";
     private float movementStrength = 100f;
-    private float zoomStrength = 00.1f;
+    private float zoomStrength = 0.2f;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()

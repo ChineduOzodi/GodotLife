@@ -1,0 +1,247 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_world" kind="class" prot="public">
+    <compoundname>World</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">Node2D</basecompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_world_1a0408286a049cfccca1a0232dd80d42c5" prot="private" static="no" mutable="no">
+        <type><ref refid="class_tile_map" kindref="compound">TileMap</ref></type>
+        <definition>TileMap World.tileMap</definition>
+        <argsstring></argsstring>
+        <name>tileMap</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/World.cs" line="9" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/World.cs" bodystart="9" bodyend="-1"/>
+        <referencedby refid="class_world_1ae0441527937def98a753b7d3e62ac7f5" compoundref="_world_8cs" startline="18" endline="22">_Ready</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_world_1a98c85f06bd6ec1c6fe0895d0910338b2" prot="private" static="no" mutable="no">
+        <type>OpenSimplexNoise</type>
+        <definition>OpenSimplexNoise World.noise</definition>
+        <argsstring></argsstring>
+        <name>noise</name>
+        <initializer>= new OpenSimplexNoise()</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/World.cs" line="10" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/World.cs" bodystart="10" bodyend="-1"/>
+        <referencedby refid="class_world_1a948e7d94a4fac2b932c17c4a1460d464" compoundref="_world_8cs" startline="33" endline="62">GenerateWorld</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_world_1a5e799bc6b80dc2638ee54b78c56ac0be" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float World.waterLevel</definition>
+        <argsstring></argsstring>
+        <name>waterLevel</name>
+        <initializer>= 0.6f</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/World.cs" line="11" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/World.cs" bodystart="11" bodyend="-1"/>
+        <referencedby refid="class_world_1a948e7d94a4fac2b932c17c4a1460d464" compoundref="_world_8cs" startline="33" endline="62">GenerateWorld</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_world_1aa861679cb371af259d6e1c298f7831e1" prot="private" static="no" mutable="no">
+        <type><ref refid="class_tile" kindref="compound">Tile</ref>[][]</type>
+        <definition>Tile [][] World.tiles</definition>
+        <argsstring></argsstring>
+        <name>tiles</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/World.cs" line="12" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/World.cs" bodystart="12" bodyend="-1"/>
+        <referencedby refid="class_world_1a948e7d94a4fac2b932c17c4a1460d464" compoundref="_world_8cs" startline="33" endline="62">GenerateWorld</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_world_1a97fd474cd587e59bafb2992a819a2774" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int World.xOffset</definition>
+        <argsstring></argsstring>
+        <name>xOffset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/World.cs" line="13" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/World.cs" bodystart="13" bodyend="-1"/>
+        <referencedby refid="class_world_1a948e7d94a4fac2b932c17c4a1460d464" compoundref="_world_8cs" startline="33" endline="62">GenerateWorld</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_world_1a1dbfb7eab105821ce8a772fa42cbde12" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int World.yOffset</definition>
+        <argsstring></argsstring>
+        <name>yOffset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/World.cs" line="14" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/World.cs" bodystart="14" bodyend="-1"/>
+        <referencedby refid="class_world_1a948e7d94a4fac2b932c17c4a1460d464" compoundref="_world_8cs" startline="33" endline="62">GenerateWorld</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_world_1a69fc3846355e0066866c1a20b8ad0cc2" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int World.cityCount</definition>
+        <argsstring></argsstring>
+        <name>cityCount</name>
+        <initializer>= 10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/World.cs" line="15" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/World.cs" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_world_1ad4cb1aaebb98c616801f857837a9292f" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int World.peopleCount</definition>
+        <argsstring></argsstring>
+        <name>peopleCount</name>
+        <initializer>= 10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/World.cs" line="16" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/World.cs" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_world_1ae0441527937def98a753b7d3e62ac7f5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>override void</type>
+        <definition>override void World._Ready</definition>
+        <argsstring>()</argsstring>
+        <name>_Ready</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/World.cs" line="18" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/World.cs" bodystart="18" bodyend="22"/>
+        <references refid="class_world_1a948e7d94a4fac2b932c17c4a1460d464" compoundref="_world_8cs" startline="33" endline="62">GenerateWorld</references>
+        <references refid="class_world_1a0408286a049cfccca1a0232dd80d42c5" compoundref="_world_8cs" startline="9">tileMap</references>
+      </memberdef>
+      <memberdef kind="function" id="class_world_1afe484709db88134f16e67aed42df4ad5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>override void</type>
+        <definition>override void World._Process</definition>
+        <argsstring>(float delta)</argsstring>
+        <name>_Process</name>
+        <param>
+          <type>float</type>
+          <declname>delta</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/World.cs" line="25" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/World.cs" bodystart="25" bodyend="31"/>
+        <references refid="class_world_1a948e7d94a4fac2b932c17c4a1460d464" compoundref="_world_8cs" startline="33" endline="62">GenerateWorld</references>
+      </memberdef>
+      <memberdef kind="function" id="class_world_1a948e7d94a4fac2b932c17c4a1460d464" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void World.GenerateWorld</definition>
+        <argsstring>(int width, int height)</argsstring>
+        <name>GenerateWorld</name>
+        <param>
+          <type>int</type>
+          <declname>width</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>height</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/World.cs" line="33" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/World.cs" bodystart="33" bodyend="62"/>
+        <references refid="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1ad4e3b74fb352a9f0977f9b86258daddb">Grassland</references>
+        <references refid="class_world_1a98c85f06bd6ec1c6fe0895d0910338b2" compoundref="_world_8cs" startline="10">noise</references>
+        <references refid="class_world_1aa861679cb371af259d6e1c298f7831e1" compoundref="_world_8cs" startline="12">tiles</references>
+        <references refid="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1a27634ff8002b12e75d98e07ccd005d18">Water</references>
+        <references refid="class_world_1a5e799bc6b80dc2638ee54b78c56ac0be" compoundref="_world_8cs" startline="11">waterLevel</references>
+        <references refid="class_world_1a97fd474cd587e59bafb2992a819a2774" compoundref="_world_8cs" startline="13">xOffset</references>
+        <references refid="class_world_1a1dbfb7eab105821ce8a772fa42cbde12" compoundref="_world_8cs" startline="14">yOffset</references>
+        <referencedby refid="class_world_1afe484709db88134f16e67aed42df4ad5" compoundref="_world_8cs" startline="25" endline="31">_Process</referencedby>
+        <referencedby refid="class_world_1ae0441527937def98a753b7d3e62ac7f5" compoundref="_world_8cs" startline="18" endline="22">_Ready</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="14">
+        <label>World</label>
+        <link refid="class_world"/>
+        <childnode refid="15" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>Node2D</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="19">
+        <label>Godot::TileMap</label>
+      </node>
+      <node id="16">
+        <label>World</label>
+        <link refid="class_world"/>
+        <childnode refid="17" relation="public-inheritance">
+        </childnode>
+        <childnode refid="18" relation="usage">
+          <edgelabel>tileMap</edgelabel>
+        </childnode>
+        <childnode refid="20" relation="usage">
+          <edgelabel>tiles</edgelabel>
+        </childnode>
+      </node>
+      <node id="17">
+        <label>Node2D</label>
+      </node>
+      <node id="20">
+        <label>Tile</label>
+        <link refid="class_tile"/>
+      </node>
+      <node id="18">
+        <label>TileMap</label>
+        <link refid="class_tile_map"/>
+        <childnode refid="19" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="E:/mygitrepos/GodotLife/Scripts/World.cs" line="5" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/World.cs" bodystart="4" bodyend="63"/>
+    <listofallmembers>
+      <member refid="class_world_1afe484709db88134f16e67aed42df4ad5" prot="public" virt="non-virtual"><scope>World</scope><name>_Process</name></member>
+      <member refid="class_world_1ae0441527937def98a753b7d3e62ac7f5" prot="public" virt="non-virtual"><scope>World</scope><name>_Ready</name></member>
+      <member refid="class_world_1a69fc3846355e0066866c1a20b8ad0cc2" prot="private" virt="non-virtual"><scope>World</scope><name>cityCount</name></member>
+      <member refid="class_world_1a948e7d94a4fac2b932c17c4a1460d464" prot="public" virt="non-virtual"><scope>World</scope><name>GenerateWorld</name></member>
+      <member refid="class_world_1a98c85f06bd6ec1c6fe0895d0910338b2" prot="private" virt="non-virtual"><scope>World</scope><name>noise</name></member>
+      <member refid="class_world_1ad4cb1aaebb98c616801f857837a9292f" prot="private" virt="non-virtual"><scope>World</scope><name>peopleCount</name></member>
+      <member refid="class_world_1a0408286a049cfccca1a0232dd80d42c5" prot="private" virt="non-virtual"><scope>World</scope><name>tileMap</name></member>
+      <member refid="class_world_1aa861679cb371af259d6e1c298f7831e1" prot="private" virt="non-virtual"><scope>World</scope><name>tiles</name></member>
+      <member refid="class_world_1a5e799bc6b80dc2638ee54b78c56ac0be" prot="private" virt="non-virtual"><scope>World</scope><name>waterLevel</name></member>
+      <member refid="class_world_1a97fd474cd587e59bafb2992a819a2774" prot="private" virt="non-virtual"><scope>World</scope><name>xOffset</name></member>
+      <member refid="class_world_1a1dbfb7eab105821ce8a772fa42cbde12" prot="private" virt="non-virtual"><scope>World</scope><name>yOffset</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

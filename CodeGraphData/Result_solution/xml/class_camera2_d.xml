@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_camera2_d" kind="class" prot="public">
+    <compoundname>Camera2D</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">Camera2D</basecompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_camera2_d_1a6d24de43f897893eddf3864387beb36d" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float Camera2D.movementStrength</definition>
+        <argsstring></argsstring>
+        <name>movementStrength</name>
+        <initializer>= 100f</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/Camera2D.cs" line="9" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/Camera2D.cs" bodystart="9" bodyend="-1"/>
+        <referencedby refid="class_camera2_d_1a9a9b1dd57f2233ae7e7a4b27cef0a49a" compoundref="_camera2_d_8cs" startline="19" endline="51">_Process</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_camera2_d_1a211152b107ceba9784702e7ae90217e0" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float Camera2D.zoomStrength</definition>
+        <argsstring></argsstring>
+        <name>zoomStrength</name>
+        <initializer>= 0.2f</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/Camera2D.cs" line="10" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/Camera2D.cs" bodystart="10" bodyend="-1"/>
+        <referencedby refid="class_camera2_d_1a9a9b1dd57f2233ae7e7a4b27cef0a49a" compoundref="_camera2_d_8cs" startline="19" endline="51">_Process</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_camera2_d_1a611ad3035e233481fc237757ce9b80e2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>override void</type>
+        <definition>override void Camera2D._Ready</definition>
+        <argsstring>()</argsstring>
+        <name>_Ready</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/Camera2D.cs" line="13" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/Camera2D.cs" bodystart="13" bodyend="16"/>
+      </memberdef>
+      <memberdef kind="function" id="class_camera2_d_1a9a9b1dd57f2233ae7e7a4b27cef0a49a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>override void</type>
+        <definition>override void Camera2D._Process</definition>
+        <argsstring>(float delta)</argsstring>
+        <name>_Process</name>
+        <param>
+          <type>float</type>
+          <declname>delta</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/Camera2D.cs" line="19" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/Camera2D.cs" bodystart="19" bodyend="51"/>
+        <references refid="class_camera2_d_1a6d24de43f897893eddf3864387beb36d" compoundref="_camera2_d_8cs" startline="9">movementStrength</references>
+        <references refid="class_camera2_d_1a211152b107ceba9784702e7ae90217e0" compoundref="_camera2_d_8cs" startline="10">zoomStrength</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>Godot::Camera2D</label>
+      </node>
+      <node id="0">
+        <label>Camera2D</label>
+        <link refid="class_camera2_d"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>Godot::Camera2D</label>
+      </node>
+      <node id="2">
+        <label>Camera2D</label>
+        <link refid="class_camera2_d"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="E:/mygitrepos/GodotLife/Scripts/Camera2D.cs" line="5" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/Camera2D.cs" bodystart="4" bodyend="52"/>
+    <listofallmembers>
+      <member refid="class_camera2_d_1a9a9b1dd57f2233ae7e7a4b27cef0a49a" prot="public" virt="non-virtual"><scope>Camera2D</scope><name>_Process</name></member>
+      <member refid="class_camera2_d_1a611ad3035e233481fc237757ce9b80e2" prot="public" virt="non-virtual"><scope>Camera2D</scope><name>_Ready</name></member>
+      <member refid="class_camera2_d_1a6d24de43f897893eddf3864387beb36d" prot="private" virt="non-virtual"><scope>Camera2D</scope><name>movementStrength</name></member>
+      <member refid="class_camera2_d_1a211152b107ceba9784702e7ae90217e0" prot="private" virt="non-virtual"><scope>Camera2D</scope><name>zoomStrength</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
