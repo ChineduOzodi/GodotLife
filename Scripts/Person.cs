@@ -33,13 +33,12 @@ public class Person : Node2D
                 personAction = PersonAction.Waiting;
                 break;
             case PersonAction.Moving:
-                Tile tile = world.GetTile(path[pathIndex].worldPosition);
-                gridWorldPosition = tile.position;
-                
-                
                 
                 if (pathIndex < path.Length)
                 {
+                    Tile tile = world.GetTile(path[pathIndex].worldPosition);
+                    gridWorldPosition = tile.position;
+
                     float d = GetPosition().DistanceTo(path[pathIndex].worldPosition);
                     if (d > 5)
                     {
