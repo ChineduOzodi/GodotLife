@@ -33,22 +33,10 @@ public class Person : Node2D
                 personAction = PersonAction.Waiting;
                 break;
             case PersonAction.Moving:
-                Tile tile = world.GetTile(GetPosition());
+                Tile tile = world.GetTile(path[pathIndex].worldPosition);
                 gridWorldPosition = tile.position;
                 
-                if (tile.biome == TileType.Grassland)
-                {
-                    if (!world.roads.ContainsKey($"{gridWorldPosition.ToString()}"))
-                    {
-                        world.GenerateRoad(gridWorldPosition, tile);
-                    }
-                    
-                    tile.speedMod += .01f * delta * walkSpeed;
-                    if (tile.speedMod > tile.maxSpeedMod)
-                    {
-                        tile.speedMod = tile.maxSpeedMod;
-                    }
-                }
+                
                 
                 if (pathIndex < path.Length)
                 {
@@ -60,6 +48,19 @@ public class Person : Node2D
                     else
                     {
                         SetPosition(path[pathIndex].worldPosition);
+                        if (tile.biome == TileType.Grassland)
+                        {
+                            if (!world.roads.ContainsKey($"{gridWorldPosition.ToString()}"))
+                            {
+                                world.GenerateRoad(gridWorldPosition, tile);
+                            }
+                            
+                            tile.speedMod += .02f * walkSpeed;
+                            if (tile.speedMod > tile.maxSpeedMod)
+                            {
+                                tile.speedMod = tile.maxSpeedMod;
+                            }
+                        }
                         pathIndex++;
                     }
                 } else

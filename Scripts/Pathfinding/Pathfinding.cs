@@ -208,10 +208,10 @@ namespace Life.Scripts.Pathfinding
                 path.Add(currentNode);
                 currentNode = currentNode.parent;
             }
-            waypoints = SimplifyPath(path);
-            Array.Reverse(waypoints);
+            //waypoints = SimplifyPath(path);
+            Array.Reverse(path);
 
-            return waypoints;
+            return path;
         }
 
         PathNode[] SimplifyPath(List<PathNode> path)

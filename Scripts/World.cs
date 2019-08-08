@@ -191,7 +191,7 @@ public class World : Node2D
 
     public Tile GetTile(Vector2 position)
     {
-        Coord pos = new Coord(Mathf.FloorToInt(position.x / tileSize) * tileSize, Mathf.FloorToInt(position.y / tileSize) * tileSize);
+        Coord pos = new Coord(Mathf.RoundToInt(position.x / tileSize) * tileSize, Mathf.RoundToInt(position.y / tileSize) * tileSize);
         int x = pos.x / tileSize - xOffset;
         int y = pos.y / tileSize - xOffset;
 
