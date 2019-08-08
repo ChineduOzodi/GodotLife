@@ -38,29 +38,40 @@ public class Person : Node2D
                 {
                     Tile tile = world.GetTile(path[pathIndex].worldPosition);
                     gridWorldPosition = tile.position;
+                    float remainingDelta = delta;
 
-                    float d = GetPosition().DistanceTo(path[pathIndex].worldPosition);
-                    if (d > 5)
-                    {
-                        SetPosition(GetPosition().LinearInterpolate(path[pathIndex].worldPosition, (tile.speedMod * walkSpeed * delta * world.TileSize) / d));
-                    }
-                    else
-                    {
-                        SetPosition(path[pathIndex].worldPosition);
-                        if (tile.biome == TileType.Grassland)
-                        {
-                            if (!world.roads.ContainsKey($"{gridWorldPosition.ToString()}"))
+                    while (remainingDelta > 0) {
+                        float distanceIndex = GetPosition().DistanceTo(path[pathIndex].worldPosition);
+                        float distanceDelta = tile.speedMod * walkSpeed * delta * world.TileSize;
+
+                        if (distanceDelta <= distanceIndex) {
+                            SetPosition(GetPosition().LinearInterpolate(path[pathIndex].worldPosition, (distanceDelta) / distanceIndex));
+                            remainingDelta = 0;
+                        } else {
+                            if (tile.biome == TileType.Grassland)
                             {
-                                world.GenerateRoad(gridWorldPosition, tile);
+                                if (!world.roads.ContainsKey($"{gridWorldPosition.ToString()}"))
+                                {
+                                    world.GenerateRoad(gridWorldPosition, tile);
+                                }
+                                
+                                tile.speedMod += .02f * walkSpeed;
+                                if (tile.speedMod > tile.maxSpeedMod)
+                                {
+                                    tile.speedMod = tile.maxSpeedMod;
+                                }
                             }
-                            
-                            tile.speedMod += .02f * walkSpeed;
-                            if (tile.speedMod > tile.maxSpeedMod)
-                            {
-                                tile.speedMod = tile.maxSpeedMod;
+                            pathIndex++;
+                            if (pathIndex < path.Length) {
+                                SetPosition(tile.position);
+                                remainingDelta = 0;
+                                break;
                             }
+                            Tile tile = world.GetTile(path[pathIndex].worldPosition);
+                            gridWorldPosition = tile.position;
+                            remainingDelta = distanceIndex / ( distanceDelta / delta);
+
                         }
-                        pathIndex++;
                     }
                 } else
                 {
