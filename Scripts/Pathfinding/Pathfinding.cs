@@ -209,9 +209,10 @@ namespace Life.Scripts.Pathfinding
                 currentNode = currentNode.parent;
             }
             //waypoints = SimplifyPath(path);
-            Array.Reverse(path);
+            waypoints = path.ToArray();
+            Array.Reverse(waypoints);
 
-            return path;
+            return waypoints;
         }
 
         PathNode[] SimplifyPath(List<PathNode> path)
