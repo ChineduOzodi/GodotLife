@@ -6,11 +6,12 @@ public class Person : Node2D
 {
     private World world;
     private PathRequestManager pathRequestManager;
-    private PathNode[] path;
     private PersonAction personAction = PersonAction.Idle;
     private int pathIndex = 0;
-    private float walkSpeed = 1;
+    private float walkSpeed = 2;
     private Vector2 gridWorldPosition;
+    
+    public PathNode[] path;
 
     public PersonAction PersonAction { get => personAction; }
 
@@ -21,27 +22,44 @@ public class Person : Node2D
         pathRequestManager = GetNode<PathRequestManager>(new NodePath("../PathRequestManager"));
         gridWorldPosition = GetPosition();
     }
-
+    
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
-        switch(personAction)
+        switch (personAction)
         {
             case PersonAction.Idle:
                 PathRequestManager.RequestPath(gridWorldPosition, GotoCity(), FoundPath);
                 personAction = PersonAction.Waiting;
                 break;
             case PersonAction.Moving:
+                Tile tile = world.GetTile(GetPosition());
+                gridWorldPosition = tile.position;
+                
+                if (tile.biome == TileType.Grassland)
+                {
+                    if (!world.roads.ContainsKey($"{gridWorldPosition.ToString()}"))
+                    {
+                        world.GenerateRoad(gridWorldPosition, tile);
+                    }
+                    
+                    tile.speedMod += .01f * delta * walkSpeed;
+                    if (tile.speedMod > tile.maxSpeedMod)
+                    {
+                        tile.speedMod = tile.maxSpeedMod;
+                    }
+                }
+                
                 if (pathIndex < path.Length)
                 {
                     float d = GetPosition().DistanceTo(path[pathIndex].worldPosition);
-                    if (d > 10)
+                    if (d > 5)
                     {
-                        SetPosition(GetPosition().LinearInterpolate(path[pathIndex].worldPosition, (path[pathIndex].moveSpeed * walkSpeed * delta * world.TileSize) / d));
+                        SetPosition(GetPosition().LinearInterpolate(path[pathIndex].worldPosition, (tile.speedMod * walkSpeed * delta * world.TileSize) / d));
                     }
                     else
                     {
-                        gridWorldPosition = path[pathIndex].worldPosition;
+                        SetPosition(path[pathIndex].worldPosition);
                         pathIndex++;
                     }
                 } else

@@ -46,7 +46,7 @@ namespace Life.Scripts.Pathfinding
                 if (paths.ContainsKey($"({currentPathRequest.pathStart.ToString()}),({currentPathRequest.pathEnd.ToString()})"))
                 {
                     PathNodeFound found = paths[$"({currentPathRequest.pathStart.ToString()}),({currentPathRequest.pathEnd.ToString()})"];
-                    if (found.lastUpdated + 50000 > world.Time)
+                    if (found.lastUpdated + 5000 > world.Time)
                     {
                         //Console.WriteLine("Path found in mem");
                         FinishedProcessingPath(found.path, true);
