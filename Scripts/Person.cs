@@ -67,7 +67,7 @@ public class Person : Node2D
                                 remainingDelta = 0;
                                 break;
                             }
-                            Tile tile = world.GetTile(path[pathIndex].worldPosition);
+                            tile = world.GetTile(path[pathIndex].worldPosition);
                             gridWorldPosition = tile.position;
                             remainingDelta = distanceIndex / ( distanceDelta / delta);
 
