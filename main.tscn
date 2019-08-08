@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/World.cs" type="Script" id=1]
 [ext_resource path="res://tileset.res" type="TileSet" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Scripts/Camera2D.cs" type="Script" id=4]
 [ext_resource path="res://addons/carmel4a97.RTS_Camera2D/RTS-Camera2D.gd" type="Script" id=5]
 [ext_resource path="res://addons/carmel4a97.RTS_Camera2D/node_icon.png" type="Texture" id=6]
+[ext_resource path="res://Scripts/Pathfinding/Pathfinding.cs" type="Script" id=7]
+[ext_resource path="res://Scripts/Pathfinding/PathRequestManager.cs" type="Script" id=8]
 
 [sub_resource type="ShaderMaterial" id=1]
 
@@ -32,3 +34,9 @@ script = ExtResource( 5 )
 __meta__ = {
 "_editor_icon": ExtResource( 6 )
 }
+
+[node name="Pathfinding" type="Node" parent="."]
+script = ExtResource( 7 )
+
+[node name="PathRequestManager" type="Node" parent="."]
+script = ExtResource( 8 )

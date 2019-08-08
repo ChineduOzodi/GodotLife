@@ -49,10 +49,17 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Prefabs\ActionText.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Camera2D.cs" />
     <Compile Include="Scripts\Classes\City.cs" />
     <Compile Include="Scripts\Classes\Tile.cs" />
+    <Compile Include="Scripts\Pathfinding\Pathfinding.cs" />
+    <Compile Include="Scripts\Pathfinding\PathRequestManager.cs" />
+    <Compile Include="Scripts\Pathfinding\Coord.cs" />
+    <Compile Include="Scripts\Pathfinding\Heap.cs" />
+    <Compile Include="Scripts\Pathfinding\PathNode.cs" />
+    <Compile Include="Scripts\Person.cs" />
     <Compile Include="Scripts\TileMap.cs" />
     <Compile Include="Scripts\World.cs" />
   </ItemGroup>

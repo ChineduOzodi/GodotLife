@@ -7,24 +7,44 @@ public class World : Node2D
     // Declare member variables here. Examples:
     // private int a = 2;
     // private string b = "text";
+    public Tile[][] tiles;
+    public List<City> cities = new List<City>();
+    public List<Person> people = new List<Person>();
+
     private int tileSize = 64;
     private int width = 300;
     private int height = 300;
+    private int xLimit;
+    private int yLimit;
     TileMap tileMap;
     private OpenSimplexNoise noise = new OpenSimplexNoise();
     private float waterLevel = 0.6f;
-    private Tile[][] tiles;
     private int xOffset;
     private int yOffset;
+    private RandomNumberGenerator random = new RandomNumberGenerator();
     private int cityCount = 10;
     private int peopleCount = 10;
-    private List<City> cities = new List<City>();
+
+    
 
     private PackedScene cityPrefab;
+    private PackedScene personPrefab;
+
+    public int XOffset { get => xOffset; }
+    public int YOffset { get => yOffset; }
+    public float WaterLevel { get => waterLevel; }
+    public int Width { get => width; }
+    public int Height { get => height; }
+    public int TileSize { get => tileSize; }
+    public int YLimit { get => yLimit; }
+    public int XLimit { get => xLimit; }
+    public RandomNumberGenerator Random { get => random; }
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         cityPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/City.tscn");
+        personPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/Person.tscn");
         tileMap = GetNode<TileMap>(new NodePath("TileMap"));
         GenerateWorld(width, height);
     }
@@ -42,7 +62,10 @@ public class World : Node2D
     {
         xOffset = -width / 2;
         yOffset = -height / 2;
+        xLimit = (width + xOffset) * tileSize;
+        yLimit = (height + yOffset) * tileSize;
         noise.SetSeed(DateTime.Now.TimeOfDay.Milliseconds);
+        random.SetSeed(DateTime.Now.TimeOfDay.Milliseconds);
         tileMap.CreateNoise(width, height, noise, waterLevel);
         tiles = new Tile[width][];
         for (int x = 0; x < width; x++)
@@ -72,7 +95,6 @@ public class World : Node2D
 
     private void GenerateCities(int num)
     {
-        RandomNumberGenerator random = new RandomNumberGenerator();
         DeleteCities();
         cities = new List<City>();
         int tries = 0;
@@ -88,16 +110,29 @@ public class World : Node2D
                 cities.Add(city);
                 city.Name = "city" + num;
                 city.name = city.Name;
-                city.SetPosition(new Vector2((randomX + xOffset) * tileSize, (randomY + yOffset) * tileSize));
+                Vector2 pos = new Vector2((randomX + xOffset) * tileSize, (randomY + yOffset) * tileSize);
+                city.SetPosition(pos);
                 tries = 0;
                 num--;
                 Console.WriteLine($"Created {city.name}");
+                for (int i = 0; i < peopleCount; i++)
+                {
+                    GeneratePerson(pos);
+                }
             } else
             {
                 tries++;
                 Console.WriteLine($"tries: {tries}");
             }
         }
+    }
+
+    private void GeneratePerson(Vector2 position)
+    {
+        Person person = (Person)personPrefab.Instance();
+        person.SetPosition(position);
+        AddChild(person);
+        people.Add(person);
     }
     private void DeleteCities()
     {
