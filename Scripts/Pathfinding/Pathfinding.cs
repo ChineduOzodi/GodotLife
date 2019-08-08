@@ -20,6 +20,7 @@ namespace Life.Scripts.Pathfinding
         Dictionary<String,PathNode> grid;
         List<PathNode> path;
         List<Node2D> pathVis = new List<Node2D>();
+        private Dictionary<String, float> gCosts = new Dictionary<string, float>();
 
         public int maxLocalSize
         {
@@ -41,10 +42,10 @@ namespace Life.Scripts.Pathfinding
 
         internal async void StartFindPath(Coord startPos, Coord targetPos)
         {
-            Console.WriteLine("Pathfinding: async path task start");
+            //Console.WriteLine("Pathfinding: async path task start");
             PathNode[] path = await Task.Run( () => FindLocalPath(startPos, targetPos));
 
-            Console.WriteLine("Pathfinding: async path task done");
+            //Console.WriteLine("Pathfinding: async path task done");
 
             if (path.Length > 0)
             {
@@ -57,12 +58,12 @@ namespace Life.Scripts.Pathfinding
 
         private PathNode[] FindLocalPath(Coord startPos, Coord targetPos)
         {
-            Console.WriteLine($"Pathfinding: finding path start: ({startPos.x},{startPos.y}) to ({targetPos.x},{targetPos.y})");
+            //Console.WriteLine($"Pathfinding: finding path start: ({startPos.x},{startPos.y}) to ({targetPos.x},{targetPos.y})");
             for(int i = pathVis.Count - 1; i >= 0; i--)
             {
-                pathVis[i].Free();
+                pathVis[i].GetChild<Sprite>(0).SetModulate(new Color(0.0f, 0, 0, 0.0f));
             }
-            pathVis = new List<Node2D>();
+            //pathVis = new List<Node2D>();
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -83,20 +84,34 @@ namespace Life.Scripts.Pathfinding
             if (visualizeSearch)
             {
                 //startNode vis
-                Node2D viz = (Node2D)pathNodeVisScene.Instance();
-                AddChild(viz);
-                viz.GetChild<Sprite>(0).SetModulate(new Color(0, 1, 0, 0.5f));
-                viz.SetName($"{startPos.x}, {startPos.y}");
-                viz.SetPosition(startNode.worldPosition);
-                pathVis.Add(viz);
+                Node2D viz = GetNode<Node2D>(new NodePath($"{startPos.x}, {startPos.y}"));
+                if (viz != null)
+                {
+                    viz.GetChild<Sprite>(0).SetModulate(new Color(0, 1, 0, 0.5f));
+                } else
+                {
+                    viz = (Node2D)pathNodeVisScene.Instance();
+                    AddChild(viz);
+                    viz.GetChild<Sprite>(0).SetModulate(new Color(0, 1, 0, 0.5f));
+                    viz.SetName($"{startPos.x}, {startPos.y}");
+                    viz.SetPosition(startNode.worldPosition);
+                    pathVis.Add(viz);
+                }
 
                 //targetNode vis
-                Node2D targetViz = (Node2D)pathNodeVisScene.Instance();
-                targetViz.GetChild<Sprite>(0).SetModulate(new Color(.5f, 0, 1));
-                AddChild(targetViz);
-                targetViz.SetName($"{targetPos.x}, {targetPos.y}");
-                targetViz.SetPosition(targetNode.worldPosition);
-                pathVis.Add(targetViz);
+                 Node2D targetViz = GetNode<Node2D>(new NodePath($"{targetPos.x}, {targetPos.y}"));
+                if (targetNode != null)
+                {
+                    targetViz.GetChild<Sprite>(0).SetModulate(new Color(.5f, 0, 1));
+                }
+                else {
+                    targetViz = (Node2D)pathNodeVisScene.Instance();
+                    targetViz.GetChild<Sprite>(0).SetModulate(new Color(.5f, 0, 1));
+                    AddChild(targetViz);
+                    targetViz.SetName($"{targetPos.x}, {targetPos.y}");
+                    targetViz.SetPosition(targetNode.worldPosition);
+                    pathVis.Add(targetViz);
+                }
             }
 
             
@@ -150,8 +165,16 @@ namespace Life.Scripts.Pathfinding
                         //Console.WriteLine($"Pathfinding: neighbor cost: {newMovementCostToNeighbor}");
                         if (newMovementCostToNeighbor < neighbor.gCost || !openSet.Contains(neighbor))
                         {
+                            gCosts[$"({neighbor.coord.x},{neighbor.coord.y})-({startNode.coord.x},{startNode.coord.y})"] = newMovementCostToNeighbor;
                             neighbor.gCost = newMovementCostToNeighbor;
-                            neighbor.hCost = GetDistance(neighbor, targetNode);
+                            if (gCosts.ContainsKey($"({neighbor.coord.x},{neighbor.coord.y})-({targetNode.coord.x},{targetNode.coord.y})"))
+                            {
+                                neighbor.hCost = gCosts[$"({neighbor.coord.x},{neighbor.coord.y})-({targetNode.coord.x},{targetNode.coord.y})"];
+                            } else
+                            {
+                                neighbor.hCost = GetDistance(neighbor, targetNode) / 0.5f;
+                            }
+                            
                             neighbor.parent = currentNode;
 
                             if (!openSet.Contains(neighbor))
@@ -246,12 +269,20 @@ namespace Life.Scripts.Pathfinding
 
                             if (visualizeSearch)
                             {
-                                Node2D viz = (Node2D)pathNodeVisScene.Instance();
-                                AddChild(viz);
-                                viz.GetChild<Sprite>(0).SetModulate(new Color(0, 1, 0, 0.5f));
-                                viz.SetName($"{checkX}, {checkY}");
-                                viz.SetPosition(pathNode.worldPosition);
-                                pathVis.Add(viz);
+                                Node2D viz = GetNode<Node2D>(new NodePath($"{checkX}, {checkY}"));
+                                if (viz != null)
+                                {
+                                    viz.GetChild<Sprite>(0).SetModulate(new Color(0, 1, 0, 0.5f));
+                                }
+                                else
+                                {
+                                    viz = (Node2D)pathNodeVisScene.Instance();
+                                    AddChild(viz);
+                                    viz.GetChild<Sprite>(0).SetModulate(new Color(0, 1, 0, 0.5f));
+                                    viz.SetName($"{checkX}, {checkY}");
+                                    viz.SetPosition(pathNode.worldPosition);
+                                    pathVis.Add(viz);
+                                }
                             }
                         }
                         else

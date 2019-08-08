@@ -9,7 +9,7 @@ public class Person : Node2D
     private PathNode[] path;
     private PersonAction personAction = PersonAction.Idle;
     private int pathIndex = 0;
-    private float walkSpeed = 10;
+    private float walkSpeed = 1;
     private Vector2 gridWorldPosition;
 
     public PersonAction PersonAction { get => personAction; }
@@ -48,7 +48,7 @@ public class Person : Node2D
                 {
                     //reached goal
                     pathIndex = 0;
-                    Console.WriteLine("reached goal");
+                    //Console.WriteLine("reached goal");
                     personAction = PersonAction.Idle;
                 }
                 break;
@@ -82,7 +82,7 @@ public class Person : Node2D
         } else
         {
             Console.WriteLine("Person did not find path");
-            personAction = PersonAction.Done;
+            personAction = PersonAction.Idle;
         }
     }
 }

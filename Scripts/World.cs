@@ -11,6 +11,7 @@ public class World : Node2D
     public List<City> cities = new List<City>();
     public List<Person> people = new List<Person>();
 
+    private long time = 0;
     private int tileSize = 64;
     private int width = 300;
     private int height = 300;
@@ -23,7 +24,7 @@ public class World : Node2D
     private int yOffset;
     private RandomNumberGenerator random = new RandomNumberGenerator();
     private int cityCount = 10;
-    private int peopleCount = 10;
+    private int peopleCount = 100;
 
     
 
@@ -39,6 +40,7 @@ public class World : Node2D
     public int YLimit { get => yLimit; }
     public int XLimit { get => xLimit; }
     public RandomNumberGenerator Random { get => random; }
+    public long Time { get => time; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -52,6 +54,7 @@ public class World : Node2D
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
+        time += (long) delta;
         if (Input.IsActionPressed("R"))
         {
             GenerateWorld(width, height);
