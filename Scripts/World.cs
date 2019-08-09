@@ -11,9 +11,8 @@ public class World : Node2D
     public Tile[][] tiles;
     public List<City> cities = new List<City>();
     public List<Person> people = new List<Person>();
-    public Dictionary<string, Road> roads = new Dictionary<string, Road>();
 
-    private long time = 0;
+    private double time = 0;
     private int tileSize = 32;
     private int width = 300;
     private int height = 300;
@@ -25,18 +24,20 @@ public class World : Node2D
     private float noiseScale = .5f;
     DrawingLine drawingLine;
     Map map;
+    private DisplayMode mapDisplayMode = DisplayMode.Normal;
     private float waterLevel = 0.5f;
     private int xOffset;
     private int yOffset;
     private RandomNumberGenerator random = new RandomNumberGenerator();
-    private int cityCount = 3;
-    private int peopleCount = 1;
+    private int cityCount = 50;
+    private int peopleCount = 20;
     private Person nearestPerson;
     float nearestPersonDistanceSquared;
+    private float mapUpdateInterval = 5;
+    public double mapLastUpdate;
 
     private PackedScene cityPrefab;
     private PackedScene personPrefab;
-    private PackedScene roadPrefab;
 
     public int XOffset { get => xOffset; }
     public int YOffset { get => yOffset; }
@@ -47,17 +48,17 @@ public class World : Node2D
     public int YLimit { get => yLimit; }
     public int XLimit { get => xLimit; }
     public RandomNumberGenerator Random { get => random; }
-    public long Time { get => time; }
+    public double Time { get => time; }
     public Person NearestPerson { get => nearestPerson; }
     public float NearestPersonDistanceSquared { get => nearestPersonDistanceSquared; }
     public float ElevChangeCost { get => elevChangeCost; }
+    public DisplayMode MapDisplayMode { get => mapDisplayMode; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         cityPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/City.tscn");
         personPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/Person.tscn");
-        roadPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/Road/Road.tscn");
         tileMap = GetNode<TileMap>(new NodePath("TileMap"));
         map = GetNode<Map>(new NodePath("Map"));
         drawingLine = GetNode<DrawingLine>(new NodePath("DrawingLine"));
@@ -69,7 +70,17 @@ public class World : Node2D
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
-        time += (long) delta;
+        time += (double) delta;
+
+        if (mapLastUpdate + mapUpdateInterval < time && mapDisplayMode == DisplayMode.Normal)
+        {
+            mapLastUpdate = time;
+            map.GenerateMap();
+        }
+        //else
+        //{
+        //    Console.WriteLine($"{mapLastUpdate + mapUpdateInterval} < {time}, delta: {(double)delta}");
+        //}
 
         if (nearestPerson != null)
         {
@@ -110,7 +121,6 @@ public class World : Node2D
         noise.SetSeed(DateTime.Now.TimeOfDay.Milliseconds);
         noise.SetOctaves(20);
         random.SetSeed(DateTime.Now.TimeOfDay.Milliseconds);
-        map.GenerateMap(width, height, noise, waterLevel, tileSize, noiseScale);
         //tileMap.CreateNoise(width, height, noise, waterLevel);
         tiles = new Tile[width][];
         for (int x = 0; x < width; x++)
@@ -121,6 +131,7 @@ public class World : Node2D
                 Tile tile = new Tile();
                 tile.name = $"${(x + xOffset) * tileSize},{(y + yOffset) * tileSize}";
                 tile.elev = (noise.GetNoise2d((x + xOffset) * noiseScale, (y + yOffset) * noiseScale) + 1) * .5f;
+                tile.elevAboveSeaLevel = tile.elev - waterLevel;
                 tile.position = new Vector2((x + xOffset) * tileSize, (y + yOffset) * tileSize);
 
                 if (tile.elev > waterLevel)
@@ -143,6 +154,7 @@ public class World : Node2D
                 tiles[x][y] = tile;
             }
         }
+        map.GenerateMap();
         GenerateCities(cityCount);
     }
 
@@ -204,13 +216,10 @@ public class World : Node2D
         return tiles[x][y];
     }
 
-    public void GenerateRoad(Vector2 position, Tile tile)
+    public void UpdateDisplayMode( DisplayMode displayMode)
     {
-        Road road = (Road)roadPrefab.Instance();
-        AddChild(road);
-        road.tile = tile;
-        road.SetPosition(position);
-        roads[$"{position.ToString()}"] = road;
+        mapDisplayMode = displayMode;
+        map.GenerateMap();
     }
 }
 

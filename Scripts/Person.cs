@@ -78,12 +78,7 @@ public class Person : Node2D
                             remainingDelta = 0;
                         } else {
                             if (tile.biome == TileType.Grassland)
-                            {
-                                if (!world.roads.ContainsKey($"{tile.position.ToString()}"))
-                                {
-                                    world.GenerateRoad(tile.position, tile);
-                                }
-                                
+                            {                                
                                 tile.speedMod += .02f * walkSpeed;
                                 if (tile.speedMod > tile.maxSpeedMod)
                                 {
@@ -100,6 +95,16 @@ public class Person : Node2D
                             elev = currentTile.elev;
                             tile = world.GetTile(path[pathIndex].worldPosition);
                             remainingDelta = distanceIndex / ( distanceDelta / delta);
+
+                            if (tile.speedMod > tile.baseSpeedMod)
+                            {
+                                tile.speedMod -= (float) (world.Time - tile.lastUpdated) * tile.recoveryRate;
+                                if (tile.speedMod < tile.baseSpeedMod)
+                                    tile.speedMod = tile.baseSpeedMod;
+                                float mod = (tile.speedMod - tile.baseSpeedMod) / (tile.maxSpeedMod - tile.baseSpeedMod);
+                                tile.lastUpdated = world.Time;
+
+                            }
 
                         }
                     }

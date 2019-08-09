@@ -5,13 +5,6 @@ public class Map : Node2D
 {
     private World world;
 
-    private int width;
-    private int height;
-    private OpenSimplexNoise noise;
-    private float waterLevel;
-    private int tileSize;
-    private float noiseScale;
-
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -21,49 +14,99 @@ public class Map : Node2D
     public override void _Draw()
     {
         base._Draw();
+        Console.WriteLine("Updating map");
 
-        int xOffset = -width / 2;
-        int yOffset = -height / 2;
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < world.Width; x++)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < world.Height; y++)
             {
-                float elev = (noise.GetNoise2d((x + xOffset) * noiseScale, (y + yOffset) * noiseScale) + 1) * .5f;
-                if (elev > waterLevel)
+                Tile tile = world.tiles[x][y];
+                switch (world.MapDisplayMode)
                 {
-                    Color color = new Color(0.2f, 0.5f, 0.2f, 1).LinearInterpolate(new Color(0, 0.1f, 0), (elev - waterLevel) / (1 - waterLevel));
-                    DrawRect(new Rect2((x + xOffset) * tileSize - tileSize / 2, (y + yOffset) * tileSize - tileSize / 2, tileSize, tileSize),
-                        color);
+                    case DisplayMode.Normal:
+                        DisplayNormal(tile);
+                        break;
+                    case DisplayMode.Height:
+                        DisplayHeight(tile);
+                        break;
                 }
-                else
-                {
-                    Color color;
-                    float deepestWaterElev = 0.3f;
-                    Color deepestWaterColor = new Color(0.1f, 0.1f, 0.4f); ;
-                    if (elev < deepestWaterElev)
-                    {
-                        color = deepestWaterColor;
-                    } else
-                    {
-                        color = new Color(0.2f, 0.2f, .6f).LinearInterpolate(deepestWaterColor, (waterLevel - elev) / (waterLevel - deepestWaterElev));
-                    }
-                    DrawRect(new Rect2((x + xOffset) * tileSize - tileSize / 2, (y + yOffset) * tileSize - tileSize / 2, tileSize, tileSize),
-                        color);
-                }
-
             }
         }
 
     }
 
-    public void GenerateMap(int width, int height, OpenSimplexNoise noise, float waterLevel, int tileSize, float noiseScale)
+    public void GenerateMap()
     {
-        this.width = width;
-        this.height = height;
-        this.noise = noise;
-        this.waterLevel = waterLevel;
-        this.tileSize = tileSize;
-        this.noiseScale = noiseScale;
         Update();
     }
+
+    private void DisplayNormal(Tile tile)
+    {
+        Color color;
+
+        switch (tile.biome)
+        {
+            case TileType.Grassland:
+                color = new Color(0.2f, 0.5f, 0.2f, 1).LinearInterpolate(new Color(0, 0.1f, 0), (tile.elevAboveSeaLevel) / (1 - world.WaterLevel));
+
+                if (tile.speedMod > tile.baseSpeedMod)
+                {
+                    tile.speedMod -= (float)(world.Time - tile.lastUpdated) * tile.recoveryRate;
+                    if (tile.speedMod < tile.baseSpeedMod)
+                        tile.speedMod = tile.baseSpeedMod;
+                    float mod = (tile.speedMod - tile.baseSpeedMod) / (tile.maxSpeedMod - tile.baseSpeedMod);
+                    color = color.LinearInterpolate(Color.ColorN("brown", 0.5f), mod);
+                    tile.lastUpdated = world.Time;
+
+                }
+
+                break;
+            case TileType.Water:
+                float deepestWaterElev = 0.3f;
+                Color deepestWaterColor = new Color(0.1f, 0.1f, 0.4f); ;
+                if (tile.elev < deepestWaterElev)
+                {
+                    color = deepestWaterColor;
+                }
+                else
+                {
+                    color = new Color(0.2f, 0.2f, .6f).LinearInterpolate(deepestWaterColor, (-tile.elevAboveSeaLevel) / (world.WaterLevel - deepestWaterElev));
+                }
+                break;
+            default:
+                color = Color.ColorN("pink");
+                break;
+        }
+
+        Vector2 rectPosition = new Vector2(tile.position.x - world.TileSize / 2, tile.position.y - world.TileSize / 2);
+        DrawRect(new Rect2(rectPosition, world.TileSize, world.TileSize),
+            color);
+    }
+
+    private void DisplayHeight(Tile tile)
+    {
+        Color color = Color.ColorN("black");
+
+        switch (tile.biome)
+        {
+            case TileType.Grassland:
+                color = color.LinearInterpolate(new Color(1, 1f, 1), (tile.elevAboveSeaLevel) / (1 - world.WaterLevel));
+                break;
+            case TileType.Water:
+                break;
+            default:
+                color = Color.ColorN("pink");
+                break;
+        }
+
+        Vector2 rectPosition = new Vector2(tile.position.x - world.TileSize / 2, tile.position.y - world.TileSize / 2);
+        DrawRect(new Rect2(rectPosition, world.TileSize, world.TileSize),
+            color);
+    }
+}
+
+public enum DisplayMode
+{
+    Normal,
+    Height
 }

@@ -13,11 +13,10 @@ scale = Vector2( 0.2, 0.2 )
 z_index = 2
 texture = ExtResource( 2 )
 
-[node name="ActionText" type="RichTextLabel" parent="."]
+[node name="ActionText" type="Label" parent="."]
 margin_left = -17.4993
 margin_top = -24.0096
-margin_right = 20.5007
-margin_bottom = -12.0096
-text = "Hello"
-scroll_active = false
+margin_right = 22.5007
+margin_bottom = -10.0096
+text = "Label"
 script = ExtResource( 3 )

@@ -16,14 +16,7 @@ public class Road : Node2D
     {
         if (tile != null)
         {
-            if (tile.speedMod > tile.baseSpeedMod)
-            {
-                tile.speedMod -= delta * tile.recoveryRate;
-                if (tile.speedMod < tile.baseSpeedMod)
-                    tile.speedMod = tile.baseSpeedMod;
-                float mod = (tile.speedMod - tile.baseSpeedMod) / (tile.maxSpeedMod - tile.baseSpeedMod);
-                GetChild<Sprite>(0).SetModulate(new Color(0, 0, 0, 0).LinearInterpolate(Color.ColorN("brown",0.5f), mod));
-            }
+            
         }
     }
 }

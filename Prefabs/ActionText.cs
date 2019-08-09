@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class ActionText : RichTextLabel
+public class ActionText : Label
 {
     Person person;
 
