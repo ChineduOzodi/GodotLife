@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Person.cs" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Prefabs/ActionText.cs" type="Script" id=3]
+
+[node name="Person" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="icon" type="Sprite" parent="."]
+modulate = Color( 0.752941, 0.0117647, 0.0117647, 1 )
+scale = Vector2( 0.2, 0.2 )
+z_index = 2
+texture = ExtResource( 2 )
+
+[node name="ActionText" type="RichTextLabel" parent="."]
+margin_left = -17.4993
+margin_top = -24.0096
+margin_right = 20.5007
+margin_bottom = -12.0096
+text = "Hello"
+scroll_active = false
+script = ExtResource( 3 )
