@@ -45,6 +45,8 @@ export (int) var camera_margin = 50
 # It changes a camera zoom value in units... (?, but it works... it probably
 # multiplies camera size by 1+camera_zoom_speed)
 const camera_zoom_speed = Vector2(0.5, 0.5)
+const worldXLimit = 32 * 150
+const worldYLimit = 32 * 150
 
 # Vector of camera's movement / second.
 var camera_movement = Vector2()
@@ -97,7 +99,14 @@ func _physics_process(delta):
 	
 	# Update position of the camera.
 	position += camera_movement * get_zoom()
-	
+	if position.y < -worldYLimit:
+		position = Vector2(position.x,-worldYLimit)
+	if position.y > worldYLimit:
+		position = Vector2(position.x,worldYLimit)
+	if position.x < -worldXLimit:
+		position = Vector2(-worldXLimit, position.y)
+	if position.x > worldXLimit:
+		position = Vector2(worldXLimit, position.y)
 	# Set camera movement to zero, update old mouse position.
 	camera_movement = Vector2(0,0)
 	_prev_mouse_pos = get_local_mouse_position()

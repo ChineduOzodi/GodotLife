@@ -14,21 +14,23 @@ public class World : Node2D
     public Dictionary<string, Road> roads = new Dictionary<string, Road>();
 
     private long time = 0;
-    private int tileSize = 64;
+    private int tileSize = 32;
     private int width = 300;
     private int height = 300;
     private int xLimit;
     private int yLimit;
+    private float elevChangeCost = 1000;
     TileMap tileMap;
     private OpenSimplexNoise noise = new OpenSimplexNoise();
+    private float noiseScale = .5f;
     DrawingLine drawingLine;
-    private float waterLevel = 0.6f;
+    Map map;
+    private float waterLevel = 0.5f;
     private int xOffset;
     private int yOffset;
     private RandomNumberGenerator random = new RandomNumberGenerator();
-    private int cityCount = 10;
-    private int peopleCount = 100;
-    private bool pathDrawn = false;
+    private int cityCount = 3;
+    private int peopleCount = 1;
     private Person nearestPerson;
     float nearestPersonDistanceSquared;
 
@@ -48,6 +50,7 @@ public class World : Node2D
     public long Time { get => time; }
     public Person NearestPerson { get => nearestPerson; }
     public float NearestPersonDistanceSquared { get => nearestPersonDistanceSquared; }
+    public float ElevChangeCost { get => elevChangeCost; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -56,6 +59,7 @@ public class World : Node2D
         personPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/Person.tscn");
         roadPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/Road/Road.tscn");
         tileMap = GetNode<TileMap>(new NodePath("TileMap"));
+        map = GetNode<Map>(new NodePath("Map"));
         drawingLine = GetNode<DrawingLine>(new NodePath("DrawingLine"));
         GenerateWorld(width, height);
     }
@@ -104,8 +108,10 @@ public class World : Node2D
         xLimit = (width + xOffset) * tileSize;
         yLimit = (height + yOffset) * tileSize;
         noise.SetSeed(DateTime.Now.TimeOfDay.Milliseconds);
+        noise.SetOctaves(20);
         random.SetSeed(DateTime.Now.TimeOfDay.Milliseconds);
-        tileMap.CreateNoise(width, height, noise, waterLevel);
+        map.GenerateMap(width, height, noise, waterLevel, tileSize, noiseScale);
+        //tileMap.CreateNoise(width, height, noise, waterLevel);
         tiles = new Tile[width][];
         for (int x = 0; x < width; x++)
         {
@@ -114,16 +120,16 @@ public class World : Node2D
             {
                 Tile tile = new Tile();
                 tile.name = $"${(x + xOffset) * tileSize},{(y + yOffset) * tileSize}";
-                tile.height = (noise.GetNoise2d(x + xOffset, y + yOffset) + 1) * .5f;
+                tile.elev = (noise.GetNoise2d((x + xOffset) * noiseScale, (y + yOffset) * noiseScale) + 1) * .5f;
                 tile.position = new Vector2((x + xOffset) * tileSize, (y + yOffset) * tileSize);
 
-                if (tile.height > waterLevel)
+                if (tile.elev > waterLevel)
                 {
-                   tile.biome =  TileType.Grassland;
-                   tile.speedMod = 0.60f;
+                    tile.biome =  TileType.Grassland;
+                    tile.speedMod = 0.60f;
                     tile.baseSpeedMod = 0.6f;
                     tile.recoveryRate = 0.001f;
-                    tile.maxSpeedMod = 5;
+                    tile.maxSpeedMod = 1;
                 }
                 else
                 {

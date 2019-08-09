@@ -14,6 +14,7 @@ namespace Life.Scripts.Pathfinding
         public Vector2 worldPosition;
         public Coord coord;
         public PathNode parent;
+        public float elev;
 
         public float gCost; //cost from node position to the start node
         public float hCost; //cost from the node position to the target node
@@ -50,7 +51,8 @@ namespace Life.Scripts.Pathfinding
             //Get correct walk speed modification
             int x = pos.x / model.TileSize - model.XOffset;
             int y = pos.y / model.TileSize - model.XOffset;
-            speed *= model.tiles[x][y].speedMod;
+            Tile tile = model.tiles[x][y];
+            speed *= tile.speedMod;
 
 
             Vector2 worldPosition = new Vector2(pos.x,pos.y);
@@ -58,6 +60,7 @@ namespace Life.Scripts.Pathfinding
             PathNode node = new PathNode(speed, worldPosition);
 
             node.coord = pos; //set position
+            node.elev = tile.elev;
             return node;
         }
 

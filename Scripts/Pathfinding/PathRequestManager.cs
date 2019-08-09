@@ -71,6 +71,7 @@ namespace Life.Scripts.Pathfinding
                     new PathNodeFound(path, world.Time);
                 //Console.WriteLine("Path added to mem");
             }
+            //Console.WriteLine($"PathRequestManager: Finding path finished: {pathRequestQueue.Count}");
             currentPathRequest.callback(path, success);
             isProcessingPath = false;
             TryProcessNext();

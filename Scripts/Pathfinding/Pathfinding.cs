@@ -15,8 +15,7 @@ namespace Life.Scripts.Pathfinding
         public PackedScene pathNodeVisScene;
         private bool visualizeSearch = false;
     
-    
-        World localMap;
+        World world;
         Dictionary<String,PathNode> grid;
         List<PathNode> path;
         List<Node2D> pathVis = new List<Node2D>();
@@ -26,7 +25,7 @@ namespace Life.Scripts.Pathfinding
         {
             get
             {
-                return localMap.Width * localMap.Height;
+                return world.Width * world.Height;
             }
         }
 
@@ -34,7 +33,7 @@ namespace Life.Scripts.Pathfinding
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
-            localMap = GetParent<World>();
+            world = GetParent<World>();
             grid = new Dictionary<string, PathNode>();
             requestManager = GetNode<PathRequestManager>(new NodePath("../PathRequestManager"));
             pathNodeVisScene = ResourceLoader.Load<PackedScene>("res://Prefabs/PathNodeVis.tscn");
@@ -71,8 +70,8 @@ namespace Life.Scripts.Pathfinding
             PathNode[] waypoints = new PathNode[0];
             bool pathSuccess = false;
 
-            PathNode startNode = PathNode.PathNodeFromPosition(startPos, localMap);
-            PathNode targetNode = PathNode.PathNodeFromPosition(targetPos, localMap);
+            PathNode startNode = PathNode.PathNodeFromPosition(startPos, world);
+            PathNode targetNode = PathNode.PathNodeFromPosition(targetPos, world);
 
             startNode.coord = startPos;
             targetNode.coord = targetPos;
@@ -160,8 +159,16 @@ namespace Life.Scripts.Pathfinding
                             continue;
                         }
 
+                        float newMovementCostToNeighbor;
 
-                        float newMovementCostToNeighbor = currentNode.gCost + GetDistance(currentNode, neighbor) / (currentNode.moveSpeed);
+                        if (currentNode.biome == TileType.Water && neighbor.biome == TileType.Water)
+                        {
+                            newMovementCostToNeighbor = currentNode.gCost + (GetDistance(currentNode, neighbor)) / (currentNode.moveSpeed);
+                        }
+                        else
+                        {
+                            newMovementCostToNeighbor = currentNode.gCost + (GetDistance(currentNode, neighbor) + (Mathf.Abs(currentNode.elev - neighbor.elev) * world.ElevChangeCost * world.TileSize)) / (currentNode.moveSpeed);
+                        }
                         //Console.WriteLine($"Pathfinding: neighbor cost: {newMovementCostToNeighbor}");
                         if (newMovementCostToNeighbor < neighbor.gCost || !openSet.Contains(neighbor))
                         {
@@ -192,6 +199,8 @@ namespace Life.Scripts.Pathfinding
 
             if (pathSuccess)
             {
+                world.GetTile(targetNode.worldPosition).distanceToLoctaion[$"{startNode.worldPosition.ToString()}"] = targetNode.fCost;
+                world.GetTile(startNode.worldPosition).distanceToLoctaion[$"{targetNode.worldPosition.ToString()}"] = targetNode.fCost;
                 waypoints = RetracePath(grid[$"{startPos.x}, {startPos.y}"], grid[$"{targetPos.x}, {targetPos.y}"]);
             }
             return waypoints;
@@ -245,9 +254,9 @@ namespace Life.Scripts.Pathfinding
         public List<PathNode> GetNeighbors(PathNode node)
         {
             List<PathNode> neighbors = new List<PathNode>();
-            for (int x = -localMap.TileSize; x <= localMap.TileSize; x+=localMap.TileSize)
+            for (int x = -world.TileSize; x <= world.TileSize; x+=world.TileSize)
             {
-                for (int y = -localMap.TileSize; y <= localMap.TileSize; y+=localMap.TileSize)
+                for (int y = -world.TileSize; y <= world.TileSize; y+=world.TileSize)
                 {
                     if (x == 0 && y == 0)
                     {
@@ -259,12 +268,12 @@ namespace Life.Scripts.Pathfinding
 
                     //Console.WriteLine($"Pathfinding: checkX,checkY {checkX},{checkY}");
 
-                    if (checkX >= -localMap.XLimit && checkX < localMap.XLimit && checkY >= -localMap.YLimit && checkY < localMap.YLimit)
+                    if (checkX >= -world.XLimit && checkX < world.XLimit && checkY >= -world.YLimit && checkY < world.YLimit)
                     {
                         if (!grid.ContainsKey($"{checkX}, {checkY}"))
                         {
                             //Console.WriteLine($"Pathfinding: grid doesn't contain check");
-                            PathNode pathNode = PathNode.PathNodeFromPosition(new Coord(checkX, checkY), localMap);
+                            PathNode pathNode = PathNode.PathNodeFromPosition(new Coord(checkX, checkY), world);
                             neighbors.Add(pathNode);
                             grid[$"{checkX}, {checkY}"] = pathNode;
 

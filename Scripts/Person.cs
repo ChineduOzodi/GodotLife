@@ -9,18 +9,21 @@ public class Person : Node2D
     private PersonAction personAction = PersonAction.Idle;
     private int pathIndex = 0;
     private float walkSpeed = 2;
-    private Vector2 gridWorldPosition;
+    private Tile currentTile;
+    private float elev;
     
     public PathNode[] path;
 
     public PersonAction PersonAction { get => personAction; }
+    public int PathIndex { get => pathIndex; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         world = GetParent<World>();
         pathRequestManager = GetNode<PathRequestManager>(new NodePath("../PathRequestManager"));
-        gridWorldPosition = GetPosition();
+        currentTile = world.GetTile(GetPosition());
+        elev = currentTile.elev;
     }
     
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,30 +32,56 @@ public class Person : Node2D
         switch (personAction)
         {
             case PersonAction.Idle:
-                PathRequestManager.RequestPath(gridWorldPosition, GotoCity(), FoundPath);
                 personAction = PersonAction.Waiting;
+                PathRequestManager.RequestPath(currentTile.position, GotoCity(), FoundPath);
                 break;
+            //case PersonAction.Waiting:
+            //    if (path != null)
+            //    {
+            //        personAction = PersonAction.Moving;
+            //    }
+            //    break;
             case PersonAction.Moving:
                 
                 if (pathIndex < path.Length)
                 {
                     Tile tile = world.GetTile(path[pathIndex].worldPosition);
-                    gridWorldPosition = tile.position;
                     float remainingDelta = delta;
 
                     while (remainingDelta > 0) {
-                        float distanceIndex = GetPosition().DistanceTo(path[pathIndex].worldPosition);
+                        float distanceIndex;
                         float distanceDelta = tile.speedMod * walkSpeed * delta * world.TileSize;
+                        if (currentTile.biome == TileType.Water && tile.biome == TileType.Water)
+                        {
+                            distanceIndex = GetPosition().DistanceTo(path[pathIndex].worldPosition);
+                        } else
+                        {
+                            distanceIndex = GetPosition().DistanceTo(path[pathIndex].worldPosition)  + (Mathf.Abs(elev - tile.elev) * world.ElevChangeCost * world.TileSize);
+                            //Console.WriteLine($"distanceIndex: {distanceIndex}");
+                            //Console.WriteLine($"deltatIndex: {distanceDelta}");
+                        }
 
                         if (distanceDelta <= distanceIndex) {
-                            SetPosition(GetPosition().LinearInterpolate(path[pathIndex].worldPosition, (distanceDelta) / distanceIndex));
+
+                            if (currentTile.biome == TileType.Water && tile.biome == TileType.Water)
+                            {
+                                SetPosition(GetPosition().LinearInterpolate(path[pathIndex].worldPosition, (distanceDelta) / distanceIndex));
+                            }
+                            else
+                            {
+                                float interpolation = (distanceDelta) / distanceIndex;
+                                SetPosition(GetPosition().LinearInterpolate(path[pathIndex].worldPosition, interpolation));
+                                elev += (tile.elev - elev) * interpolation;
+                                //Console.WriteLine($"Interpolation: {(distanceDelta) / distanceIndex}");
+                            }
+                            
                             remainingDelta = 0;
                         } else {
                             if (tile.biome == TileType.Grassland)
                             {
-                                if (!world.roads.ContainsKey($"{gridWorldPosition.ToString()}"))
+                                if (!world.roads.ContainsKey($"{tile.position.ToString()}"))
                                 {
-                                    world.GenerateRoad(gridWorldPosition, tile);
+                                    world.GenerateRoad(tile.position, tile);
                                 }
                                 
                                 tile.speedMod += .02f * walkSpeed;
@@ -62,13 +91,14 @@ public class Person : Node2D
                                 }
                             }
                             pathIndex++;
-                            if (pathIndex < path.Length) {
+                            if (pathIndex >= path.Length) {
                                 SetPosition(tile.position);
                                 remainingDelta = 0;
                                 break;
                             }
+                            currentTile = tile;
+                            elev = currentTile.elev;
                             tile = world.GetTile(path[pathIndex].worldPosition);
-                            gridWorldPosition = tile.position;
                             remainingDelta = distanceIndex / ( distanceDelta / delta);
 
                         }
@@ -77,6 +107,7 @@ public class Person : Node2D
                 {
                     //reached goal
                     pathIndex = 0;
+                    path = null;
                     //Console.WriteLine("reached goal");
                     personAction = PersonAction.Idle;
                 }
@@ -86,9 +117,48 @@ public class Person : Node2D
 
     private Vector2 GotoCity()
     {
+        float[] distances = new float[world.cities.Count];
+        float totalDistance = 0;
+        for (int i = 0; i < world.cities.Count; i++)
+        {
+            City selectedCity = world.cities[i];
+            if (selectedCity.GetPosition().Equals(currentTile.position))
+            {
+                distances[i] = 0;
+            } else
+            {
+                if (currentTile.distanceToLoctaion.ContainsKey($"{selectedCity.GetPosition().ToString()}"))
+                {
+                    distances[i] = 10000/ currentTile.distanceToLoctaion[$"{selectedCity.GetPosition().ToString()}"];
+                } else
+                {
+                    distances[i] = 10000/ selectedCity.GetPosition().DistanceTo(GetPosition());
+                }
+                
+            }
+            totalDistance += distances[i];
+        }
+
+        float randomNum = world.Random.Randf() * totalDistance;
+
+        for (int i = 0; i < world.cities.Count; i++)
+        {
+            //Console.WriteLine($"City probability: {distances[i] / totalDistance}")
+            if (distances[i] >= randomNum)
+            {
+                return world.cities[i].GetPosition();
+
+            } else
+            {
+                randomNum -= distances[i];
+            }
+        }
+
+        Console.WriteLine("ERROR: DID NOT FIND WEIGHTED CITY");
+
         City city = world.cities[world.Random.RandiRange(0, world.cities.Count - 1)];
         int tries = 0;
-        while (city.GetPosition().Equals(gridWorldPosition))
+        while (city.GetPosition().Equals(currentTile.position))
         {
             tries++;
             city = world.cities[world.Random.RandiRange(0, world.cities.Count - 1)];
@@ -107,7 +177,9 @@ public class Person : Node2D
         if (success)
         {
             this.path = path;
+            pathIndex = 0;
             personAction = PersonAction.Moving;
+            //Console.WriteLine("Found path, moving");
         } else
         {
             Console.WriteLine("Person did not find path");
