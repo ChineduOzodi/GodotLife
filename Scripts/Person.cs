@@ -50,7 +50,7 @@ public class Person : Node2D
 
                     while (remainingDelta > 0) {
                         float distanceIndex;
-                        float distanceDelta = tile.speedMod * walkSpeed * delta * world.TileSize;
+                        float distanceDelta = tile.speedMod * walkSpeed * delta * world.TileSize * tile.riverCrossingSpeed;
                         if (currentTile.biome == TileType.Water && tile.biome == TileType.Water)
                         {
                             distanceIndex = GetPosition().DistanceTo(path[pathIndex].worldPosition);

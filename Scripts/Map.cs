@@ -41,6 +41,9 @@ public class Map : Node2D
                     case DisplayMode.Moisture:
                         DisplayMoisture(tile);
                         break;
+                    case DisplayMode.WalkingSpeed:
+                        DisplayWalkingSpeed(tile);
+                        break;
                 }
             }
         }
@@ -166,6 +169,15 @@ public class Map : Node2D
         DrawRect(new Rect2(rectPosition, world.TileSize, world.TileSize),
             color);
     }
+    private void DisplayWalkingSpeed(Tile tile)
+    {
+        Color color = Color.ColorN("red");
+        color = color.LinearInterpolate(Color.ColorN("green"), tile.speedMod * tile.riverCrossingSpeed);
+
+        Vector2 rectPosition = new Vector2(tile.position.x - world.TileSize / 2, tile.position.y - world.TileSize / 2);
+        DrawRect(new Rect2(rectPosition, world.TileSize, world.TileSize),
+            color);
+    }
 }
 
 public enum DisplayMode
@@ -175,5 +187,6 @@ public enum DisplayMode
     MoistureNoise,
     LatTemperature,
     CellMoisture,
-    Moisture
+    Moisture,
+    WalkingSpeed
 }

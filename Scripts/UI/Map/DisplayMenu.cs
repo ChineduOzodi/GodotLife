@@ -10,7 +10,7 @@ public class DisplayMenu : MenuButton
     const string LatTemperature = "Lat Temperature";
     const string CellMoisture = "Cell Moisture";
     const string Moisture = "Moisture";
-
+    const string WalkingSpeed = "Walking Speed";
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -18,6 +18,7 @@ public class DisplayMenu : MenuButton
         world = GetParent().GetParent<World>();
         GetPopup().AddItem(Normal);
         GetPopup().AddItem(Height);
+        GetPopup().AddItem(WalkingSpeed);
         GetPopup().AddItem(MoistureNoise);
         GetPopup().AddItem(LatTemperature);
         GetPopup().AddItem(CellMoisture);
@@ -55,6 +56,9 @@ public class DisplayMenu : MenuButton
                 break;
             case Moisture:
                 world.UpdateDisplayMode(DisplayMode.Moisture);
+                break;
+            case WalkingSpeed:
+                world.UpdateDisplayMode(DisplayMode.WalkingSpeed);
                 break;
         }
 

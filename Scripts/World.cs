@@ -11,33 +11,48 @@ public class World : Node2D
     public Tile[][] tiles;
     public List<City> cities = new List<City>();
     public List<Person> people = new List<Person>();
+    public Dictionary<String, RiverData> rivers = new Dictionary<string, RiverData>();
 
     private double time = 0;
-    private int tileSize = 32;
-    private int width = 300;
-    private int height = 300;
+    
     private int xLimit;
     private int yLimit;
-    private float elevChangeCost = 1000;
-    TileMap tileMap;
-    private OpenSimplexNoise elevationNoise = new OpenSimplexNoise();
-    private float elevationNoiseScale = .5f;
-    private OpenSimplexNoise moistureNoise = new OpenSimplexNoise();
-    private float moistureNoiseScale = .75f;
-    DrawingLine drawingLine;
-    Map map;
+    private float elevChangeCost = 500;
+    
+    
+    private DrawingLine drawingLine;
+    private Map map;
+    private Rivers riverDisplay;
     private DisplayMode mapDisplayMode = DisplayMode.Normal;
-    private float waterLevel = 0.5f;
     private int xOffset;
     private int yOffset;
     private RandomNumberGenerator random = new RandomNumberGenerator();
-    private int cityCount = 30;
-    private int peopleCount = 20;
     private Person nearestPerson;
     float nearestPersonDistanceSquared;
     private float mapUpdateInterval = 5;
-    public double mapLastUpdate;
+    private double mapLastUpdate;
 
+
+    //Map Generation Variables
+    private int tileSize = 32;
+    private int width = 300;
+    private int height = 300;
+    private float waterLevel = 0.5f;
+    private int cityCount = 30;
+    private int peopleCount = 20;
+    private float riverSpawnProbability = .1f;
+    private float riverFormationMoistureScale = 3f; //greater number = less river formation for less moisture places;
+    private float riverMovementMoistureScale = 1;
+    private float riverMocementMoistureCarryScale = .9f;
+    private float riverCrossingDifficultyScale = 11f;
+    private float riverCrossingDifficultyMax = 0.01f;
+    private float elevationNoiseScale = .5f;
+    private float moistureNoiseScale = .75f;
+
+    private OpenSimplexNoise moistureNoise = new OpenSimplexNoise();
+    private OpenSimplexNoise elevationNoise = new OpenSimplexNoise();
+
+    // Scenes for instancing
     private PackedScene cityPrefab;
     private PackedScene personPrefab;
 
@@ -60,8 +75,8 @@ public class World : Node2D
     {
         cityPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/City.tscn");
         personPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/Person.tscn");
-        tileMap = GetNode<TileMap>(new NodePath("TileMap"));
         map = GetNode<Map>(new NodePath("Map"));
+        riverDisplay = GetNode<Rivers>(new NodePath("Rivers"));
         drawingLine = GetNode<DrawingLine>(new NodePath("DrawingLine"));
         GenerateWorld(width, height);
     }
@@ -73,7 +88,7 @@ public class World : Node2D
     {
         time += (double) delta;
 
-        if (mapLastUpdate + mapUpdateInterval < time && mapDisplayMode == DisplayMode.Normal)
+        if (mapLastUpdate + mapUpdateInterval < time && (mapDisplayMode == DisplayMode.Normal || mapDisplayMode == DisplayMode.WalkingSpeed))
         {
             mapLastUpdate = time;
             map.GenerateMap();
@@ -123,7 +138,6 @@ public class World : Node2D
         elevationNoise.SetSeed(DateTime.Now.TimeOfDay.Milliseconds + "elevation".GetHashCode());
         elevationNoise.SetOctaves(20);
         random.SetSeed(DateTime.Now.TimeOfDay.Milliseconds);
-        //tileMap.CreateNoise(width, height, noise, waterLevel);
         tiles = new Tile[width][];
         for (int x = 0; x < width; x++)
         {
@@ -137,11 +151,11 @@ public class World : Node2D
                 float elevationNoiseNumber = elevationNoise.GetNoise2d((x + xOffset) * elevationNoiseScale, (y + yOffset) * elevationNoiseScale);
                 tile.elev = ( elevationNoiseNumber + 1) * .5f;
                 float elevAboveSeaLevel = tile.elev - waterLevel;
-                if (elevAboveSeaLevel < 0)
-                    Console.WriteLine($"elevAboveSeaLevel: {elevAboveSeaLevel}");
+                //if (elevAboveSeaLevel < 0)
+                //    Console.WriteLine($"elevAboveSeaLevel: {elevAboveSeaLevel}");
                 float elevAboveSeaLevelScaled = (elevAboveSeaLevel >= 0) ? (elevAboveSeaLevel / (1 - waterLevel)) : elevAboveSeaLevel / waterLevel;
-                if (elevAboveSeaLevelScaled < 0)
-                    Console.WriteLine($"elevAboveSeaLevelScaled: {elevAboveSeaLevelScaled}");
+                //if (elevAboveSeaLevelScaled < 0)
+                //    Console.WriteLine($"elevAboveSeaLevelScaled: {elevAboveSeaLevelScaled}");
                 float alteredElevationAboveSeaLevelNumber = ( elevAboveSeaLevelScaled >= 0) ? Mathf.Pow(elevAboveSeaLevelScaled, elevationPow) :  -Mathf.Pow(-elevAboveSeaLevelScaled, elevationPow);
                 tile.elev = alteredElevationAboveSeaLevelNumber;
                 float moistureNoisePow = 0.75f;
@@ -180,7 +194,7 @@ public class World : Node2D
                     {
                         tile.biome = TileType.snow;
                         tile.speedMod = 0.20f;
-                        tile.baseSpeedMod = 0.1f;
+                        tile.baseSpeedMod = 0.2f;
                         tile.recoveryRate = 0.001f;
                         tile.maxSpeedMod = 1;
                         //Console.WriteLine("tile biome set to snow");
@@ -229,7 +243,7 @@ public class World : Node2D
                     {
                         tile.biome = TileType.Water;
                         tile.speedMod = 0.1f;
-                        tile.baseSpeedMod = 0.001f;
+                        tile.baseSpeedMod = 0.1f;
                         tile.recoveryRate = 0.001f;
                         tile.maxSpeedMod = 1;
                     }
@@ -239,6 +253,7 @@ public class World : Node2D
             }
         }
         map.GenerateMap();
+        GenerateRivers();
         GenerateCities(cityCount);
     }
 
@@ -263,7 +278,7 @@ public class World : Node2D
                 city.SetPosition(pos);
                 tries = 0;
                 num--;
-                Console.WriteLine($"Created {city.name}");
+                //Console.WriteLine($"Created {city.name}");
                 for (int i = 0; i < peopleCount; i++)
                 {
                     GeneratePerson(pos);
@@ -271,7 +286,7 @@ public class World : Node2D
             } else
             {
                 tries++;
-                Console.WriteLine($"tries: {tries}");
+                //Console.WriteLine($"tries: {tries}");
             }
         }
     }
@@ -283,6 +298,215 @@ public class World : Node2D
         AddChild(person);
         people.Add(person);
     }
+
+    public void GenerateRivers()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                //Console.WriteLine($"x: {x} y: {y}");
+                Tile tile = tiles[x][y];
+                Vector2 previousPosition = Vector2.Zero;
+                int count = 0;
+                if (random.Randf() <= Mathf.Pow(tile.moisture,riverFormationMoistureScale) && random.Randf() <= riverSpawnProbability && (tile.biome == TileType.land || tile.biome == TileType.snow) && !tile.hasFreshWater)
+                {
+                    //Console.WriteLine($"{tile.position.ToString()} starting river");
+                    while (true)
+                    {
+                        count++;
+                        //check if tile already has river
+                        if (tile.hasFreshWater)
+                        {
+                            if (tile.hasWaterBasin)
+                            {
+                                //Console.WriteLine($"{tile.position.ToString()} already has basin");
+                                tile.waterBasinSize += rivers[$"{previousPosition.ToString()}"].size * riverMocementMoistureCarryScale;
+                                //set new tile attributes
+                                float riverCrossingDifficulty = (1 * riverCrossingDifficultyScale - tile.waterBasinSize) / riverCrossingDifficultyScale;
+                                if (riverCrossingDifficulty < riverCrossingDifficultyMax)
+                                {
+                                    Console.WriteLine($"WARNING: basin crossing difficulty crossing threshold: {riverCrossingDifficulty} < {riverCrossingDifficultyMax}");
+                                }
+                                tile.riverCrossingSpeed = (riverCrossingDifficulty <= riverCrossingDifficultyMax) ? riverCrossingDifficultyMax : riverCrossingDifficulty;
+                                break;
+                            } else
+                            {
+                                //find data increment number
+                                //Console.WriteLine($"{tile.position.ToString()} already has river data");
+                                
+
+                                int num = 0;
+                                float riverMoistureCarry = rivers[$"{previousPosition.ToString()}"].size * riverMocementMoistureCarryScale;
+                                RiverData riverData = rivers[$"{tile.position.ToString()}"];
+                                riverData.fromPositions.Add(previousPosition);
+                                while (true)
+                                {
+                                    num++;
+                                    if (tile.hasWaterBasin)
+                                    {
+                                        tile.waterBasinSize += riverMoistureCarry;
+                                        //set new tile attributes
+                                        float riverCrossingDifficulty = (1 * riverCrossingDifficultyScale - tile.waterBasinSize) / riverCrossingDifficultyScale;
+                                        if (riverCrossingDifficulty < riverCrossingDifficultyMax)
+                                        {
+                                            Console.WriteLine($"WARNING: basin crossing difficulty crossing threshold: {riverCrossingDifficulty} < {riverCrossingDifficultyMax}");
+                                        }
+                                        tile.riverCrossingSpeed = (riverCrossingDifficulty <= riverCrossingDifficultyMax) ? riverCrossingDifficultyMax : riverCrossingDifficulty;
+                                        break;
+                                    } else if (tile.biome == TileType.land || tile.biome == TileType.snow)
+                                    {
+                                        riverData = rivers[$"{tile.position.ToString()}"];
+                                        riverData.size += riverMoistureCarry;
+                                        riverMoistureCarry *= riverMocementMoistureCarryScale;
+
+                                        //set new tile attributes
+                                        float riverCrossingDifficulty = (1 * riverCrossingDifficultyScale - riverData.size) / riverCrossingDifficultyScale;
+                                        if (riverCrossingDifficulty < riverCrossingDifficultyMax)
+                                        {
+                                            Console.WriteLine($"WARNING: river crossing difficulty crossing threshold: {riverCrossingDifficulty} < {riverCrossingDifficultyMax}");
+
+                                        }
+                                        tile.riverCrossingSpeed = (riverCrossingDifficulty <= riverCrossingDifficultyMax) ? riverCrossingDifficultyMax : riverCrossingDifficulty;
+
+                                        if (riverData.toPosition.x != tile.position.x && riverData.toPosition.y != tile.position.y)
+                                        {
+                                            float newRiverCrossingSpeed = tile.riverCrossingSpeed  + (1 - tile.riverCrossingSpeed) * 0.5f;
+                                            Tile nTile1 = GetTile(new Vector2(riverData.toPosition.x, tile.position.y));
+                                            Tile nTile2 = GetTile(new Vector2(tile.position.x, riverData.toPosition.y));
+                                            nTile1.riverCrossingSpeed *= newRiverCrossingSpeed;
+                                            nTile2.riverCrossingSpeed *= newRiverCrossingSpeed;
+                                        }
+                                        //Console.WriteLine($"Tile speedMod: {tile.speedMod}");
+                                        tile = GetTile(riverData.toPosition);
+                                    } else
+                                    {
+                                        break;
+                                    }
+                                    
+
+                                    if (num > 1000)
+                                    {
+                                        Console.WriteLine("ERROR: Entered into a forever loop");
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                            
+                        }
+                        else
+                        {
+                            //try to create new river data
+                            if (tile.biome == TileType.land || tile.biome == TileType.snow)
+                            {
+                                //spawn stream
+                                //Console.WriteLine($"{tile.position.ToString()} creating possible river data");
+                                tile.hasFreshWater = true;
+                                
+                                Tile toTile = null;
+                                float distanceDiff = 0;
+
+                                for (int nx = -tileSize; nx <= tileSize; nx += TileSize)
+                                {
+                                    for (int ny = -tileSize; ny <= tileSize; ny += tileSize)
+                                    {
+                                        if (nx == 0 && ny == 0)
+                                            continue;
+
+                                        float checkX = tile.position.x + nx;
+                                        float checkY = tile.position.y + ny;
+
+                                        if (checkX >= -xLimit && checkX < xLimit && checkY >= -yLimit && checkY < yLimit)
+                                        {
+                                            Tile neighborTile =GetTile(new Vector2(checkX,checkY));
+                                            float neighborDiff = neighborTile.elev - tile.elev;
+                                            if (neighborDiff < distanceDiff)
+                                            {
+                                                distanceDiff = neighborDiff;
+                                                toTile = neighborTile;
+                                            }
+                                        }
+
+                                        
+                                    }
+                                }
+
+                                if (toTile != null)
+                                {
+                                    //set stats
+                                    //Console.WriteLine($"{tile.position.ToString()} creating new river data");
+                                    RiverData riverData = new RiverData();
+                                    riverData.position = tile.position;
+                                    if (count != 1)
+                                    {
+                                        riverData.fromPositions.Add(previousPosition);
+                                    }
+                                    riverData.size = 0;
+                                    riverData.fromPositions.ForEach( fromPosition => riverData.size += rivers[$"{fromPosition.ToString()}"].size * riverMocementMoistureCarryScale);
+                                    //Console.WriteLine($"river size: {riverData.size}");
+                                    riverData.size += tile.moisture * riverMovementMoistureScale;
+                                    
+                                    previousPosition = tile.position;
+                                    riverData.toPosition = toTile.position;
+                                    //TODO: calculate speed
+
+                                    //set new tile attributes
+                                    float riverCrossingDifficulty = (1 * riverCrossingDifficultyScale - riverData.size) / riverCrossingDifficultyScale;
+                                    if (riverCrossingDifficulty < riverCrossingDifficultyMax)
+                                    {
+                                        Console.WriteLine($"WARNING: river crossing difficulty crossing threshold: {riverCrossingDifficulty} < {riverCrossingDifficultyMax}");
+                                    }
+
+                                    tile.riverCrossingSpeed = (riverCrossingDifficulty <= riverCrossingDifficultyMax) ? riverCrossingDifficultyMax : riverCrossingDifficulty;
+                                    if (riverData.toPosition.x != tile.position.x && riverData.toPosition.y != tile.position.y)
+                                    {
+                                        float newRiverCrossingSpeed = tile.riverCrossingSpeed + (1 - tile.riverCrossingSpeed) * 0.5f;
+                                        Tile nTile1 = GetTile(new Vector2(riverData.toPosition.x, tile.position.y));
+                                        Tile nTile2 = GetTile(new Vector2(tile.position.x, riverData.toPosition.y));
+                                        nTile1.riverCrossingSpeed *= newRiverCrossingSpeed;
+                                        nTile2.riverCrossingSpeed *= newRiverCrossingSpeed;
+                                    }
+
+                                    rivers[$"{tile.position.ToString()}"] = riverData;
+                                    tile = toTile;
+                                } else
+                                {
+                                    //Console.WriteLine($"{tile.position.ToString()} creating new river basin");
+                                    tile.hasWaterBasin = true;
+                                    tile.waterBasinSize += 1;
+
+                                    //set new tile attributes
+                                    float riverCrossingDifficulty = (1 * riverCrossingDifficultyScale - tile.waterBasinSize) / riverCrossingDifficultyScale;
+                                    if (riverCrossingDifficulty < riverCrossingDifficultyMax)
+                                    {
+                                        Console.WriteLine($"WARNING: basin crossing difficulty crossing threshold: {riverCrossingDifficulty} < {riverCrossingDifficultyMax}");
+                                    }
+
+                                    tile.riverCrossingSpeed = (riverCrossingDifficulty <= riverCrossingDifficultyMax) ? riverCrossingDifficultyMax : riverCrossingDifficulty;
+                                    break;
+                                }
+
+                            } else
+                            {
+                                //Console.WriteLine($"{tile.position.ToString()} not land or snow");
+                                break;
+                            }
+                        }
+
+                        if (count > 1000)
+                        {
+                            Console.WriteLine($"Breaking from river generation, either really long river or forever loop");
+                            count = 0;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        riverDisplay.GenerateRivers();
+    }
+
     private void DeleteCities()
     {
         for (int i = cities.Count - 1; i >= 0; i--)
@@ -305,6 +529,16 @@ public class World : Node2D
         mapDisplayMode = displayMode;
         map.GenerateMap();
     }
+}
+
+public class RiverData
+{
+    public string name;
+    public Vector2 position;
+    public Vector2 toPosition;
+    public float size;
+    public float speed;
+    public List<Vector2> fromPositions = new List<Vector2>();
 }
 
 

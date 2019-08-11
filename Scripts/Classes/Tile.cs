@@ -13,8 +13,12 @@ public class Tile
     public float moisture;
     public float maxSpeedMod;
     public float speedMod;
+    public float riverCrossingSpeed = 1;
     public float baseSpeedMod;
     public float recoveryRate;
+    public bool hasFreshWater;
+    public bool hasWaterBasin;
+    public float waterBasinSize = 0;
     public Vector2 position;
     public Dictionary<String, float> distanceToLoctaion = new Dictionary<string, float>();
     public double lastUpdated;
