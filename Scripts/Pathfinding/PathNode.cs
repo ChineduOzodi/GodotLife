@@ -46,13 +46,12 @@ namespace Life.Scripts.Pathfinding
         public static PathNode PathNodeFromPosition(Coord pos, World model)
         {
             //Console.WriteLine($"Pos. ({pos.x},{pos.y})");
-            float speed = 1;
 
             //Get correct walk speed modification
             int x = pos.x / model.TileSize - model.XOffset;
             int y = pos.y / model.TileSize - model.XOffset;
             Tile tile = model.tiles[x][y];
-            speed *= tile.speedMod;
+            float speed = tile.speedMod * tile.riverCrossingSpeed;
 
 
             Vector2 worldPosition = new Vector2(pos.x,pos.y);

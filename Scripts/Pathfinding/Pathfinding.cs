@@ -145,7 +145,7 @@ namespace Life.Scripts.Pathfinding
                     if (currentNode.Equals(targetNode))
                     {
                         sw.Stop();
-                        Console.WriteLine("Path found:" + sw.ElapsedMilliseconds + " ms");
+                        //Console.WriteLine("Path found:" + sw.ElapsedMilliseconds + " ms");
                         pathSuccess = true;
                         break;
                     }

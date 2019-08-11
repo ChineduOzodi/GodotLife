@@ -14,6 +14,7 @@ namespace Life.Scripts.Pathfinding
         Queue<PathRequest> pathRequestQueue = new Queue<PathRequest>();
         PathRequest currentPathRequest;
         Dictionary<String, PathNodeFound> paths = new Dictionary<string, PathNodeFound>();
+        private float updateTime = 10;
 
         static PathRequestManager instance;
         Pathfinding pathfinding;
@@ -32,7 +33,7 @@ namespace Life.Scripts.Pathfinding
         {
             PathRequest newRequest = new PathRequest(pathStart, pathEnd, callback);
             instance.pathRequestQueue.Enqueue(newRequest);
-            Console.WriteLine($"Path requested, queue: {instance.pathRequestQueue.Count}");
+            //Console.WriteLine($"Path requested, queue: {instance.pathRequestQueue.Count}");
             instance.TryProcessNext();
         }
 
@@ -46,7 +47,7 @@ namespace Life.Scripts.Pathfinding
                 if (paths.ContainsKey($"({currentPathRequest.pathStart.ToString()}),({currentPathRequest.pathEnd.ToString()})"))
                 {
                     PathNodeFound found = paths[$"({currentPathRequest.pathStart.ToString()}),({currentPathRequest.pathEnd.ToString()})"];
-                    if (found.lastUpdated + 5000 > world.Time)
+                    if (found.lastUpdated + updateTime > world.Time || pathRequestQueue.Count > 10)
                     {
                         //Console.WriteLine("Path found in mem");
                         FinishedProcessingPath(found.path, true);
@@ -55,7 +56,8 @@ namespace Life.Scripts.Pathfinding
                         isProcessingPath = true;
                         pathfinding.StartFindPath(Coord.Vector2ToCoord(currentPathRequest.pathStart), Coord.Vector2ToCoord(currentPathRequest.pathEnd));
                     }
-                } else
+                }
+                else
                 {
                     isProcessingPath = true;
                     pathfinding.StartFindPath(Coord.Vector2ToCoord(currentPathRequest.pathStart), Coord.Vector2ToCoord(currentPathRequest.pathEnd));
@@ -95,10 +97,10 @@ namespace Life.Scripts.Pathfinding
     public class PathNodeFound
     {
         public PathNode[] path;
-        public long lastUpdated;
+        public double lastUpdated;
 
         public PathNodeFound() { }
-        public PathNodeFound(PathNode[] path, long lastUpdated)
+        public PathNodeFound(PathNode[] path, double lastUpdated)
         {
             this.path = path;
             this.lastUpdated = lastUpdated;

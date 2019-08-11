@@ -63,7 +63,8 @@
     <Compile Include="Scripts\Pathfinding\Heap.cs" />
     <Compile Include="Scripts\Pathfinding\PathNode.cs" />
     <Compile Include="Scripts\Person.cs" />
-    <Compile Include="Scripts\TileMap.cs" />
+    <Compile Include="Scripts\Rivers.cs" />
+    <Compile Include="Scripts\UI\Map\DisplayMenu.cs" />
     <Compile Include="Scripts\World.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

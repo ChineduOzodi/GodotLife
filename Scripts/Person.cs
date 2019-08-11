@@ -50,7 +50,7 @@ public class Person : Node2D
 
                     while (remainingDelta > 0) {
                         float distanceIndex;
-                        float distanceDelta = tile.speedMod * walkSpeed * delta * world.TileSize;
+                        float distanceDelta = tile.speedMod * walkSpeed * delta * world.TileSize * tile.riverCrossingSpeed;
                         if (currentTile.biome == TileType.Water && tile.biome == TileType.Water)
                         {
                             distanceIndex = GetPosition().DistanceTo(path[pathIndex].worldPosition);
@@ -77,13 +77,8 @@ public class Person : Node2D
                             
                             remainingDelta = 0;
                         } else {
-                            if (tile.biome == TileType.Grassland)
-                            {
-                                if (!world.roads.ContainsKey($"{tile.position.ToString()}"))
-                                {
-                                    world.GenerateRoad(tile.position, tile);
-                                }
-                                
+                            if (tile.biome == TileType.land)
+                            {                                
                                 tile.speedMod += .02f * walkSpeed;
                                 if (tile.speedMod > tile.maxSpeedMod)
                                 {
@@ -100,6 +95,16 @@ public class Person : Node2D
                             elev = currentTile.elev;
                             tile = world.GetTile(path[pathIndex].worldPosition);
                             remainingDelta = distanceIndex / ( distanceDelta / delta);
+
+                            if (tile.speedMod > tile.baseSpeedMod)
+                            {
+                                tile.speedMod -= (float) (world.Time - tile.lastUpdated) * tile.recoveryRate;
+                                if (tile.speedMod < tile.baseSpeedMod)
+                                    tile.speedMod = tile.baseSpeedMod;
+                                float mod = (tile.speedMod - tile.baseSpeedMod) / (tile.maxSpeedMod - tile.baseSpeedMod);
+                                tile.lastUpdated = world.Time;
+
+                            }
 
                         }
                     }
@@ -129,10 +134,10 @@ public class Person : Node2D
             {
                 if (currentTile.distanceToLoctaion.ContainsKey($"{selectedCity.GetPosition().ToString()}"))
                 {
-                    distances[i] = 10000/ currentTile.distanceToLoctaion[$"{selectedCity.GetPosition().ToString()}"];
+                    distances[i] = 10000/ Mathf.Pow(currentTile.distanceToLoctaion[$"{selectedCity.GetPosition().ToString()}"],2);
                 } else
                 {
-                    distances[i] = 10000/ selectedCity.GetPosition().DistanceTo(GetPosition());
+                    distances[i] = 10000/ Mathf.Pow(selectedCity.GetPosition().DistanceTo(GetPosition()),2);
                 }
                 
             }
