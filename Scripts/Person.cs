@@ -77,7 +77,7 @@ public class Person : Node2D
                             
                             remainingDelta = 0;
                         } else {
-                            if (tile.biome == TileType.Grassland)
+                            if (tile.biome == TileType.land)
                             {                                
                                 tile.speedMod += .02f * walkSpeed;
                                 if (tile.speedMod > tile.maxSpeedMod)
@@ -134,10 +134,10 @@ public class Person : Node2D
             {
                 if (currentTile.distanceToLoctaion.ContainsKey($"{selectedCity.GetPosition().ToString()}"))
                 {
-                    distances[i] = 10000/ currentTile.distanceToLoctaion[$"{selectedCity.GetPosition().ToString()}"];
+                    distances[i] = 10000/ Mathf.Pow(currentTile.distanceToLoctaion[$"{selectedCity.GetPosition().ToString()}"],2);
                 } else
                 {
-                    distances[i] = 10000/ selectedCity.GetPosition().DistanceTo(GetPosition());
+                    distances[i] = 10000/ Mathf.Pow(selectedCity.GetPosition().DistanceTo(GetPosition()),2);
                 }
                 
             }

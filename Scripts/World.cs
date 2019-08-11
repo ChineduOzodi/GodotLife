@@ -20,8 +20,10 @@ public class World : Node2D
     private int yLimit;
     private float elevChangeCost = 1000;
     TileMap tileMap;
-    private OpenSimplexNoise noise = new OpenSimplexNoise();
-    private float noiseScale = .5f;
+    private OpenSimplexNoise elevationNoise = new OpenSimplexNoise();
+    private float elevationNoiseScale = .5f;
+    private OpenSimplexNoise moistureNoise = new OpenSimplexNoise();
+    private float moistureNoiseScale = .75f;
     DrawingLine drawingLine;
     Map map;
     private DisplayMode mapDisplayMode = DisplayMode.Normal;
@@ -29,7 +31,7 @@ public class World : Node2D
     private int xOffset;
     private int yOffset;
     private RandomNumberGenerator random = new RandomNumberGenerator();
-    private int cityCount = 50;
+    private int cityCount = 30;
     private int peopleCount = 20;
     private Person nearestPerson;
     float nearestPersonDistanceSquared;
@@ -41,7 +43,6 @@ public class World : Node2D
 
     public int XOffset { get => xOffset; }
     public int YOffset { get => yOffset; }
-    public float WaterLevel { get => waterLevel; }
     public int Width { get => width; }
     public int Height { get => height; }
     public int TileSize { get => tileSize; }
@@ -118,8 +119,9 @@ public class World : Node2D
         yOffset = -height / 2;
         xLimit = (width + xOffset) * tileSize;
         yLimit = (height + yOffset) * tileSize;
-        noise.SetSeed(DateTime.Now.TimeOfDay.Milliseconds);
-        noise.SetOctaves(20);
+        moistureNoise.SetSeed(DateTime.Now.TimeOfDay.Milliseconds + "moisture".GetHashCode());
+        elevationNoise.SetSeed(DateTime.Now.TimeOfDay.Milliseconds + "elevation".GetHashCode());
+        elevationNoise.SetOctaves(20);
         random.SetSeed(DateTime.Now.TimeOfDay.Milliseconds);
         //tileMap.CreateNoise(width, height, noise, waterLevel);
         tiles = new Tile[width][];
@@ -129,26 +131,108 @@ public class World : Node2D
             for (int y = 0; y < height; y++)
             {
                 Tile tile = new Tile();
+                float elevationPow = 2;
+
                 tile.name = $"${(x + xOffset) * tileSize},{(y + yOffset) * tileSize}";
-                tile.elev = (noise.GetNoise2d((x + xOffset) * noiseScale, (y + yOffset) * noiseScale) + 1) * .5f;
-                tile.elevAboveSeaLevel = tile.elev - waterLevel;
+                float elevationNoiseNumber = elevationNoise.GetNoise2d((x + xOffset) * elevationNoiseScale, (y + yOffset) * elevationNoiseScale);
+                tile.elev = ( elevationNoiseNumber + 1) * .5f;
+                float elevAboveSeaLevel = tile.elev - waterLevel;
+                if (elevAboveSeaLevel < 0)
+                    Console.WriteLine($"elevAboveSeaLevel: {elevAboveSeaLevel}");
+                float elevAboveSeaLevelScaled = (elevAboveSeaLevel >= 0) ? (elevAboveSeaLevel / (1 - waterLevel)) : elevAboveSeaLevel / waterLevel;
+                if (elevAboveSeaLevelScaled < 0)
+                    Console.WriteLine($"elevAboveSeaLevelScaled: {elevAboveSeaLevelScaled}");
+                float alteredElevationAboveSeaLevelNumber = ( elevAboveSeaLevelScaled >= 0) ? Mathf.Pow(elevAboveSeaLevelScaled, elevationPow) :  -Mathf.Pow(-elevAboveSeaLevelScaled, elevationPow);
+                tile.elev = alteredElevationAboveSeaLevelNumber;
+                float moistureNoisePow = 0.75f;
+                float moistureNoiseNumber = moistureNoise.GetNoise2d((x + xOffset) * moistureNoiseScale, (y + yOffset) * moistureNoiseScale);
+                float alteredMoistureNoiseNumber = (moistureNoiseNumber < 0) ? -Mathf.Pow(-moistureNoiseNumber, moistureNoisePow) : Mathf.Pow(moistureNoiseNumber, moistureNoisePow);
+                tile.moistureNoise = (alteredMoistureNoiseNumber + 1) * .5f;
+                tile.latTemperature = -Mathf.Pow(((float) y + yOffset) / (-yOffset), 2) + 1;
+                tile.cellMoisture = (Mathf.Cos((((float)y + yOffset) / (-yOffset)) * Mathf.Pi * 3) + 1) * 0.5f;
+
+                //calculate moisture
+                float elevMoisture = (tile.elev >= 0) ? 1 - tile.elev : 1;
+
+                float elevMoistureScale = 1;
+                float cellMoistureScale = 1;
+                float latTemperatureScale = 1;
+                float moistureNoisModScale = 2;
+
+                tile.moisture = (elevMoisture * elevMoistureScale + tile.cellMoisture * cellMoistureScale - ( 1 - tile.latTemperature) * latTemperatureScale
+                    + tile.moistureNoise * moistureNoisModScale) / (elevMoistureScale + cellMoistureScale + latTemperatureScale + moistureNoisModScale);
                 tile.position = new Vector2((x + xOffset) * tileSize, (y + yOffset) * tileSize);
 
-                if (tile.elev > waterLevel)
+                if (tile.moisture < 0)
                 {
-                    tile.biome =  TileType.Grassland;
-                    tile.speedMod = 0.60f;
-                    tile.baseSpeedMod = 0.6f;
-                    tile.recoveryRate = 0.001f;
-                    tile.maxSpeedMod = 1;
+                    tile.moisture = 0;
+                    Console.WriteLine("negative moisture");
+                }
+
+                if (tile.elev > 0)
+                {
+                    float snowLevel = 0.4f;
+                    float moistureScale = 1;
+                    float elevationScale = 1;
+
+                    float snowPossibility = (tile.moisture * moistureScale + tile.elev * elevationScale) / (moistureScale + elevationScale);
+                    if (snowPossibility >= snowLevel)
+                    {
+                        tile.biome = TileType.snow;
+                        tile.speedMod = 0.20f;
+                        tile.baseSpeedMod = 0.1f;
+                        tile.recoveryRate = 0.001f;
+                        tile.maxSpeedMod = 1;
+                        //Console.WriteLine("tile biome set to snow");
+                    } else
+                    {
+                        tile.biome = TileType.land;
+                        tile.speedMod = 0.60f;
+                        tile.baseSpeedMod = 0.6f;
+                        tile.recoveryRate = 0.001f;
+                        tile.maxSpeedMod = 1;
+                    }
+
+                    float iceLevel = 0.6f;
+                    float moistureIceScale = 1;
+                    float temperatureScale = 1;
+                    float elevationIceScale = .1f;
+
+                    float icePossibility = ( (1 - tile.moisture) * moistureIceScale + (1 - tile.latTemperature) * temperatureScale + tile.elev * elevationIceScale) / (moistureIceScale + temperatureScale + elevationIceScale);
+
+                    if (icePossibility >= iceLevel)
+                    {
+                        tile.biome = TileType.ice;
+                        tile.speedMod = 0.3f;
+                        tile.baseSpeedMod = 0.3f;
+                        tile.recoveryRate = 0.001f;
+                        tile.maxSpeedMod = 1;
+                        //Console.WriteLine("tile biome set to ice");
+                    }
                 }
                 else
                 {
-                    tile.biome = TileType.Water;
-                    tile.speedMod = 0.10f;
-                    tile.baseSpeedMod = 0.1f;
-                    tile.recoveryRate = 0.001f;
-                    tile.maxSpeedMod = 1;
+                    float iceLevel = 0.8f;
+                    float moistureScale = 1;
+                    float temperatureScale = 1;
+
+                    float icePossibility = ((1 - tile.moisture) * moistureScale + (1 - tile.latTemperature) * temperatureScale) / (moistureScale + temperatureScale);
+
+                    if (icePossibility >= iceLevel)
+                    {
+                        tile.biome = TileType.ice;
+                        tile.speedMod = 0.3f;
+                        tile.baseSpeedMod = 0.3f;
+                        tile.recoveryRate = 0.001f;
+                        tile.maxSpeedMod = 1;
+                    } else
+                    {
+                        tile.biome = TileType.Water;
+                        tile.speedMod = 0.1f;
+                        tile.baseSpeedMod = 0.001f;
+                        tile.recoveryRate = 0.001f;
+                        tile.maxSpeedMod = 1;
+                    }
                 }
 
                 tiles[x][y] = tile;
@@ -168,7 +252,7 @@ public class World : Node2D
             int randomX = random.RandiRange(0, width - 1);
             int randomY = random.RandiRange(0, height - 1);
             //Console.WriteLine($"randomX:{randomX}, randomY: {randomY}, width:{tiles.Length}, height:{tiles[0].Length}");
-            if (tiles[randomX][randomY].biome == TileType.Grassland)
+            if (tiles[randomX][randomY].biome == TileType.land)
             {
                 City city = (City) cityPrefab.Instance();
                 AddChild(city);

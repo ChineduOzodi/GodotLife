@@ -23,7 +23,7 @@ public class TileMap : Godot.TileMap
                 float elev = (noise.GetNoise2d(x + xOffset, y + yOffset) + 1) * .5f;
                 if (elev > waterLevel)
                 {
-                    SetCell(x + xOffset, y + yOffset, (int) TileType.Grassland);
+                    SetCell(x + xOffset, y + yOffset, (int) TileType.land);
                 } else
                 {
                     SetCell(x + xOffset, y + yOffset, (int) TileType.Water);
@@ -38,10 +38,4 @@ public class TileMap : Godot.TileMap
 //  {
 //      
 //  }
-}
-
-public enum TileType
-{
-    Grassland = 0,
-    Water = 1
 }
