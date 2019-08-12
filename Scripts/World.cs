@@ -46,7 +46,7 @@ public class World : Node2D
     private float waterLevel = 0.5f;
     private int cityCount = 30;
     private int peopleCount = 20;
-    private float riverSpawnProbability = .2f;
+    private float riverSpawnProbability = .5f;
     private float riverFormationMoistureScale = 3f; //greater number = less river formation for less moisture places;
     private float riverMovementMoistureScale = 1;
     private float riverMocementMoistureCarryScale = .9f;
@@ -238,7 +238,7 @@ public class World : Node2D
                         tile.biome = TileType.Glacier;
                         tile.speedMod = 0.3f;
                         tile.baseSpeedMod = 0.3f;
-                        tile.recoveryRate = 0.001f;
+                        tile.recoveryRate = 0.002f;
                         tile.maxSpeedMod = 1;
                         //Console.WriteLine("tile biome set to ice");
                     }

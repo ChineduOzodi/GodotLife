@@ -115,6 +115,18 @@ public class Map : Node2D
             case TileType.snow:
                 color = new Color(1f, .9f, .9f);
                 color = color.LinearInterpolate(Color.ColorN("black"), (1 - (tile.elev)) * 0.5f);
+
+                //add path effect
+                if (tile.speedMod > tile.baseSpeedMod)
+                {
+                    tile.speedMod -= (float)(world.Time - tile.lastUpdated) * tile.recoveryRate;
+                    if (tile.speedMod < tile.baseSpeedMod)
+                        tile.speedMod = tile.baseSpeedMod;
+                    float mod = (tile.speedMod - tile.baseSpeedMod) / (tile.maxSpeedMod - tile.baseSpeedMod);
+                    color = color.LinearInterpolate(new Color(106f / 255, 92f / 255, 82f / 255), mod);
+                    tile.lastUpdated = world.Time;
+
+                }
                 //add rock effect
                 if (tile.HasMapResource(MapResourceName.Rock))
                 {
@@ -128,6 +140,19 @@ public class Map : Node2D
             case TileType.Glacier:
                 color = new Color(.77f, .8f, .85f);
                 color = color.LinearInterpolate(Color.ColorN("black"), (1 - (tile.elev)) * 0.05f);
+
+                //add path effect
+                if (tile.speedMod > tile.baseSpeedMod)
+                {
+                    tile.speedMod -= (float)(world.Time - tile.lastUpdated) * tile.recoveryRate;
+                    if (tile.speedMod < tile.baseSpeedMod)
+                        tile.speedMod = tile.baseSpeedMod;
+                    float mod = (tile.speedMod - tile.baseSpeedMod) / (tile.maxSpeedMod - tile.baseSpeedMod);
+                    color = color.LinearInterpolate(new Color(106f / 255, 92f / 255, 82f / 255), mod);
+                    tile.lastUpdated = world.Time;
+
+                }
+
                 //add rock effect
                 if (tile.HasMapResource(MapResourceName.Rock))
                 {

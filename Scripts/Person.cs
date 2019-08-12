@@ -77,7 +77,7 @@ public class Person : Node2D
                             
                             remainingDelta = 0;
                         } else {
-                            if (tile.biome == TileType.land || tile.biome == TileType.snow)
+                            if (currentTile.biome != TileType.Water && currentTile.biome != TileType.SeaIce)
                             {                                
                                 tile.speedMod += .02f * walkSpeed;
                                 if (tile.speedMod > tile.maxSpeedMod)
