@@ -55,8 +55,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Camera2D.cs" />
     <Compile Include="Scripts\Classes\City.cs" />
+    <Compile Include="Scripts\Classes\Resource.cs" />
     <Compile Include="Scripts\Classes\Tile.cs" />
     <Compile Include="Scripts\Map.cs" />
+    <Compile Include="Scripts\MapResourceOverlay.cs" />
     <Compile Include="Scripts\Pathfinding\Pathfinding.cs" />
     <Compile Include="Scripts\Pathfinding\PathRequestManager.cs" />
     <Compile Include="Scripts\Pathfinding\Coord.cs" />

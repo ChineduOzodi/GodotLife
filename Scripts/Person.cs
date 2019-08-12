@@ -51,7 +51,7 @@ public class Person : Node2D
                     while (remainingDelta > 0) {
                         float distanceIndex;
                         float distanceDelta = tile.speedMod * walkSpeed * delta * world.TileSize * tile.riverCrossingSpeed;
-                        if (currentTile.biome == TileType.Water && tile.biome == TileType.Water)
+                        if ((currentTile.biome == TileType.Water || currentTile.biome == TileType.SeaIce) && (tile.biome == TileType.SeaIce || tile.biome == TileType.Water))
                         {
                             distanceIndex = GetPosition().DistanceTo(path[pathIndex].worldPosition);
                         } else
@@ -63,7 +63,7 @@ public class Person : Node2D
 
                         if (distanceDelta <= distanceIndex) {
 
-                            if (currentTile.biome == TileType.Water && tile.biome == TileType.Water)
+                            if ((currentTile.biome == TileType.Water || currentTile.biome == TileType.SeaIce) && (tile.biome == TileType.SeaIce || tile.biome == TileType.Water))
                             {
                                 SetPosition(GetPosition().LinearInterpolate(path[pathIndex].worldPosition, (distanceDelta) / distanceIndex));
                             }
@@ -77,7 +77,7 @@ public class Person : Node2D
                             
                             remainingDelta = 0;
                         } else {
-                            if (tile.biome == TileType.land)
+                            if (tile.biome == TileType.land || tile.biome == TileType.snow)
                             {                                
                                 tile.speedMod += .02f * walkSpeed;
                                 if (tile.speedMod > tile.maxSpeedMod)
