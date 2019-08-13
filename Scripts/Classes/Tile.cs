@@ -22,7 +22,7 @@ public class Tile
     public float recoveryRate;
 
     // water/rivers
-    public bool hasFreshWater;
+    public bool hasRiver;
     public bool hasWaterBasin;
     public float waterBasinSize = 0;
     public Vector2 position;

@@ -67,6 +67,11 @@ namespace Life.Scripts.Classes
             return new MapResourceData(resource.Name, maxResource, maxResource, resource);
         }
 
+        public static MapResourceData CreateLiving(MapResource resource, float maxResource)
+        {
+            return new MapResourceData(resource.Name, maxResource, maxResource, resource);
+        }
+
     }
 
     public class MapResourceTags
@@ -84,6 +89,7 @@ namespace Life.Scripts.Classes
         public const string FruitTree = "Fruit Tree";
         public const string BerryBush = "BerryBush";
         public const string SeaFish = "Sea Fish";
+        public const string FreshWaterFish = "Fresh Water Fish";
         public const string Dear = "Dear";
     }
 
