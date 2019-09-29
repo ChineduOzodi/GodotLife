@@ -1,9 +1,16 @@
 using Godot;
+using Life.Scripts.Classes;
 using System;
 
 public class Map : Node2D
 {
     private World world;
+    private float riverAlphaScale = 0.1f;
+    private float riverWidthScale = .5f;
+    private float waterBasinScale = 0.5f;
+    private bool riverAlpha = true;
+    MapResource mapResource;
+    float resourceScale = 10;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -44,9 +51,17 @@ public class Map : Node2D
                     case DisplayMode.WalkingSpeed:
                         DisplayWalkingSpeed(tile);
                         break;
+                    case DisplayMode.Resource:
+                        DisplayResource(tile);
+                        break;
                 }
             }
         }
+
+        //if (world.MapDisplayMode == DisplayMode.Normal)
+        //{
+        //    DrawRivers();
+        //}
 
     }
 
@@ -63,6 +78,14 @@ public class Map : Node2D
         {
             case TileType.land:
                 color = new Color(213f/255, 204f/255,127f/255).LinearInterpolate(new Color(57f/255, 118f/255, 40f/255), tile.moisture);
+                color = color.LinearInterpolate(Color.ColorN("black"), (tile.elev) * .9f);
+
+                //add rock effect
+                if (tile.HasMapResource(MapResourceName.Rock))
+                {
+                    MapResourceData mapResourceData = tile.GetMapResourceData(MapResourceName.Rock);
+                    color = color.LinearInterpolate(new Color(98f/255, 98f/255,98f/255), mapResourceData.amount / mapResourceData.mapResource.resourceMax * 0.75f);
+                }
                 color = color.LinearInterpolate(Color.ColorN("black"), (tile.elev) * .9f);
 
                 if (tile.speedMod > tile.baseSpeedMod)
@@ -92,12 +115,49 @@ public class Map : Node2D
             case TileType.snow:
                 color = new Color(1f, .9f, .9f);
                 color = color.LinearInterpolate(Color.ColorN("black"), (1 - (tile.elev)) * 0.5f);
-                break;
-            case TileType.ice:
-                color = new Color(.77f, .8f, .85f);
-                if (tile.elev > 0)
+
+                //add path effect
+                if (tile.speedMod > tile.baseSpeedMod)
                 {
-                    color = color.LinearInterpolate(Color.ColorN("black"), (1 - (tile.elev)) * 0.05f);
+                    tile.speedMod -= (float)(world.Time - tile.lastUpdated) * tile.recoveryRate;
+                    if (tile.speedMod < tile.baseSpeedMod)
+                        tile.speedMod = tile.baseSpeedMod;
+                    float mod = (tile.speedMod - tile.baseSpeedMod) / (tile.maxSpeedMod - tile.baseSpeedMod);
+                    color = color.LinearInterpolate(new Color(106f / 255, 92f / 255, 82f / 255), mod);
+                    tile.lastUpdated = world.Time;
+
+                }
+                //add rock effect
+                if (tile.HasMapResource(MapResourceName.Rock))
+                {
+                    MapResourceData mapResourceData = tile.GetMapResourceData(MapResourceName.Rock);
+                    color = color.LinearInterpolate(new Color(98f / 255, 98f / 255, 98f / 255), mapResourceData.amount / mapResourceData.mapResource.resourceMax * 0.75f);
+                }
+                break;
+            case TileType.SeaIce:
+                color = new Color(.77f, .8f, .85f);
+                break;
+            case TileType.Glacier:
+                color = new Color(.77f, .8f, .85f);
+                color = color.LinearInterpolate(Color.ColorN("black"), (1 - (tile.elev)) * 0.05f);
+
+                //add path effect
+                if (tile.speedMod > tile.baseSpeedMod)
+                {
+                    tile.speedMod -= (float)(world.Time - tile.lastUpdated) * tile.recoveryRate;
+                    if (tile.speedMod < tile.baseSpeedMod)
+                        tile.speedMod = tile.baseSpeedMod;
+                    float mod = (tile.speedMod - tile.baseSpeedMod) / (tile.maxSpeedMod - tile.baseSpeedMod);
+                    color = color.LinearInterpolate(new Color(106f / 255, 92f / 255, 82f / 255), mod);
+                    tile.lastUpdated = world.Time;
+
+                }
+
+                //add rock effect
+                if (tile.HasMapResource(MapResourceName.Rock))
+                {
+                    MapResourceData mapResourceData = tile.GetMapResourceData(MapResourceName.Rock);
+                    color = color.LinearInterpolate(new Color(98f / 255, 98f / 255, 98f / 255), mapResourceData.amount / mapResourceData.mapResource.resourceMax * 0.75f);
                 }
                 break;
             default:
@@ -116,19 +176,36 @@ public class Map : Node2D
 
         switch (tile.biome)
         {
-            case TileType.land:
-                color = color.LinearInterpolate(new Color(1, 1f, 1), tile.elev);
-                break;
             case TileType.Water:
                 break;
             default:
-                color = Color.ColorN("pink");
+                color = color.LinearInterpolate(new Color(1, 1f, 1), tile.elev);
                 break;
         }
 
         Vector2 rectPosition = new Vector2(tile.position.x - world.TileSize / 2, tile.position.y - world.TileSize / 2);
         DrawRect(new Rect2(rectPosition, world.TileSize, world.TileSize),
             color);
+    }
+
+    private void DisplayResource(Tile tile)
+    {
+        Color color = Color.ColorN("black");
+
+        if (mapResource != null)
+        {
+            if (tile.HasMapResource(mapResource.Name))
+            {
+                MapResourceData mapResourceData = tile.GetMapResourceData(mapResource.Name);
+                color = color.LinearInterpolate(new Color(1, 1f, 1), mapResourceData.amount / mapResource.resourceMax);
+            }
+        }
+
+        Vector2 rectPosition = new Vector2(tile.position.x - world.TileSize / 2, tile.position.y - world.TileSize / 2);
+        DrawRect(new Rect2(rectPosition, world.TileSize, world.TileSize),
+            color);
+
+        
     }
 
     private void DisplayMoistureNoise(Tile tile)
@@ -178,6 +255,40 @@ public class Map : Node2D
         DrawRect(new Rect2(rectPosition, world.TileSize, world.TileSize),
             color);
     }
+
+    private void DrawRivers()
+    {
+        for (int x = 0; x < world.Width; x++)
+        {
+            for (int y = 0; y < world.Height; y++)
+            {
+                Tile tile = world.tiles[x][y];
+
+                if (tile.hasWaterBasin)
+                {
+                    DrawCircle(tile.position, tile.waterBasinSize * waterBasinScale, new Color(0.2f, 0.2f, .6f));
+                }
+                else if (tile.hasRiver)
+                {
+                    RiverData river = world.rivers[$"{tile.position.ToString()}"];
+                    if (riverAlpha)
+                    {
+                        DrawLine(river.position, river.toPosition, new Color(0.2f, 0.2f, .6f, river.size * riverAlphaScale), river.size * riverWidthScale);
+                    }
+                    else
+                    {
+                        DrawLine(river.position, river.toPosition, new Color(0.2f, 0.2f, .6f, 1), river.size * riverWidthScale);
+                    }
+                }
+            }
+        }
+    }
+
+    public void DisplayMapResource(MapResource mapResource)
+    {
+        this.mapResource = mapResource;
+        Update();
+    }
 }
 
 public enum DisplayMode
@@ -188,5 +299,6 @@ public enum DisplayMode
     LatTemperature,
     CellMoisture,
     Moisture,
-    WalkingSpeed
+    WalkingSpeed,
+    Resource
 }

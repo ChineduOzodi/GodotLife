@@ -34,7 +34,7 @@ public class Rivers : Node2D
                 if (tile.hasWaterBasin)
                 {
                     DrawCircle(tile.position, tile.waterBasinSize * waterBasinScale, new Color(0.2f, 0.2f, .6f));
-                } else if (tile.hasFreshWater)
+                } else if (tile.hasRiver)
                 {
                     RiverData river = world.rivers[$"{tile.position.ToString()}"];
                     if (riverAlpha)

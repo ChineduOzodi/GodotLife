@@ -1,4 +1,5 @@
 using Godot;
+using Life.Scripts.Classes;
 using System;
 
 public class DisplayMenu : MenuButton
@@ -25,6 +26,12 @@ public class DisplayMenu : MenuButton
         GetPopup().AddItem(Moisture);
 
         GetPopup().Connect("id_pressed", this, "OnItemPressed");
+    }
+
+    public void AddToDisplayMenu(string itemName)
+    {
+        Console.WriteLine($"Adding to display menu: {itemName}");
+        GetPopup().AddItem(itemName);
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -59,6 +66,11 @@ public class DisplayMenu : MenuButton
                 break;
             case WalkingSpeed:
                 world.UpdateDisplayMode(DisplayMode.WalkingSpeed);
+                break;
+            default:
+                //should be a map resource
+                MapResource mapResource = world.GetMapResource(itemName);
+                world.DisplayMapResource(mapResource);
                 break;
         }
 
