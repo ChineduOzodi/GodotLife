@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/World.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Map.cs" type="Script" id=2]
@@ -8,8 +8,9 @@
 [ext_resource path="res://addons/carmel4a97.RTS_Camera2D/RTS-Camera2D.gd" type="Script" id=6]
 [ext_resource path="res://addons/carmel4a97.RTS_Camera2D/node_icon.png" type="Texture" id=7]
 [ext_resource path="res://Scripts/UI/Map/DisplayMenu.cs" type="Script" id=8]
-[ext_resource path="res://Scripts/Rivers.cs" type="Script" id=9]
-[ext_resource path="res://Scripts/MapResourceOverlay.cs" type="Script" id=10]
+[ext_resource path="res://Scripts/UI/Map/TileInfoLabel.cs" type="Script" id=9]
+[ext_resource path="res://Scripts/Rivers.cs" type="Script" id=10]
+[ext_resource path="res://Scripts/MapResourceOverlay.cs" type="Script" id=11]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -44,8 +45,17 @@ flat = false
 switch_on_hover = true
 script = ExtResource( 8 )
 
-[node name="Rivers" type="Node2D" parent="."]
+[node name="TileInfoLabel" type="RichTextLabel" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -30.0
+margin_right = 255.0
+text = "Hello World"
+scroll_active = false
 script = ExtResource( 9 )
 
-[node name="MapResourceOverlay" type="Node2D" parent="."]
+[node name="Rivers" type="Node2D" parent="."]
 script = ExtResource( 10 )
+
+[node name="MapResourceOverlay" type="Node2D" parent="."]
+script = ExtResource( 11 )

@@ -3,6 +3,7 @@ using Life.Scripts.Classes;
 using Life.Scripts.Pathfinding;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class World : Node2D
 {
@@ -11,12 +12,16 @@ public class World : Node2D
     public const float YearDuration = HourDuration * 24;
     public const float TileScale = 1; //in km
     public const float TileArea = TileScale * TileScale; //in km^2
+    public static World Instance;
+    
 
     public Tile[][] tiles;
     public List<City> cities = new List<City>();
     public List<Person> people = new List<Person>();
     public Dictionary<String, RiverData> rivers = new Dictionary<string, RiverData>();
     public List<MapResource> mapResources = new List<MapResource>();
+
+    private Tile hoveredTile = null;
     
     private double time = 0; //time in seconds
     private int xLimit;
@@ -40,9 +45,9 @@ public class World : Node2D
 
 
     //Map Generation Variables
-    private int tileSize = 32;
+    private int tileSize = 100;
     private int width = 300;
-    private int height = 300;
+    private int height = 200;
     private float waterLevel = 0.5f;
     private int cityCount = 30;
     private int peopleCount = 20;
@@ -72,6 +77,8 @@ public class World : Node2D
     private float seaFishProbability = 1f;
     private float seaFishScale = 100f;
 
+    
+
     private OpenSimplexNoise moistureNoise = new OpenSimplexNoise();
     private OpenSimplexNoise elevationNoise = new OpenSimplexNoise();
     private OpenSimplexNoise ironOreNoise = new OpenSimplexNoise();
@@ -94,10 +101,12 @@ public class World : Node2D
     public float NearestPersonDistanceSquared { get => nearestPersonDistanceSquared; }
     public float ElevChangeCost { get => elevChangeCost; }
     public DisplayMode MapDisplayMode { get => mapDisplayMode; }
+    public Tile HoveredTile { get => hoveredTile; set => hoveredTile = value; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        Instance = this;
         cityPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/City.tscn");
         personPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/Person.tscn");
         map = GetNode<Map>(new NodePath("Map"));
@@ -118,15 +127,26 @@ public class World : Node2D
     {
         time += (double) delta;
 
-        if (mapLastUpdate + mapUpdateInterval < time && (mapDisplayMode == DisplayMode.Normal || mapDisplayMode == DisplayMode.WalkingSpeed))
-        {
-            mapLastUpdate = time;
-            map.GenerateMap();
-        }
+        //if (mapLastUpdate + mapUpdateInterval < time && (mapDisplayMode == DisplayMode.Normal || mapDisplayMode == DisplayMode.WalkingSpeed))
+        //{
+        //    mapLastUpdate = time;
+        //    map.GenerateMap();
+        //}
         //else
         //{
         //    Console.WriteLine($"{mapLastUpdate + mapUpdateInterval} < {time}, delta: {(double)delta}");
         //}
+
+        // show hovered over Tile
+        Vector2 mousePosition = GetGlobalMousePosition();
+        Coord mouseTileCoord = new Coord( (int) ((mousePosition.x + tileSize * 0.5f) / tileSize - xOffset ), (int) ((mousePosition.y + tileSize * 0.5f) / tileSize - yOffset));
+        if (mouseTileCoord.x >= 0 && mouseTileCoord.y >= 0 && mouseTileCoord.x < width && mouseTileCoord.y < height)
+        {
+            hoveredTile = tiles[mouseTileCoord.x][mouseTileCoord.y];
+        } else
+        {
+            hoveredTile = null;
+        }
 
         if (nearestPerson != null)
         {
@@ -178,6 +198,7 @@ public class World : Node2D
             for (int y = 0; y < height; y++)
             {
                 Tile tile = new Tile();
+                tile.coord = new Coord(x, y);
                 float elevationPow = 2;
 
                 tile.name = $"${(x + xOffset) * tileSize},{(y + yOffset) * tileSize}";
@@ -354,12 +375,13 @@ public class World : Node2D
                 city.name = city.Name;
                 Vector2 pos = new Vector2((randomX + xOffset) * tileSize, (randomY + yOffset) * tileSize);
                 city.SetPosition(pos);
+                city.GenerateCity(this, tiles[randomX][randomY]);
                 tries = 0;
                 num--;
                 //Console.WriteLine($"Created {city.name}");
                 for (int i = 0; i < peopleCount; i++)
                 {
-                    GeneratePerson(pos);
+                    //GeneratePerson(pos);
                 }
             } else
             {
@@ -373,8 +395,14 @@ public class World : Node2D
     {
         Person person = (Person)personPrefab.Instance();
         person.SetPosition(position);
-        AddChild(person);
-        people.Add(person);
+        if (person == null)
+        {
+            Debug.WriteLine("person is null");
+        } else
+        {
+            AddChild(person);
+            people.Add(person);
+        }
     }
 
     public void GenerateRivers()
@@ -598,7 +626,7 @@ public class World : Node2D
     {
         Coord pos = new Coord(Mathf.RoundToInt(position.x / tileSize) * tileSize, Mathf.RoundToInt(position.y / tileSize) * tileSize);
         int x = pos.x / tileSize - xOffset;
-        int y = pos.y / tileSize - xOffset;
+        int y = pos.y / tileSize - yOffset;
 
         return tiles[x][y];
     }

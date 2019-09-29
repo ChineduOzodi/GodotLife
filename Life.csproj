@@ -54,7 +54,10 @@
     <Compile Include="Prefabs\Road\Road.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Camera2D.cs" />
+    <Compile Include="Scripts\Classes\Building.cs" />
     <Compile Include="Scripts\Classes\City.cs" />
+    <Compile Include="Scripts\Classes\PersonData.cs" />
+    <Compile Include="Scripts\Classes\Property.cs" />
     <Compile Include="Scripts\Classes\Resource.cs" />
     <Compile Include="Scripts\Classes\Tile.cs" />
     <Compile Include="Scripts\Map.cs" />
@@ -67,6 +70,7 @@
     <Compile Include="Scripts\Person.cs" />
     <Compile Include="Scripts\Rivers.cs" />
     <Compile Include="Scripts\UI\Map\DisplayMenu.cs" />
+    <Compile Include="Scripts\UI\Map\TileInfoLabel.cs" />
     <Compile Include="Scripts\World.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

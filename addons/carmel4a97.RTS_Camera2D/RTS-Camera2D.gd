@@ -45,8 +45,8 @@ export (int) var camera_margin = 50
 # It changes a camera zoom value in units... (?, but it works... it probably
 # multiplies camera size by 1+camera_zoom_speed)
 const camera_zoom_speed = Vector2(0.5, 0.5)
-const worldXLimit = 32 * 150
-const worldYLimit = 32 * 150
+const worldXLimit = 100 * 150
+const worldYLimit = 100 * 100
 
 # Vector of camera's movement / second.
 var camera_movement = Vector2()
