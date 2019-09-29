@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="_tile_8cs" kind="file">
+    <compoundname>Tile.cs</compoundname>
+    <innerclass refid="class_tile" prot="public">Tile</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="keyword">using</highlight><highlight class="normal"><sp/>Godot;</highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/>System;</highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4" refid="class_tile" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="class_tile" kindref="compound">Tile</ref></highlight></codeline>
+<codeline lineno="5"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="6" refid="class_tile_1ab6fac763af2fdb822d528caa8d528e89" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><ref refid="class_tile_1ab6fac763af2fdb822d528caa8d528e89" kindref="member">name</ref>;</highlight></codeline>
+<codeline lineno="7" refid="class_tile_1a42d31aa66e57a2342f297b61ffcd170b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1" kindref="member">TileType</ref><sp/><ref refid="class_tile_1a42d31aa66e57a2342f297b61ffcd170b" kindref="member">biome</ref>;</highlight></codeline>
+<codeline lineno="8" refid="class_tile_1a0e7bb304b54906b3cd4f2ec46cd7f189" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="class_tile_1a0e7bb304b54906b3cd4f2ec46cd7f189" kindref="member">height</ref>;</highlight></codeline>
+<codeline lineno="9" refid="class_tile_1ad25ccfc042e2436c038b155c0bdb52e8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="class_tile_1ad25ccfc042e2436c038b155c0bdb52e8" kindref="member">speedMod</ref>;</highlight></codeline>
+<codeline lineno="10"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="E:/mygitrepos/GodotLife/Scripts/Classes/Tile.cs"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_city" kind="class" prot="public">
+    <compoundname>City</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">Node</basecompoundref>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_city_1ab5511791f932d9fc103c326a68024069" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>override void</type>
+        <definition>override void City._Ready</definition>
+        <argsstring>()</argsstring>
+        <name>_Ready</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="E:/mygitrepos/GodotLife/Scripts/Classes/City.cs" line="11" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/Classes/City.cs" bodystart="11" bodyend="14"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="5">
+        <label>Node</label>
+      </node>
+      <node id="4">
+        <label>City</label>
+        <link refid="class_city"/>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="7">
+        <label>Node</label>
+      </node>
+      <node id="6">
+        <label>City</label>
+        <link refid="class_city"/>
+        <childnode refid="7" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="E:/mygitrepos/GodotLife/Scripts/Classes/City.cs" line="5" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/Classes/City.cs" bodystart="4" bodyend="21"/>
+    <listofallmembers>
+      <member refid="class_city_1ab5511791f932d9fc103c326a68024069" prot="public" virt="non-virtual"><scope>City</scope><name>_Ready</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
