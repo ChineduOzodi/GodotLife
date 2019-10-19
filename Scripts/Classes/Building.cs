@@ -13,7 +13,7 @@ namespace Life.Scripts.Classes
         public enum Type
         {
             Residential,
-            Business,
+            Commercial,
             Industrial
         }
     }

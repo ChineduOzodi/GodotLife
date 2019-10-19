@@ -1,5 +1,6 @@
 using Godot;
 using Life.Scripts.Classes;
+using RandomNameGen;
 using System;
 using System.Collections.Generic;
 
@@ -32,18 +33,127 @@ public class City : Node2D
 //      
 //  }
 
-    public void GenerateCity(World world, Tile tile)
+    public void GenerateCity(World world, Tile tile, int numFamilies)
     {
         this.world = world;
         tileCoords.Add(tile.coord);
         tile.GenerateProperties();
+        Random random = new Random(DateTime.Now.Second + world.Random.Randi());
+
+        //get river directions
+        if (World.Instance.rivers.ContainsKey(tile.position.ToString()))
+        {
+            RiverData river = World.Instance.rivers[tile.position.ToString()];
+            Vector2 toMovement = river.toPosition - river.position;
+            List<Vector2> fromMovements = new List<Vector2>();
+            for (int i = 0; i < river.fromPositions.Count; i++)
+            {
+                fromMovements.Add(river.fromPositions[i] - river.position);
+            }
+
+            for (int x = 0; x < Tile.subTileWidthHeight; x++)
+            {
+                for (int y = 0; y < Tile.subTileWidthHeight; y++)
+                {
+                    Property property = tile.properties[x][y];
+                    if (x == Tile.subTileWidthHeight / 2 && y == Tile.subTileWidthHeight / 2)
+                    {
+                        property.hasRiver = true;
+                    } else if (toMovement.x > 0 && toMovement.y == 0 && x >= Tile.subTileWidthHeight / 2 && y == Tile.subTileWidthHeight / 2 )
+                    {
+                        property.hasRiver = true;
+                    }
+                    else if (toMovement.x < 0 && toMovement.y == 0 && x <= Tile.subTileWidthHeight / 2 && y == Tile.subTileWidthHeight / 2)
+                    {
+                        property.hasRiver = true;
+                    }
+                    else if (toMovement.x == 0 && toMovement.y > 0 && x == Tile.subTileWidthHeight / 2 && y >= Tile.subTileWidthHeight / 2)
+                    {
+                        property.hasRiver = true;
+                    }
+                    else if (toMovement.x == 0 && toMovement.y < 0 && x == Tile.subTileWidthHeight / 2 && y <= Tile.subTileWidthHeight / 2)
+                    {
+                        property.hasRiver = true;
+                    }
+                    else if (toMovement.x > 0 && toMovement.y > 0 && x >= Tile.subTileWidthHeight / 2 && y >= Tile.subTileWidthHeight / 2 && Tile.subTileWidthHeight - y - 1 == x)
+                    {
+                        property.hasRiver = true;
+                    }
+                    else if (toMovement.x < 0 && toMovement.y < 0 && x <= Tile.subTileWidthHeight / 2 && y <= Tile.subTileWidthHeight / 2 && Tile.subTileWidthHeight - y - 1 == x)
+                    {
+                        property.hasRiver = true;
+                    }
+                    else if (toMovement.x > 0 && toMovement.y < 0 && x >= Tile.subTileWidthHeight / 2 && y <= Tile.subTileWidthHeight / 2 && Tile.subTileWidthHeight - x - 1 == y)
+                    {
+                        property.hasRiver = true;
+                    }
+                    else if (toMovement.x < 0 && toMovement.y > 0 && x <= Tile.subTileWidthHeight / 2 && y >= Tile.subTileWidthHeight / 2 && Tile.subTileWidthHeight - x - 1 == y)
+                    {
+                        property.hasRiver = true;
+                    }
+
+                    for (int r = 0; r < fromMovements.Count; r++)
+                    {
+                        Vector2 fromMovement = fromMovements[r];
+
+                        if (x == Tile.subTileWidthHeight / 2 && y == Tile.subTileWidthHeight / 2)
+                        {
+                            property.hasRiver = true;
+                        }
+                        else if (fromMovement.x > 0 && fromMovement.y == 0 && x >= Tile.subTileWidthHeight / 2 && y == Tile.subTileWidthHeight / 2)
+                        {
+                            property.hasRiver = true;
+                        }
+                        else if (fromMovement.x < 0 && fromMovement.y == 0 && x <= Tile.subTileWidthHeight / 2 && y == Tile.subTileWidthHeight / 2)
+                        {
+                            property.hasRiver = true;
+                        }
+                        else if (fromMovement.x == 0 && fromMovement.y > 0 && x == Tile.subTileWidthHeight / 2 && y >= Tile.subTileWidthHeight / 2)
+                        {
+                            property.hasRiver = true;
+                        }
+                        else if (fromMovement.x == 0 && fromMovement.y < 0 && x == Tile.subTileWidthHeight / 2 && y <= Tile.subTileWidthHeight / 2)
+                        {
+                            property.hasRiver = true;
+                        }
+                        else if (fromMovement.x > 0 && fromMovement.y > 0 && x >= Tile.subTileWidthHeight / 2 && y >= Tile.subTileWidthHeight / 2 && x == y)
+                        {
+                            property.hasRiver = true;
+                        }
+                        else if (fromMovement.x < 0 && fromMovement.y < 0 && x <= Tile.subTileWidthHeight / 2 && y <= Tile.subTileWidthHeight / 2 && x == y)
+                        {
+                            property.hasRiver = true;
+                        }
+                        else if (fromMovement.x > 0 && fromMovement.y < 0 && x >= Tile.subTileWidthHeight / 2 && y <= Tile.subTileWidthHeight / 2 && Tile.subTileWidthHeight - x - 1 == y)
+                        {
+                            property.hasRiver = true;
+                        }
+                        else if (fromMovement.x < 0 && fromMovement.y > 0 && x <= Tile.subTileWidthHeight / 2 && y >= Tile.subTileWidthHeight / 2 && Tile.subTileWidthHeight - x - 1 == y)
+                        {
+                            property.hasRiver = true;
+                        }
+
+                    }
+
+                    if (property.hasRiver)
+                    {
+                        tile.RemoveTrees(property.treeCount, x, y);
+                    }
+
+                }
+            }
+
+        }
 
         for (int x = 0; x < Tile.subTileWidthHeight; x++)
         {
             for (int y = 0; y < Tile.subTileWidthHeight; y++)
             {
                 Property property = tile.properties[x][y];
-                if (x == y || Tile.subTileWidthHeight - x - 1 == y || Tile.subTileWidthHeight - y - 1 == x || x == Tile.subTileWidthHeight / 2 || y == Tile.subTileWidthHeight / 2)
+                if (!property.hasRiver && (x == y || Tile.subTileWidthHeight - x - 1 == y || Tile.subTileWidthHeight - y - 1 == x || x == Tile.subTileWidthHeight / 2 || y == Tile.subTileWidthHeight / 2))
+                {
+                    property.hasRoad = true;
+                } else if (x == Tile.subTileWidthHeight / 2 || y == Tile.subTileWidthHeight / 2)
                 {
                     property.hasRoad = true;
                 }
@@ -51,7 +161,55 @@ public class City : Node2D
 
             }
         }
+
+        for (int i = 0; i < familyPerCity; i++)
+        {
+            GeneratePeople(world, tile, random);
+        }
         Update();
+    }
+
+    private void GeneratePeople(World world, Tile tile, Random random)
+    {
+        RandomName randomName = new RandomName(random);
+        PersonData person1 = new PersonData();
+        person1.personId = random.Next().ToString();
+        world.people.Add(person1);
+        if (world.Random.Randf() < 0.5f)
+        {
+            person1.gender = Gender.male;
+            person1.firstName = randomName.GenerateFirstName(Sex.Male);
+        } else
+        {
+            person1.gender = Gender.female;
+            person1.firstName = randomName.GenerateFirstName(Sex.Female);
+        }
+        person1.lastName = randomName.GenerateLastName();
+        //person1.birthDate
+
+        if (World.Instance.Random.Randf() > marriedPercent)
+        {
+            PersonData person2 = new PersonData();
+            person2.personId = random.Next().ToString();;
+            world.people.Add(person2);
+            if (person1.gender == Gender.female)
+            {
+                person2.gender = Gender.male;
+                person1.firstName = randomName.GenerateFirstName(Sex.Male);
+            } else
+            {
+                person2.gender = Gender.female;
+                person1.firstName = randomName.GenerateFirstName(Sex.Female);
+            }
+            person1.spouseId = person2.personId;
+            person2.spouseId = person1.spouseId;
+
+            person2.lastName = person1.lastName;
+            //Console.WriteLine(person2.firstName + " " + person2.lastName);
+
+        }
+
+        //Console.WriteLine(person1.firstName + " " + person1.lastName);
     }
 
     public override void _Draw()
@@ -62,6 +220,11 @@ public class City : Node2D
         Tile tile = world.tiles[tileCoords[0].x][tileCoords[0].y];
         //Color roadColor = new Color(213f / 255, 204f / 255, 127f / 255);
         Color roadColor = Color.ColorN("brown");
+        Color waterColor = Color.ColorN("blue");
+        Color industryColor = Color.ColorN("yellow");
+        Color commercialColor = Color.ColorN("purple");
+        Color residentialColor = Color.ColorN("green");
+        Color errorColor = Color.ColorN("pink");
         Console.WriteLine($"squareWidthHeight: {squareWidthHeight}");
 
         for (int x = 0; x < Tile.subTileWidthHeight; x++)
@@ -69,15 +232,36 @@ public class City : Node2D
             for (int y = 0; y < Tile.subTileWidthHeight; y++)
             {
                 Property property = tile.properties[x][y];
+                float propertyX = property.x * squareWidthHeight - Tile.subTileWidthHeight / 2f * squareWidthHeight;
+                float propertyY = property.y * squareWidthHeight - Tile.subTileWidthHeight / 2f * squareWidthHeight;
+                 Vector2 rectPosition = new Vector2(propertyX, propertyY);
                 if (property.hasRoad)
                 {
-                    float propertyX = property.x * squareWidthHeight - Tile.subTileWidthHeight / 2f * squareWidthHeight;
-                    float propertyY = property.y * squareWidthHeight - Tile.subTileWidthHeight / 2f * squareWidthHeight;
-                    Console.WriteLine($"road property: {propertyX}, {propertyY}");
-                    Vector2 rectPosition = new Vector2(propertyX, propertyY);
-                    DrawRect(new Rect2(rectPosition, squareWidthHeight, squareWidthHeight),
-                        roadColor);
+                    
+                    //Console.WriteLine($"road property: {propertyX}, {propertyY}");
+                   
+                    DrawRect(new Rect2(rectPosition, squareWidthHeight, squareWidthHeight), roadColor);
                     //Console.WriteLine($"drew road");
+                } else if (property.hasRiver || property.hasBasin)
+                {
+                    DrawRect(new Rect2(rectPosition, squareWidthHeight, squareWidthHeight), waterColor);
+                } else if (property.hasStructure)
+                {
+                    switch (property.building.type)
+                    {
+                        case Building.Type.Residential:
+                            DrawRect(new Rect2(rectPosition, squareWidthHeight, squareWidthHeight), residentialColor);
+                            break;
+                        case Building.Type.Commercial:
+                            DrawRect(new Rect2(rectPosition, squareWidthHeight, squareWidthHeight), commercialColor);
+                            break;
+                        case Building.Type.Industrial:
+                            DrawRect(new Rect2(rectPosition, squareWidthHeight, squareWidthHeight), industryColor);
+                            break;
+                        default:
+                            DrawRect(new Rect2(rectPosition, squareWidthHeight, squareWidthHeight), errorColor);
+                            break;
+                    }
                 }
             }
         }

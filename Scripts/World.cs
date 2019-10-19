@@ -13,11 +13,12 @@ public class World : Node2D
     public const float TileScale = 1; //in km
     public const float TileArea = TileScale * TileScale; //in km^2
     public static World Instance;
+    public int idGen = 1;
     
 
     public Tile[][] tiles;
     public List<City> cities = new List<City>();
-    public List<Person> people = new List<Person>();
+    public List<PersonData> people = new List<PersonData>();
     public Dictionary<String, RiverData> rivers = new Dictionary<string, RiverData>();
     public List<MapResource> mapResources = new List<MapResource>();
 
@@ -57,7 +58,7 @@ public class World : Node2D
     private float riverMocementMoistureCarryScale = .9f;
     private float riverCrossingDifficultyScale = 11f;
     private float riverCrossingDifficultyMax = 0.01f;
-    private float elevationNoiseScale = .5f;
+    private float elevationNoiseScale = 1f;
     private float moistureNoiseScale = .75f;
     private float goldOreNoiseScale = 20f;
     private float goldOreNoiseMin = .6f;
@@ -68,7 +69,7 @@ public class World : Node2D
     private float rockElevationDiffScale = 1f;
     private float rockMinElevationDiff = 0.005f;
     private float treeMinMoisture = 0.2f;
-    private float treeMoistureScale = 300;
+    private float treeMoistureScale = 1000;
     private float dearProbability = 0.5f;
     private float dearScale = 50;
     private float freshWaterFishProbability = 1f;
@@ -152,25 +153,25 @@ public class World : Node2D
         {
             nearestPersonDistanceSquared = nearestPerson.GetGlobalPosition().DistanceSquaredTo(GetGlobalMousePosition());
         }
-        for (int i = 0; i < people.Count; i++)
-        {
-            Person person = people[i];
-            if (nearestPerson == null)
-            {
-                nearestPerson = person;
-                nearestPersonDistanceSquared = nearestPerson.GetGlobalPosition().DistanceSquaredTo(GetGlobalMousePosition());
-            }
+        //for (int i = 0; i < people.Count; i++)
+        //{
+        //    Person person = people[i];
+        //    if (nearestPerson == null)
+        //    {
+        //        nearestPerson = person;
+        //        nearestPersonDistanceSquared = nearestPerson.GetGlobalPosition().DistanceSquaredTo(GetGlobalMousePosition());
+        //    }
 
-            float distSquared = person.GetGlobalPosition().DistanceSquaredTo(GetGlobalMousePosition());
+        //    float distSquared = person.GetGlobalPosition().DistanceSquaredTo(GetGlobalMousePosition());
 
-            if (distSquared < nearestPersonDistanceSquared)
-            {
-                nearestPerson = person;
-                nearestPersonDistanceSquared = nearestPerson.GetGlobalPosition().DistanceSquaredTo(GetGlobalMousePosition());
-                drawingLine.Update();
+        //    if (distSquared < nearestPersonDistanceSquared)
+        //    {
+        //        nearestPerson = person;
+        //        nearestPersonDistanceSquared = nearestPerson.GetGlobalPosition().DistanceSquaredTo(GetGlobalMousePosition());
+        //        drawingLine.Update();
                 
-            }
-        }
+        //    }
+        //}
        
         if (Input.IsActionPressed("R"))
         {
@@ -375,7 +376,7 @@ public class World : Node2D
                 city.name = city.Name;
                 Vector2 pos = new Vector2((randomX + xOffset) * tileSize, (randomY + yOffset) * tileSize);
                 city.SetPosition(pos);
-                city.GenerateCity(this, tiles[randomX][randomY]);
+                city.GenerateCity(this, tiles[randomX][randomY], 5);
                 tries = 0;
                 num--;
                 //Console.WriteLine($"Created {city.name}");
@@ -401,7 +402,7 @@ public class World : Node2D
         } else
         {
             AddChild(person);
-            people.Add(person);
+            //people.Add(person);
         }
     }
 
@@ -810,7 +811,7 @@ public class World : Node2D
         if (tile.biome != TileType.Water && tile.biome != TileType.SeaIce)
         {
             
-            float maxAmount = Mathf.Floor((tile.moisture - treeMinMoisture) * treeMoistureScale);
+            float maxAmount = Mathf.Floor((tile.moisture - treeMinMoisture) * treeMoistureScale)  * Tile.subTileWidthHeight * Tile.subTileWidthHeight;
             if (maxAmount > 0)
             {
                 // add tree resources
@@ -822,33 +823,32 @@ public class World : Node2D
                 }
             }
 
-            //create fruit tree
-            maxAmount *= 0.2f;
-            if (maxAmount > 0)
-            {
-                //create fruit tree
-                MapResource resource = GetMapResource(MapResourceName.FruitTree);
+            ////create fruit tree
+            //maxAmount *= 0.2f;
+            //if (maxAmount > 0)
+            //{
+            //    //create fruit tree
+            //    MapResource resource = GetMapResource(MapResourceName.FruitTree);
 
-                tile.resources.Add(MapResourceData.CreateRooted(resource, Mathf.Floor(maxAmount * 0.2f)));
-                if (maxAmount > resource.resourceMax)
-                {
-                    resource.resourceMax = maxAmount;
-                }
-            }
+            //    tile.resources.Add(MapResourceData.CreateRooted(resource, Mathf.Floor(maxAmount * 0.2f) * Tile.subTileWidthHeight * Tile.subTileWidthHeight));
+            //    if (maxAmount > resource.resourceMax)
+            //    {
+            //        resource.resourceMax = maxAmount;
+            //    }
+            //}
 
-            //create berry bushes
-            maxAmount *= 2f;
-            if (maxAmount > 0)
-            {
-                //create fruit tree
-                MapResource resource = GetMapResource(MapResourceName.BerryBush);
+            ////create berry bushes
+            //maxAmount *= 2f;
+            //if (maxAmount > 0)
+            //{
+            //    MapResource resource = GetMapResource(MapResourceName.BerryBush);
 
-                tile.resources.Add(MapResourceData.CreateRooted(resource, Mathf.Floor(maxAmount * 0.2f)));
-                if (maxAmount > resource.resourceMax)
-                {
-                    resource.resourceMax = maxAmount;
-                }
-            }
+            //    tile.resources.Add(MapResourceData.CreateRooted(resource, Mathf.Floor(maxAmount * 0.2f) * Tile.subTileWidthHeight * Tile.subTileWidthHeight));
+            //    if (maxAmount > resource.resourceMax)
+            //    {
+            //        resource.resourceMax = maxAmount;
+            //    }
+            //}
         }
 
     }

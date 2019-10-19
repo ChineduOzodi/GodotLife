@@ -52,6 +52,7 @@ public class Tile
         int treesPerProperty = 0;
         if (resources.Exists(x => x.resource == MapResourceName.Tree))
         {
+            Debug.WriteLine("Total trees count: " + resources.Find(x => x.resource == MapResourceName.Tree).amount + "/" + (Tile.subTileWidthHeight * Tile.subTileWidthHeight));
             treesPerProperty = (int)resources.Find(x => x.resource == MapResourceName.Tree).amount / (Tile.subTileWidthHeight * Tile.subTileWidthHeight);
             resources.Find(x => x.resource == MapResourceName.Tree).amount = treesPerProperty * Tile.subTileWidthHeight * Tile.subTileWidthHeight;
             Debug.WriteLine("trees per property " + treesPerProperty);
@@ -76,13 +77,19 @@ public class Tile
 
     public void RemoveTrees(int count, int x, int y)
     {
+        //for (int i = 0; i < resources.Count; i++)
+        //{
+        //    MapResourceData mapResourceData = resources[i];
+        //    Debug.WriteLine(mapResourceData.resource);
+        //}
         if (resources.Exists(r => r.resource == MapResourceName.Tree))
         {
+            //Debug.WriteLine("Found Tree resource");
             properties[x][y].treeCount -= count;
             resources.Find(r => r.resource == MapResourceName.Tree).amount -= count;
         } else
         {
-            Debug.WriteLine("could not find tree resource");
+            //Debug.WriteLine("could not find tree resource");
         }
         
     }
