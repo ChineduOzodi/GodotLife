@@ -63,6 +63,11 @@
     <Compile Include="Scripts\Classes\Property.cs" />
     <Compile Include="Scripts\Classes\Resource.cs" />
     <Compile Include="Scripts\Classes\Tile.cs" />
+    <Compile Include="Scripts\HelpersMathd.cs" />
+    <Compile Include="Scripts\Helpers\GDate.cs" />
+    <Compile Include="Scripts\Helpers\Mathd.cs" />
+    <Compile Include="Scripts\Helpers\Vector2d.cs" />
+    <Compile Include="Scripts\Helpers\Vector3d.cs" />
     <Compile Include="Scripts\Map.cs" />
     <Compile Include="Scripts\MapResourceOverlay.cs" />
     <Compile Include="Scripts\Pathfinding\Pathfinding.cs" />

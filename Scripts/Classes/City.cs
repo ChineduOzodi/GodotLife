@@ -8,9 +8,9 @@ public class City : Node2D
 {
     //city generation
     private World world;
-    private const float familyPerCity = 50;
-    private const float minAdultAge = 18;
-    private const float maxAdultAge = 60;
+    private const int familyPerCity = 50;
+    private const int minAdultAge = 18;
+    private const int maxAdultAge = 60;
     private const float marriedPercent = .5f;
     private const float marriedAgeDifferenceMax = 10;
     private const float childrenAgeSubtractionMin = 16;
@@ -185,7 +185,8 @@ public class City : Node2D
             person1.firstName = randomName.GenerateFirstName(Sex.Female);
         }
         person1.lastName = randomName.GenerateLastName();
-        //person1.birthDate
+        int age = random.Next(minAdultAge, maxAdultAge);
+        person1.birthDate = world.Time - GDate.Year * age;
 
         if (World.Instance.Random.Randf() > marriedPercent)
         {
@@ -195,21 +196,23 @@ public class City : Node2D
             if (person1.gender == Gender.female)
             {
                 person2.gender = Gender.male;
-                person1.firstName = randomName.GenerateFirstName(Sex.Male);
+                person2.firstName = randomName.GenerateFirstName(Sex.Male);
             } else
             {
                 person2.gender = Gender.female;
-                person1.firstName = randomName.GenerateFirstName(Sex.Female);
+                person2.firstName = randomName.GenerateFirstName(Sex.Female);
             }
             person1.spouseId = person2.personId;
             person2.spouseId = person1.spouseId;
-
+            int age2 = random.Next(age - 10, age + 10);
+            age2 = Mathf.Clamp(age2, minAdultAge, maxAdultAge);
+            person1.birthDate = world.Time - GDate.Year * age2;
             person2.lastName = person1.lastName;
-            //Console.WriteLine(person2.firstName + " " + person2.lastName);
+            Console.WriteLine(person2.ToString());
 
         }
 
-        //Console.WriteLine(person1.firstName + " " + person1.lastName);
+        Console.WriteLine(person1.ToString());
     }
 
     public override void _Draw()

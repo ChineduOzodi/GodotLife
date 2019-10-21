@@ -23,8 +23,8 @@ public class World : Node2D
     public List<MapResource> mapResources = new List<MapResource>();
 
     private Tile hoveredTile = null;
-    
-    private double time = 0; //time in seconds
+
+    private GDate gDate = new GDate(2000, 0, 0, 0, 0, 0);
     private int xLimit;
     private int yLimit;
     private float elevChangeCost = 500;
@@ -97,12 +97,13 @@ public class World : Node2D
     public int YLimit { get => yLimit; }
     public int XLimit { get => xLimit; }
     public RandomNumberGenerator Random { get => random; }
-    public double Time { get => time; }
+    public double Time { get => gDate.time; }
     public Person NearestPerson { get => nearestPerson; }
     public float NearestPersonDistanceSquared { get => nearestPersonDistanceSquared; }
     public float ElevChangeCost { get => elevChangeCost; }
     public DisplayMode MapDisplayMode { get => mapDisplayMode; }
     public Tile HoveredTile { get => hoveredTile; set => hoveredTile = value; }
+    public GDate GDate { get => gDate; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -126,7 +127,7 @@ public class World : Node2D
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
-        time += (double) delta;
+        gDate.AddTime((double) delta);
 
         //if (mapLastUpdate + mapUpdateInterval < time && (mapDisplayMode == DisplayMode.Normal || mapDisplayMode == DisplayMode.WalkingSpeed))
         //{
