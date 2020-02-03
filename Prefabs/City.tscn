@@ -12,3 +12,41 @@ modulate = Color( 1, 1, 1, 0.498039 )
 scale = Vector2( 0.5, 0.5 )
 z_index = 1
 texture = ExtResource( 2 )
+
+[node name="cityNameMedium" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -215.515
+margin_top = -148.004
+margin_right = -0.514648
+margin_bottom = -102.004
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 2, 2 )
+text = "City Name Here"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cityNameLarge" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -1072.7
+margin_top = -297.125
+margin_right = -857.704
+margin_bottom = -251.125
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 10, 10 )
+text = "City Name Here"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

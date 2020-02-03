@@ -5,7 +5,7 @@
 [ext_resource path="res://Scripts/Pathfinding/Pathfinding.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Pathfinding/PathRequestManager.cs" type="Script" id=4]
 [ext_resource path="res://DrawingLine.cs" type="Script" id=5]
-[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/RTS-Camera2D.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/Camera2D.cs" type="Script" id=6]
 [ext_resource path="res://addons/carmel4a97.RTS_Camera2D/node_icon.png" type="Texture" id=7]
 [ext_resource path="res://Scripts/UI/Map/DisplayMenu.cs" type="Script" id=8]
 [ext_resource path="res://Scripts/UI/Map/TileInfoLabel.cs" type="Script" id=9]
@@ -44,6 +44,9 @@ text = "Display"
 flat = false
 switch_on_hover = true
 script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TileInfoLabel" type="RichTextLabel" parent="CanvasLayer"]
 anchor_top = 1.0

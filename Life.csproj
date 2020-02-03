@@ -11,6 +11,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>.mono\temp\obj</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)</IntermediateOutputPath>
+    <ApiConfiguration Condition=" '$(Configuration)' != 'Release' ">Debug</ApiConfiguration>
+    <ApiConfiguration Condition=" '$(Configuration)' == 'Release' ">Release</ApiConfiguration>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,12 +41,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GodotSharp">
-      <HintPath>$(ProjectDir)\.mono\assemblies\GodotSharp.dll</HintPath>
       <Private>False</Private>
+      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharp.dll</HintPath>
     </Reference>
     <Reference Include="GodotSharpEditor" Condition=" '$(Configuration)' == 'Tools' ">
-      <HintPath>$(ProjectDir)\.mono\assemblies\GodotSharpEditor.dll</HintPath>
       <Private>False</Private>
+      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharpEditor.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -63,9 +65,19 @@
     <Compile Include="Scripts\Classes\Property.cs" />
     <Compile Include="Scripts\Classes\Resource.cs" />
     <Compile Include="Scripts\Classes\Tile.cs" />
+    <Compile Include="Scripts\Goap\FSM.cs" />
+    <Compile Include="Scripts\Goap\FSMState.cs" />
+    <Compile Include="Scripts\Goap\GoapAction.cs" />
+    <Compile Include="Scripts\Goap\GoapAgent.cs" />
+    <Compile Include="Scripts\Goap\GoapPlanner.cs" />
+    <Compile Include="Scripts\Goap\IGoap.cs" />
     <Compile Include="Scripts\HelpersMathd.cs" />
     <Compile Include="Scripts\Helpers\GDate.cs" />
     <Compile Include="Scripts\Helpers\Mathd.cs" />
+    <Compile Include="Scripts\Helpers\Money.cs" />
+    <Compile Include="Scripts\Helpers\NameGen.cs" />
+    <Compile Include="Scripts\Helpers\NameStrings.cs" />
+    <Compile Include="Scripts\Helpers\Units.cs" />
     <Compile Include="Scripts\Helpers\Vector2d.cs" />
     <Compile Include="Scripts\Helpers\Vector3d.cs" />
     <Compile Include="Scripts\Map.cs" />
