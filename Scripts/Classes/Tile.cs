@@ -9,6 +9,7 @@ public class Tile
 	public const int subTileWidthHeight = 19;
 
 	public string name;
+	public string cityId;
 
 	public TileType biome;
 	public float elev;

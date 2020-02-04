@@ -23,6 +23,7 @@ public class City : Node2D
 	private Label cityNameLarge;
 
 	public string name;
+	public string id;
 	public List<Coord> tileCoords = new List<Coord>();
 
 	// Called when the node enters the scene tree for the first time.
@@ -58,7 +59,12 @@ public class City : Node2D
 		this.world = world;
 		tileCoords.Add(tile.coord);
 		tile.GenerateProperties();
-		Random random = new Random((int) (DateTime.Now.ToBinary() + world.Random.Randi()));
+
+		name = world.cityNames.Generate("US");
+		id = world.Random.Randi().ToString();
+		tile.cityId = id;
+		cityNameMedium.Text = name;
+		cityNameLarge.Text = name;
 
 		//get river directions
 		if (World.Instance.rivers.ContainsKey(tile.position.ToString()))
@@ -184,35 +190,34 @@ public class City : Node2D
 
 		for (int i = 0; i < familyPerCity; i++)
 		{
-			GeneratePeople(world, tile, random);
+			GeneratePeople(world, tile);
 		}
 		Update();
 	}
 
-	private void GeneratePeople(World world, Tile tile, Random random)
+	private void GeneratePeople(World world, Tile tile)
 	{
-		RandomName randomName = new RandomName(random);
 		PersonData person1 = new PersonData();
-		person1.personId = random.Next().ToString();
+		person1.personId = world.Random.Randi().ToString();
 		world.people.Add(person1);
 		if (world.Random.Randf() < 0.5f)
 		{
 			person1.gender = Gender.male;
-			person1.firstName = randomName.GenerateFirstName(Sex.Male);
+			person1.firstName = world.peopleNames.GenerateFirstName(Sex.Male);
 		} else
 		{
 			person1.gender = Gender.female;
-			person1.firstName = randomName.GenerateFirstName(Sex.Female);
+			person1.firstName = world.peopleNames.GenerateFirstName(Sex.Female);
 		}
-		person1.lastName = randomName.GenerateLastName();
-		int age = random.Next(minAdultAge, maxAdultAge);
+		person1.lastName = world.peopleNames.GenerateLastName();
+		int age = world.Random.RandiRange(minAdultAge, maxAdultAge);
 		person1.birthDate = world.Time - GDate.Year * age;
 
 		Building building = new Building();
 		building.name = $"{person1.lastName} Household";
 		building.capacity = 5;
 		building.type = Building.Type.Residential;
-		building.buildingId = "building" + random.Next().ToString();
+		building.buildingId = "building" + world.Random.Randi().ToString();
 		tile.AddBuilding(building);
 
 		person1.houseId = building.buildingId;
@@ -221,21 +226,21 @@ public class City : Node2D
 		if (World.Instance.Random.Randf() > marriedPercent)
 		{
 			PersonData person2 = new PersonData();
-			person2.personId = random.Next().ToString();;
+			person2.personId = world.Random.Randi().ToString();;
 			world.people.Add(person2);
 			if (person1.gender == Gender.female)
 			{
 				person2.gender = Gender.male;
-				person2.firstName = randomName.GenerateFirstName(Sex.Male);
+				person2.firstName = world.peopleNames.GenerateFirstName(Sex.Male);
 			} else
 			{
 				person2.gender = Gender.female;
-				person2.firstName = randomName.GenerateFirstName(Sex.Female);
+				person2.firstName = world.peopleNames.GenerateFirstName(Sex.Female);
 			}
 			person1.spouseId = person2.personId;
 			person2.spouseId = person1.spouseId;
 			person2.houseId = building.buildingId;
-			int age2 = random.Next(age - 10, age + 10);
+			int age2 = world.Random.RandiRange(age - 10, age + 10);
 			age2 = Mathf.Clamp(age2, minAdultAge, maxAdultAge);
 			person1.birthDate = world.Time - GDate.Year * age2;
 			person2.lastName = person1.lastName;
@@ -248,7 +253,7 @@ public class City : Node2D
 	public override void _Draw()
 	{
 		base._Draw();
-		Console.WriteLine("Updating City Map");
+		//Console.WriteLine("Updating City Map");
 		float squareWidthHeight = (float) world.TileSize / Tile.subTileWidthHeight;
 		Tile tile = world.tiles[tileCoords[0].x][tileCoords[0].y];
 		//Color roadColor = new Color(213f / 255, 204f / 255, 127f / 255);
@@ -258,7 +263,7 @@ public class City : Node2D
 		Color commercialColor = Color.ColorN("purple");
 		Color residentialColor = Color.ColorN("green");
 		Color errorColor = Color.ColorN("pink");
-		Console.WriteLine($"squareWidthHeight: {squareWidthHeight}");
+		//Console.WriteLine($"squareWidthHeight: {squareWidthHeight}");
 
 		for (int x = 0; x < Tile.subTileWidthHeight; x++)
 		{

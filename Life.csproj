@@ -59,6 +59,7 @@
     <Compile Include="Prefabs\Road\Road.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Camera2D.cs" />
+    <Compile Include="Scripts\CityNames.cs" />
     <Compile Include="Scripts\Classes\Building.cs" />
     <Compile Include="Scripts\Classes\City.cs" />
     <Compile Include="Scripts\Classes\PersonData.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Scripts\Helpers\Vector3d.cs" />
     <Compile Include="Scripts\Map.cs" />
     <Compile Include="Scripts\MapResourceOverlay.cs" />
+    <Compile Include="Scripts\MouseClicks.cs" />
     <Compile Include="Scripts\Pathfinding\Pathfinding.cs" />
     <Compile Include="Scripts\Pathfinding\PathRequestManager.cs" />
     <Compile Include="Scripts\Pathfinding\Coord.cs" />

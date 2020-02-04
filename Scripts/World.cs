@@ -4,6 +4,7 @@ using Life.Scripts.Pathfinding;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using RandomNameGen;
 
 public class World : Node2D
 {
@@ -14,6 +15,9 @@ public class World : Node2D
 	public const float TileArea = TileScale * TileScale; //in km^2
 	public static World Instance;
 	public int idGen = 1;
+
+	public RandomName peopleNames;
+	public CityNames cityNames;
 	
 
 	public Tile[][] tiles;
@@ -188,11 +192,11 @@ public class World : Node2D
 		yOffset = -height / 2;
 		xLimit = (width + xOffset) * tileSize;
 		yLimit = (height + yOffset) * tileSize;
-		moistureNoise.SetSeed(DateTime.Now.TimeOfDay.Milliseconds + "moisture".GetHashCode());
-		goldOreNoise.SetSeed(DateTime.Now.TimeOfDay.Milliseconds + "goldOre".GetHashCode());
-		ironOreNoise.SetSeed(DateTime.Now.TimeOfDay.Milliseconds + "ironOre".GetHashCode());
-		elevationNoise.SetSeed(DateTime.Now.TimeOfDay.Milliseconds + "elevation".GetHashCode());
-		elevationNoise.SetOctaves(20);
+		moistureNoise.Seed = (DateTime.Now.TimeOfDay.Milliseconds + "moisture".GetHashCode());
+		goldOreNoise.Seed =(DateTime.Now.TimeOfDay.Milliseconds + "goldOre".GetHashCode());
+		ironOreNoise.Seed =(DateTime.Now.TimeOfDay.Milliseconds + "ironOre".GetHashCode());
+		elevationNoise.Seed =(DateTime.Now.TimeOfDay.Milliseconds + "elevation".GetHashCode());
+		elevationNoise.Octaves = 20;
 		random.Seed = (ulong) DateTime.Now.ToBinary();
 		int negativeMoistureCount = 0;
 		tiles = new Tile[width][];
@@ -363,6 +367,10 @@ public class World : Node2D
 	private void GenerateCities(int num)
 	{
 		DeleteCities();
+		Random r = new Random((int) (DateTime.Now.ToBinary() + Random.Randi()));
+		peopleNames = new RandomName(r);
+		cityNames = new CityNames(r);
+
 		cities = new List<City>();
 		int tries = 0;
 		while(tries < 1000 && num > 0)
@@ -378,7 +386,7 @@ public class World : Node2D
 				city.Name = "city" + num;
 				city.name = city.Name;
 				Vector2 pos = new Vector2((randomX + xOffset) * tileSize, (randomY + yOffset) * tileSize);
-				city.SetPosition(pos);
+				city.Position = (pos);
 				city.GenerateCity(this, tiles[randomX][randomY], 5);
 				tries = 0;
 				num--;
@@ -398,7 +406,7 @@ public class World : Node2D
 	private void GeneratePerson(Vector2 position)
 	{
 		Person person = (Person)personPrefab.Instance();
-		person.SetPosition(position);
+		person.Position = (position);
 		if (person == null)
 		{
 			Debug.WriteLine("person is null");
