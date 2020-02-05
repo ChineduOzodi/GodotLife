@@ -25,6 +25,8 @@ public class City : Node2D
 	public string name;
 	public string id;
 	public List<Coord> tileCoords = new List<Coord>();
+	public List<String> peopleIds = new List<string>();
+	public int Population { get => peopleIds.Count; }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -200,6 +202,8 @@ public class City : Node2D
 		PersonData person1 = new PersonData();
 		person1.personId = world.Random.Randi().ToString();
 		world.people.Add(person1);
+		peopleIds.Add(person1.personId);
+
 		if (world.Random.Randf() < 0.5f)
 		{
 			person1.gender = Gender.male;
@@ -226,8 +230,10 @@ public class City : Node2D
 		if (World.Instance.Random.Randf() > marriedPercent)
 		{
 			PersonData person2 = new PersonData();
-			person2.personId = world.Random.Randi().ToString();;
+			person2.personId = world.Random.Randi().ToString();
 			world.people.Add(person2);
+			peopleIds.Add(person2.personId);
+
 			if (person1.gender == Gender.female)
 			{
 				person2.gender = Gender.male;

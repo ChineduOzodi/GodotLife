@@ -55,13 +55,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DrawingLine.cs" />
+    <Compile Include="Interface\WindowPanel\WindowPanel.cs" />
+    <Compile Include="Interface\WindowPanel\WindowTitle.cs" />
     <Compile Include="Prefabs\ActionText.cs" />
+    <Compile Include="Prefabs\CityDialog.cs" />
     <Compile Include="Prefabs\Road\Road.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Camera2D.cs" />
     <Compile Include="Scripts\CityNames.cs" />
     <Compile Include="Scripts\Classes\Building.cs" />
     <Compile Include="Scripts\Classes\City.cs" />
+    <Compile Include="Scripts\Classes\ComercialBuilding.cs" />
+    <Compile Include="Scripts\Classes\Item.cs" />
     <Compile Include="Scripts\Classes\PersonData.cs" />
     <Compile Include="Scripts\Classes\Property.cs" />
     <Compile Include="Scripts\Classes\Resource.cs" />

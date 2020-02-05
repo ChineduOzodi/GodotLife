@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Interface/WindowPanel/WindowTitle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Interface/WindowPanel/WindowPanel.cs" type="Script" id=2]
 
 [sub_resource type="Theme" id=1]
 
@@ -53,6 +54,7 @@ margin_left = 252.0
 margin_top = 78.0
 margin_right = 596.0
 margin_bottom = 324.0
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
