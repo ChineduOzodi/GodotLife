@@ -8,6 +8,7 @@ namespace Life.Scripts.Classes
     {
         public string name;
         public string buildingId;
+        public string ownerId;
         public Type type;
         public int capacity;
 

@@ -28,6 +28,7 @@ public class CityDialog : Control
 		if (this.city != null)
 		{
 			itemList.SetItemText(0, $"Population: {city.Population}");
+			itemList.SetItemText(1, $"Buildings: {city.buildings.Count}");
 		}
 	}
 
@@ -62,6 +63,7 @@ public class CityDialog : Control
 		title.Text = city.name;
 		this.city = city;
 		itemList.AddItem($"Population: {city.Population}");
+		itemList.AddItem($"Buildings: {city.buildings.Count}");
 	}
 
 

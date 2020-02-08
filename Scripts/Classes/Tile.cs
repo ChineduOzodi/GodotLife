@@ -18,6 +18,7 @@ public class Tile
 	public float cellMoisture;
 	public float moisture;
 	public Coord coord;
+	public City City { get => World.Instance.cities.Find(x => x.id == cityId); }
 
 	// movement
 	public float maxSpeedMod;
@@ -35,6 +36,7 @@ public class Tile
 	public double lastUpdated;
 
 	public Property[][] properties;
+	public List<String> buildings = new List<string>();
 	// resources
 	public List<MapResourceData> resources = new List<MapResourceData>();
 	public bool HasMapResource(string resource)
@@ -45,6 +47,7 @@ public class Tile
 	{
 		return resources.Find(x => x.resource == resource);
 	}
+
 
 	public void GenerateProperties()
 	{
@@ -95,6 +98,10 @@ public class Tile
 		
 	}
 
+	/// <summary>
+	/// Adds building to tile and city the tile is part of
+	/// </summary>
+	/// <param name="building">Building to add</param>
 	public void AddBuilding(Building building)
 	{
 		if (this.properties == null)
@@ -109,8 +116,16 @@ public class Tile
 				Property property = this.properties[x][y];
 				if (!property.hasStructure)
 				{
-					property.building = building;
+					property.buildingId = building.buildingId;
 					RemoveTrees(property.treeCount, x, y);
+					buildings.Add(building.buildingId);
+					if (cityId != null)
+					{
+						City.buildings.Add(building.buildingId);
+					} else
+					{
+						throw new Exception("Tile does not have associated city to add building to");
+					}
 					return;
 				}
 			}

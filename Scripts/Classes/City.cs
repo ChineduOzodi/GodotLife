@@ -18,15 +18,18 @@ public class City : Node2D
 	private const float grandparentAgeAdditionMin = 16;
 	private const float grandparentAgeMax = 100;
 	private const float percentChanceOwnBusiness = 0.1f;
+	private const float bussinessOwnerPercent = 0.2f;
 
 	private Label cityNameMedium;
 	private Label cityNameLarge;
 
 	public string name;
 	public string id;
+	public List<String> buildings = new List<string>();
 	public List<Coord> tileCoords = new List<Coord>();
 	public List<String> peopleIds = new List<string>();
 	public int Population { get => peopleIds.Count; }
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -200,9 +203,9 @@ public class City : Node2D
 	private void GeneratePeople(World world, Tile tile)
 	{
 		PersonData person1 = new PersonData();
-		person1.personId = world.Random.Randi().ToString();
-		world.people.Add(person1);
-		peopleIds.Add(person1.personId);
+		person1.id = world.Random.Randi().ToString();
+		world.people[person1.id] = person1;
+		peopleIds.Add(person1.id);
 
 		if (world.Random.Randf() < 0.5f)
 		{
@@ -226,13 +229,23 @@ public class City : Node2D
 
 		person1.houseId = building.buildingId;
 
+		if (world.Random.Randf() < bussinessOwnerPercent)
+		{
+			CommercialBuilding commercialBuilding = CommercialBuilding.CreateWoodShop(person1, tile);
+			//Console.WriteLine($"Available Space: {commercialBuilding.AvaliableWork()}");
+			commercialBuilding.AddWorker(person1);
+		} else
+		{
+			//TODO: find work
+		}
+
 
 		if (World.Instance.Random.Randf() > marriedPercent)
 		{
 			PersonData person2 = new PersonData();
-			person2.personId = world.Random.Randi().ToString();
-			world.people.Add(person2);
-			peopleIds.Add(person2.personId);
+			person2.id = world.Random.Randi().ToString();
+			world.people[person2.id] = person2;
+			peopleIds.Add(person2.id);
 
 			if (person1.gender == Gender.female)
 			{
@@ -243,7 +256,7 @@ public class City : Node2D
 				person2.gender = Gender.female;
 				person2.firstName = world.peopleNames.GenerateFirstName(Sex.Female);
 			}
-			person1.spouseId = person2.personId;
+			person1.spouseId = person2.id;
 			person2.spouseId = person1.spouseId;
 			person2.houseId = building.buildingId;
 			int age2 = world.Random.RandiRange(age - 10, age + 10);
@@ -251,6 +264,13 @@ public class City : Node2D
 			person1.birthDate = world.Time - GDate.Year * age2;
 			person2.lastName = person1.lastName;
 			Console.WriteLine(person2.ToString());
+
+			if (person1.businessOwnerIds.Count > 0 && person1.GetComercialBuilding(0).AvaliableWork() > 0)
+			{
+				CommercialBuilding commercialBuilding = person1.GetComercialBuilding(0);
+				//Console.WriteLine($"Available Space: {commercialBuilding.AvaliableWork()}");
+				commercialBuilding.AddWorker(person2);
+			}
 		}
 
 		Console.WriteLine(person1.ToString());
@@ -291,7 +311,7 @@ public class City : Node2D
 					DrawRect(new Rect2(rectPosition, squareWidthHeight, squareWidthHeight), waterColor);
 				} else if (property.hasStructure)
 				{
-					switch (property.building.type)
+					switch (property.Building.type)
 					{
 						case Building.Type.Residential:
 							DrawRect(new Rect2(rectPosition, squareWidthHeight, squareWidthHeight), residentialColor);

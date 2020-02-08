@@ -1,4 +1,5 @@
 using Godot;
+using Life.Scripts.Classes;
 using Life.Scripts.Pathfinding;
 using System;
 
@@ -18,7 +19,7 @@ public class Person : Node2D
 	{
 		world = GetParent<World>();
 		pathRequestManager = GetNode<PathRequestManager>(new NodePath("../PathRequestManager"));
-		personData.currentTile = world.GetTile(GetPosition());
+		personData.currentTile = world.GetTile(Position);
 		personData.elev = personData.currentTile.elev;
 	}
 	
@@ -49,10 +50,10 @@ public class Person : Node2D
 						float distanceDelta = tile.speedMod * personData.walkSpeed * delta * world.TileSize * tile.riverCrossingSpeed;
 						if ((personData.currentTile.biome == TileType.Water || personData.currentTile.biome == TileType.SeaIce) && (tile.biome == TileType.SeaIce || tile.biome == TileType.Water))
 						{
-							distanceIndex = GetPosition().DistanceTo(path[personData.pathIndex].worldPosition);
+							distanceIndex = Position.DistanceTo(path[personData.pathIndex].worldPosition);
 						} else
 						{
-							distanceIndex = GetPosition().DistanceTo(path[personData.pathIndex].worldPosition)  + (Mathf.Abs(personData.elev - tile.elev) * world.ElevChangeCost * world.TileSize);
+							distanceIndex = Position.DistanceTo(path[personData.pathIndex].worldPosition)  + (Mathf.Abs(personData.elev - tile.elev) * world.ElevChangeCost * world.TileSize);
 							//Console.WriteLine($"distanceIndex: {distanceIndex}");
 							//Console.WriteLine($"deltatIndex: {distanceDelta}");
 						}
@@ -61,12 +62,12 @@ public class Person : Node2D
 
 							if ((personData.currentTile.biome == TileType.Water || personData.currentTile.biome == TileType.SeaIce) && (tile.biome == TileType.SeaIce || tile.biome == TileType.Water))
 							{
-								SetPosition(GetPosition().LinearInterpolate(path[personData.pathIndex].worldPosition, (distanceDelta) / distanceIndex));
+								Position =(Position.LinearInterpolate(path[personData.pathIndex].worldPosition, (distanceDelta) / distanceIndex));
 							}
 							else
 							{
 								float interpolation = (distanceDelta) / distanceIndex;
-								SetPosition(GetPosition().LinearInterpolate(path[personData.pathIndex].worldPosition, interpolation));
+								Position =(Position.LinearInterpolate(path[personData.pathIndex].worldPosition, interpolation));
 								personData.elev += (tile.elev - personData.elev) * interpolation;
 								//Console.WriteLine($"Interpolation: {(distanceDelta) / distanceIndex}");
 							}
@@ -83,7 +84,7 @@ public class Person : Node2D
 							}
 							personData.pathIndex++;
 							if (personData.pathIndex >= path.Length) {
-								SetPosition(tile.position);
+								Position =(tile.position);
 								remainingDelta = 0;
 								break;
 							}
@@ -123,17 +124,17 @@ public class Person : Node2D
 		for (int i = 0; i < world.cities.Count; i++)
 		{
 			City selectedCity = world.cities[i];
-			if (selectedCity.GetPosition().Equals(personData.currentTile.position))
+			if (selectedCity.Position.Equals(personData.currentTile.position))
 			{
 				distances[i] = 0;
 			} else
 			{
-				if (personData.currentTile.distanceToLoctaion.ContainsKey($"{selectedCity.GetPosition().ToString()}"))
+				if (personData.currentTile.distanceToLoctaion.ContainsKey($"{selectedCity.Position.ToString()}"))
 				{
-					distances[i] = 10000/ Mathf.Pow(personData.currentTile.distanceToLoctaion[$"{selectedCity.GetPosition().ToString()}"],2);
+					distances[i] = 10000/ Mathf.Pow(personData.currentTile.distanceToLoctaion[$"{selectedCity.Position.ToString()}"],2);
 				} else
 				{
-					distances[i] = 10000/ Mathf.Pow(selectedCity.GetPosition().DistanceTo(GetPosition()),2);
+					distances[i] = 10000/ Mathf.Pow(selectedCity.Position.DistanceTo(Position),2);
 				}
 				
 			}
@@ -147,7 +148,7 @@ public class Person : Node2D
 			//Console.WriteLine($"City probability: {distances[i] / totalDistance}")
 			if (distances[i] >= randomNum)
 			{
-				return world.cities[i].GetPosition();
+				return world.cities[i].Position;
 
 			} else
 			{
@@ -159,7 +160,7 @@ public class Person : Node2D
 
 		City city = world.cities[world.Random.RandiRange(0, world.cities.Count - 1)];
 		int tries = 0;
-		while (city.GetPosition().Equals(personData.currentTile.position))
+		while (city.Position.Equals(personData.currentTile.position))
 		{
 			tries++;
 			city = world.cities[world.Random.RandiRange(0, world.cities.Count - 1)];
@@ -170,7 +171,7 @@ public class Person : Node2D
 			}
 		}
 		
-		return city.GetPosition();
+		return city.Position;
 	}
 
 	public void FoundPath(PathNode[] path, bool success)

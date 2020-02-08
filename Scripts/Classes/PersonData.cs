@@ -2,49 +2,69 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class PersonData
+namespace Life.Scripts.Classes
 {
-    public string firstName;
-    public string personId;
-    public string lastName;
-    public Gender gender;
-    public double birthDate; //
-    public bool alive = true;
-    public long deathDate;
-    public Vector2 position;
-    public float elev;
-    public PersonAction personAction = PersonAction.Idle;
-    public int pathIndex = 0;
-    public float walkSpeed = 2;
-    public Tile currentTile;
-    public string spouseId;
-    public string motherId;
-    public string fatherId;
-    public List<string> childrenIds;
-    public string houseId;
-    public string workPlaceId;
-
-    public bool hasSpouse { get { return spouseId != null; } }
-
-    public double GetAge(double Time)
+    public class PersonData
     {
-        return new GDate(Time - birthDate).time;
-    }
+        public string firstName;
+        public string id;
+        public string lastName;
+        public Gender gender;
+        public double birthDate; //
+        public bool alive = true;
+        public long deathDate;
+        public Vector2 position;
+        public float elev;
+        public PersonAction personAction = PersonAction.Idle;
+        public int pathIndex = 0;
+        public float walkSpeed = 2;
+        public Tile currentTile;
+        public string spouseId;
+        public string motherId;
+        public string fatherId;
+        public List<string> childrenIds;
+        public string houseId;
+        public string workPlaceId;
+        public List<string> businessOwnerIds = new List<string>();
 
-    public override string ToString()
-    {
-        if (World.Instance != null)
+        public bool hasSpouse { get { return spouseId != null; } }
+
+        public double GetAge(double Time)
         {
-            return $"[ firstName: {firstName}, lastName: {lastName}, age: {(GetAge(World.Instance.Time)/GDate.Year).ToString("0.0")}, hasSpouse: {hasSpouse.ToString()} ]";
-        } else
+            return new GDate(Time - birthDate).time;
+        }
+
+        public override string ToString()
         {
-            return $"[ firstName: {firstName}, lastName: {lastName}, birthDate: {birthDate}, hasSpouse: {hasSpouse.ToString()} ]";
+            if (World.Instance != null)
+            {
+                return $"[ firstName: {firstName}, lastName: {lastName}, age: {(GetAge(World.Instance.Time) / GDate.Year).ToString("0.0")}, hasSpouse: {hasSpouse.ToString()} ]";
+            }
+            else
+            {
+                return $"[ firstName: {firstName}, lastName: {lastName}, birthDate: {birthDate}, hasSpouse: {hasSpouse.ToString()} ]";
+            }
+        }
+
+        public CommercialBuilding GetComercialBuilding(int index)
+        {
+            if (businessOwnerIds.Count > 0)
+            {
+                string id = businessOwnerIds[index];
+                return World.Instance.buildings[id] as CommercialBuilding;
+
+            } else
+            {
+                throw new Exception("Person does not own commercial buildings");
+            }
         }
     }
+
+    public enum Gender
+    {
+        male,
+        female
+    }
 }
 
-public enum Gender
-{
-    male,
-    female
-}
+

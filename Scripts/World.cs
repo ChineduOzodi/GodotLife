@@ -3,6 +3,7 @@ using Life.Scripts.Classes;
 using Life.Scripts.Pathfinding;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Diagnostics;
 using RandomNameGen;
 
@@ -22,9 +23,10 @@ public class World : Node2D
 
 	public Tile[][] tiles;
 	public List<City> cities = new List<City>();
-	public List<PersonData> people = new List<PersonData>();
+	public Dictionary<String,PersonData> people = new Dictionary<string, PersonData>();
 	public Dictionary<String, RiverData> rivers = new Dictionary<string, RiverData>();
 	public List<MapResource> mapResources = new List<MapResource>();
+	public Dictionary<String, Building> buildings = new Dictionary<string, Building>();
 
 	private Tile hoveredTile = null;
 
