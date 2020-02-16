@@ -5,18 +5,11 @@ using System.Collections.Generic;
 public class MouseClicks : Node
 {
 	public static MouseClicks Instance;
-	public List<CityDialog> dialogs;
-	CanvasLayer canvas;
-
-	private PackedScene dialogPrefab;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		Instance = this;
-		dialogPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/cityDialog.tscn");
-		dialogs = new List<CityDialog>();
-		canvas = GetNode<CanvasLayer>("../CanvasLayer");
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -46,24 +39,10 @@ public class MouseClicks : Node
 				{
 					City city = World.Instance.cities.Find(x => x.id == tile.cityId);
 
-					CityDialog cityDialog = null;
-					
-					for(int i =0; i < dialogs.Count; i++)
-					{
-						CityDialog dialog = dialogs[i];
-						if (!dialog.Visible)
-						{
-							cityDialog = dialog;
-							break;
-						}
-					}
-					if (cityDialog == null)
-					{
-						cityDialog = (CityDialog)dialogPrefab.Instance();
-						canvas.AddChild(cityDialog);
-						dialogs.Add(cityDialog);
-					}
-					cityDialog.ShowCity(city);
+					if (DialogManager.Instance != null )
+                    {
+                        DialogManager.Instance.CreateCityDialog(city);
+                    }
 				}
 			}
 		}

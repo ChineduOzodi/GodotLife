@@ -1,13 +1,15 @@
 using Godot;
+using Life.Scripts.Classes;
 using System;
+using System.Collections.Generic;
 
-public class CityDialog : Control
+public class PeopleDialog : Control
 {
 	// Declare member variables here. Examples:
 	// private int a = 2;
 	// private string b = "text";
 	public WindowPanel windowPanel;
-	public ItemList itemList;
+	public VBoxContainer container;
 	private Label title;
 	private City city;
 
@@ -16,21 +18,14 @@ public class CityDialog : Control
 	{
 		windowPanel = GetNode<WindowPanel>("WindowPanel");
 		title = windowPanel.title;
-		itemList = GetNode<ItemList>("WindowPanel/ItemList");
+		container = GetNode<VBoxContainer>("WindowPanel/ScrollContainer/VBoxContainer");
 		windowPanel.Connect("closeButtonPressed", this, nameof(_on_CloseButton_pressed));
-		windowPanel.Connect("dragPositionSignal", this,nameof(_on_DragPosition_Signal));
-		itemList.Items = new Godot.Collections.Array();
-		itemList.Connect("item_selected", this, nameof(onItemSelected));
+		windowPanel.Connect("dragPositionSignal", this, nameof(_on_DragPosition_Signal));
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
-		if (this.city != null)
-		{
-			itemList.SetItemText(0, $"Population: {city.Population}");
-			itemList.SetItemText(1, $"Buildings: {city.buildings.Count}");
-		}
 	}
 
 	public override void _Input(InputEvent @event)
@@ -40,20 +35,14 @@ public class CityDialog : Control
 			InputEventMouseButton e = @event as InputEventMouseButton;
 			if (e.Pressed)
 			{
-				Raise();
+				Godot.Collections.Array parentChildren = GetParent().GetChildren();
+				if ( GetIndex() + 1 != parentChildren.Count)
+				{
+					Raise(); 
+				}
 			}
 
 		}
-	}
-
-	public void onItemSelected ( int index)
-	{
-		itemList.Unselect(index);
-		if (index == 0 && DialogManager.Instance != null)
-		{
-			DialogManager.Instance.CreatePeopleDialog(city);
-		}
-
 	}
 
 	private void _on_CloseButton_pressed()
@@ -67,14 +56,23 @@ public class CityDialog : Control
 		RectGlobalPosition += dragPosition;
 	}
 
-	public void ShowCity(City city)
+	public void ShowPeople(City city)
 	{
 		Show();
-		itemList.Items = new Godot.Collections.Array();
 		title.Text = city.name;
 		this.city = city;
-		itemList.AddItem($"Population: {city.Population}");
-		itemList.AddItem($"Buildings: {city.buildings.Count}");
+		List<PersonData> people = city.GetPeople();
+		people.Sort((a, b) => a.firstName.CompareTo(b.firstName));
+		foreach( PersonData person in people)
+		{
+			CustomButton button = (CustomButton) DialogManager.Instance.buttonPrefab.Instance();
+
+			button.SetPressedAction((object sender, EventArgs e) => { });
+			button.Name = $"{person.firstName} {person.lastName}";
+			button.Text = $"{person.firstName} {person.lastName}";
+			container.AddChild(button);
+
+		}
 	}
 
 

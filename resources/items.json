@@ -1,223 +1,43 @@
-{
-    "items": [
-        {
-            "name": "Plank",
-            "categories": ["Industry", "Logging"],
-            "materials": [
-                {
-                    "name": "Log",
-                    "amount": 1
-                }
-            ],
-            "amount":5,
-            "duration": 2,
-            "factory": "Logging Factory",
-            "workerCapacity": 10
-        },
-        {
-            "name": "Log",
-            "categories": ["Industry", "Logging"],
-            "materials": [
-                {
-                    "name": "Tree",
-                    "amount": 1
-                }
-            ],
-            "amount":5,
-            "duration": 4,
-            "factory": "Logging Factory"
-        },
-        {
-            "name": "Log",
-            "categories": ["Industry", "Logging"],
-            "materials": [
-                {
-                    "name": "Tree",
-                    "amount": 1
-                }
-            ],
-            "amount":4,
-            "duration": 8,
-            "factory": "Logging Shed"
-        },
-        {
-            "name": "Logging Shed",
-            "categories": ["Industry", "Building"],
-            "materials": [
-                {
-                    "name": "Log",
-                    "amount": 20
-                }
-            ],
-            "amount":1,
-            "duration": 32,
-            "workerCapacity": 4
-        },
-        {
-            "name": "Logging Factory",
-            "categories": ["Industry", "Building"],
-            "materials": [
-                {
-                    "name": "Log",
-                    "amount": 100
-                }
-            ],
-            "amount":1,
-            "duration": 1,
-            "workerCapacity": 15
-        },
-        {
-            "name": "Stone",
-            "categories": ["Industry"],
-            "materials": [
-                {
-                    "name": "Rock",
-                    "amount": 1
-                }
-            ],
-            "amount":1,
-            "duration": 1,
-            "factory": "Querry"
-        },
-        {
-            "name": "Querry",
-            "categories": ["Industry", "Building"],
-            "materials": [
-                {
-                    "name": "Stone",
-                    "amount": 100
-                }
-            ],
-            "amount":1,
-            "duration": 56,
-            "workerCapacity": 15
-        },
-        {
-            "name": "Small Residential House",
-            "categories": ["Residential", "Building"],
-            "materials": [
-                {
-                    "name": "Plank",
-                    "amount": 50
-                }
-            ],
-            "amount":1,
-            "duration": 56,
-            "capacity": 4
-        },
-        {
-            "name": "Residential House",
-            "categories": ["Residential", "Building"],
-            "materials": [
-                {
-                    "name": "Plank",
-                    "amount": 75
-                },
-                {
-                    "name": "Stone",
-                    "amount": 25
-                }
-            ],
-            "amount":1,
-            "duration": 56,
-            "capacity": 10
-        },
-        {
-            "name": "Store",
-            "categories": ["Business", "Building"],
-            "materials": [
-                {
-                    "name": "Plank",
-                    "amount": 25
-                },
-                {
-                    "name": "Stone",
-                    "amount": 75
-                }
-            ],
-            "amount":1,
-            "duration": 56,
-            "workerCapacity": 5
-        },
-        {
-            "name": "Bread",
-            "categories": ["Agriculture","Food"],
-            "materials": [
-                {
-                    "name": "Grain",
-                    "amount": 2
-                }
-            ],
-            "amount":1,
-            "duration": 1,
-            "factory": "Bakery"
-        },
-        {
-            "name": "Grain",
-            "categories": ["Agriculture"],
-            "materials": [
-                {
-                    "name": "Wheat",
-                    "amount": 1
-                }
-            ],
-            "amount":5,
-            "duration": 2,
-            "factory": "Thresher"
-        },
-        {
-            "name": "Wheat",
-            "categories": ["Agriculture", "Farming"],
-            "amount":50,
-            "duration": 100,
-            "factory": "Wheat Farm"
-        },
-        {
-            "name": "Bakery",
-            "categories": ["Agriculture", "Building"],
-            "materials": [
-                {
-                    "name": "Planks",
-                    "amount": 50
-                }
-            ],
-            "amount":1,
-            "duration": 56,
-            "workerCapacity": 5
-        },
-        {
-            "name": "Thresher",
-            "categories": ["Agriculture", "Building"],
-            "materials": [
-                {
-                    "name": "Planks",
-                    "amount": 50
-                },
-                {
-                    "name": "Stone",
-                    "amount": 25
-                }
-            ],
-            "amount":1,
-            "duration": 56,
-            "workerCapacity": 10
-        },
-        {
-            "name": "Wheat Farm",
-            "categories": ["Agriculture", "Farming", "Building"],
-            "materials": [
-                {
-                    "name": "Planks",
-                    "amount": 100
-                },
-                {
-                    "name": "Stone",
-                    "amount": 50
-                }
-            ],
-            "amount":1,
-            "duration": 56,
-            "workerCapacity": 30
-        }
-    ]
-}
+[
+    {
+        "name": "Plank",
+        "categories": [
+            "Industry",
+            "Wood Working"
+        ]
+    },
+    {
+        "name": "Log",
+        "categories": [
+            "Industry",
+            "Wood Working"
+        ]
+    },
+    {
+        "name": "Stone",
+        "categories": [
+            "Industry",
+            "Stone Working"
+        ]
+    },
+    {
+        "name": "Bread",
+        "categories": [
+            "Agriculture",
+            "Food"
+        ]
+    },
+    {
+        "name": "Grain",
+        "categories": [
+            "Agriculture"
+        ]
+    },
+    {
+        "name": "Wheat",
+        "categories": [
+            "Agriculture",
+            "Farming"
+        ]
+    }
+]

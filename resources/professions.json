@@ -1,0 +1,22 @@
+[
+    {
+        "name":"Logger",
+        "active": true
+    },
+    {
+        "name": "Stone Mining",
+        "active": true
+    },
+    {
+        "name": "Carpenter",
+        "active": false
+    },
+    {
+        "name":"Store",
+        "active": false
+    },
+    {
+        "name":"Baker",
+        "active": false
+    }
+]

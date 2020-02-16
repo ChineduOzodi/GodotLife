@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Diagnostics;
 using RandomNameGen;
+using System.IO;
+using Newtonsoft.Json;
 
 public class World : Node2D
 {
@@ -27,6 +29,10 @@ public class World : Node2D
 	public Dictionary<String, RiverData> rivers = new Dictionary<string, RiverData>();
 	public List<MapResource> mapResources = new List<MapResource>();
 	public Dictionary<String, Building> buildings = new Dictionary<string, Building>();
+	public BuildingConstructionPlan[] buildingConstructionPlans;
+	public ItemIdentification[] itemIdentifications;
+	public Professions[] professions;
+
 
 	private Tile hoveredTile = null;
 
@@ -124,6 +130,8 @@ public class World : Node2D
 		drawingLine = GetNode<DrawingLine>(new NodePath("DrawingLine"));
 		mapResourceOverlay = GetNode<MapResourceOverlay>(new NodePath("MapResourceOverlay"));
 		camera = GetNode<Camera2D>("RTS-Camera2D");
+
+		LoadGameResources();
 		CreateMapResources();
 		GenerateWorld(width, height);
 	}
@@ -186,6 +194,31 @@ public class World : Node2D
 		{
 			GenerateWorld(width, height);
 		}
+	}
+
+	public void LoadGameResources()
+	{
+		JsonSerializer serializer = new JsonSerializer();
+
+		using (StreamReader reader = new StreamReader("resources/buildings.json"))
+		using (JsonReader jreader = new JsonTextReader(reader))
+		{
+			buildingConstructionPlans = serializer.Deserialize<BuildingConstructionPlan[]>(jreader);
+		}
+
+		using (StreamReader reader = new StreamReader("resources/items.json"))
+		using (JsonReader jreader = new JsonTextReader(reader))
+		{
+			itemIdentifications = serializer.Deserialize<ItemIdentification[]>(jreader);
+		}
+
+		using (StreamReader reader = new StreamReader("resources/professions.json"))
+		using (JsonReader jreader = new JsonTextReader(reader))
+		{
+			professions = serializer.Deserialize<Professions[]>(jreader);
+		}
+
+		//Console.WriteLine($"Building constructions found: {buildingConstructionPlans.Length}");
 	}
 
 	public void GenerateWorld(int width, int height)

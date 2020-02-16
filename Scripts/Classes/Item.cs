@@ -9,6 +9,12 @@ namespace Life.Scripts.Classes
         public float amount;
     }
 
+    public class ItemIdentification
+    {
+        public String name;
+        public String[] categories;
+    }
+
     public class ItemName
     {
         public const string Rock = "Rock";

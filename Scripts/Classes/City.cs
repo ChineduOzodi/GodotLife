@@ -29,6 +29,7 @@ public class City : Node2D
 	public List<Coord> tileCoords = new List<Coord>();
 	public List<String> peopleIds = new List<string>();
 	public int Population { get => peopleIds.Count; }
+	
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -329,6 +330,17 @@ public class City : Node2D
 				}
 			}
 		}
+	}
+
+	public List<PersonData> GetPeople()
+	{
+		List<PersonData> people = new List<PersonData>();
+		foreach (String personId in peopleIds)
+		{
+			people.Add(World.Instance.people[personId]);
+		}
+
+		return people;
 	}
 }
 

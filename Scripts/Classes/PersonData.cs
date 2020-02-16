@@ -24,6 +24,7 @@ namespace Life.Scripts.Classes
         public string fatherId;
         public List<string> childrenIds;
         public string houseId;
+        public string professionType;
         public string workPlaceId;
         public List<string> businessOwnerIds = new List<string>();
 
@@ -60,10 +61,22 @@ namespace Life.Scripts.Classes
         }
     }
 
+    public class Professions
+    {
+        public string name;
+        public bool active;
+    }
+
     public enum Gender
     {
         male,
         female
+    }
+
+    public enum ProfessionType
+    {
+        manager,
+        employee
     }
 }
 

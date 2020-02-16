@@ -1,0 +1,291 @@
+[
+    {
+        "name": "Logging Shed",
+        "categories": [
+            "Industry",
+            "Wood Working",
+            "Building",
+            "Logger"
+        ],
+        "construction": {
+            "duration": 24,
+            "materials": [
+                {
+                    "name": "Log",
+                    "amount": 20
+                }
+            ]
+        },
+        "production": [
+            {
+                "name": "Log",
+                "materials": [
+                    {
+                        "name": "Tree",
+                        "natural":"true",
+                        "amount": 1
+                    }
+                ],
+                "amount": 4,
+                "duration": 8
+            }
+        ],
+        "workerCapacity": 4
+    },
+    {
+        "name": "Logging Factory",
+        "categories": [
+            "Industry",
+            "Wood Working",
+            "Building",
+            "Logger"
+        ],
+        "construction": {
+            "duration": 150,
+            "materials": [
+                {
+                    "name": "Log",
+                    "amount": 100
+                }
+            ]
+        },
+        "production": [
+            {
+                "name": "Log",
+                "materials": [
+                    {
+                        "name": "Tree",
+                        "natural":"true",
+                        "amount": 1
+                    }
+                ],
+                "amount": 5,
+                "duration": 4
+            }
+        ],
+        "workerCapacity": 15
+    },
+    {
+        "name": "Log Cutting Factory",
+        "categories": [
+            "Industry",
+            "Wood Working",
+            "Building",
+            "Carpenter"
+        ],
+        "construction": {
+            "duration": 150,
+            "materials": [
+                {
+                    "name": "Stone",
+                    "amount": 100
+                }
+            ]
+        },
+        "production": [
+            {
+                "name": "Plank",
+                "materials": [
+                    {
+                        "name": "Log",
+                        "amount": 1
+                    }
+                ],
+                "amount": 5,
+                "duration": 2
+            }
+        ],
+        "workerCapacity": 15
+    },
+    {
+        "name": "Quarry",
+        "categories": [
+            "Industry",
+            "Stone Working",
+            "Building",
+            "Stone Mining"
+        ],
+        "construction": {
+            "duration": 150,
+            "materials": [
+                {
+                    "name": "Log",
+                    "amount": 10
+                }
+            ]
+        },
+        "production": [
+            {
+                "name": "Stone",
+                "materials": [
+                    {
+                        "name": "Rock",
+                        "natural":"true",
+                        "amount": 1
+                    }
+                ],
+                "amount": 1,
+                "duration": 1
+            }
+        ],
+        "workerCapacity": 15
+    },
+    {
+        "name": "Small Residential House",
+        "categories": [
+            "Residential",
+            "Building"
+        ],
+        "construction": {
+            "duration": 56,
+            "materials": [
+                {
+                    "name": "Plank",
+                    "amount": 50
+                }
+            ]
+        },
+        "capacity": 4
+    },
+    {
+        "name": "Residential House",
+        "categories": [
+            "Residential",
+            "Building"
+        ],
+        "construction": {
+            "duration": 100,
+            "materials": [
+                {
+                    "name": "Plank",
+                    "amount": 75
+                },
+                {
+                    "name": "Stone",
+                    "amount": 25
+                }
+            ]
+        },
+        "capacity": 10
+    },
+    {
+        "name": "Store",
+        "categories": [
+            "Business",
+            "Building",
+            "Store"
+        ],
+        "construction": {
+            "duration": 75,
+            "materials": [
+                {
+                    "name": "Plank",
+                    "amount": 25
+                },
+                {
+                    "name": "Stone",
+                    "amount": 75
+                }
+            ]
+        },
+        "workerCapacity": 5
+    },
+    {
+        "name": "Bakery",
+        "categories": [
+            "Agriculture",
+            "Building",
+            "Baker"
+        ],
+        "construction": {
+            "duration": 56,
+            "materials": [
+                {
+                    "name": "Plank",
+                    "amount": 50
+                }
+            ]
+        },
+        "production": [
+            {
+                "name": "Bread",
+                "materials": [
+                    {
+                        "name": "Grain",
+                        "amount": 2
+                    }
+                ],
+                "amount": 1,
+                "duration": 1
+            }
+        ],
+        "workerCapacity": 5
+    },
+    {
+        "name": "Thresher",
+        "categories": [
+            "Agriculture",
+            "Building"
+        ],
+        "construction": {
+            "duration": 70,
+            "materials": [
+                {
+                    "name": "Plank",
+                    "amount": 50
+                },
+                {
+                    "name": "Stone",
+                    "amount": 25
+                }
+            ]
+        },
+        "production": [
+            {
+                "name": "Grain",
+                "materials": [
+                    {
+                        "name": "Wheat",
+                        "amount": 1
+                    }
+                ],
+                "amount": 5,
+                "duration": 2
+            }
+        ],
+        "workerCapacity": 10
+    },
+    {
+        "name": "Wheat Farm",
+        "categories": [
+            "Agriculture",
+            "Farming",
+            "Building"
+        ],
+        "construction": {
+            "duration": 130,
+            "materials": [
+                {
+                    "name": "Log",
+                    "amount": 50
+                },
+                {
+                    "name": "Plank",
+                    "amount": 75
+                },
+                {
+                    "name": "Stone",
+                    "amount": 50
+                }
+            ]
+        },
+        "production": [
+            {
+                "name": "Wheat",
+                "amount": 50,
+                "duration": 100
+            }
+        ],
+        "workerCapacity": 30
+    }
+]
