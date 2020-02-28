@@ -1,4 +1,5 @@
 using Godot;
+using Life.Scripts.Classes;
 using System;
 using System.Collections.Generic;
 
@@ -9,10 +10,12 @@ public class DialogManager : Node
 
     private PackedScene cityDialogPrefab;
     private PackedScene peopleDialogPrefab;
+    private PackedScene personDialogPrefab;
     public PackedScene buttonPrefab;
 
     public List<CityDialog> cityDialogs = new List<CityDialog>();
     public List<PeopleDialog> peopleDialogs = new List<PeopleDialog>();
+    public List<PersonDialog> personDialogs = new List<PersonDialog>();
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -22,6 +25,7 @@ public class DialogManager : Node
 
         cityDialogPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/CityDialog.tscn");
         peopleDialogPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/PeopleDialog.tscn");
+        personDialogPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/PersonDialog.tscn");
         buttonPrefab = ResourceLoader.Load<PackedScene>("res://Prefabs/Button.tscn");
     }
 
@@ -73,5 +77,27 @@ public class DialogManager : Node
             peopleDialogs.Add(dialog);
         }
         dialog.ShowPeople(city);
+    }
+
+    public void CreatePersonDialog(PersonData person)
+    {
+        PersonDialog dialog = null;
+
+        for (int i = 0; i < personDialogs.Count; i++)
+        {
+            PersonDialog pDialog = personDialogs[i];
+            if (!pDialog.Visible)
+            {
+                dialog = pDialog;
+                break;
+            }
+        }
+        if (dialog == null)
+        {
+            dialog = (PersonDialog)personDialogPrefab.Instance();
+            canvas.AddChild(dialog);
+            personDialogs.Add(dialog);
+        }
+        dialog.ShowPerson(person);
     }
 }

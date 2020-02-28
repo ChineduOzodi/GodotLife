@@ -29,6 +29,7 @@ namespace Life.Scripts.Classes
         public List<string> businessOwnerIds = new List<string>();
 
         public bool hasSpouse { get { return spouseId != null; } }
+        public string name { get { return $"{firstName} {lastName}"; } }
 
         public double GetAge(double Time)
         {

@@ -67,7 +67,7 @@ public class PeopleDialog : Control
 		{
 			CustomButton button = (CustomButton) DialogManager.Instance.buttonPrefab.Instance();
 
-			button.SetPressedAction((object sender, EventArgs e) => { });
+			button.SetPressedAction((object sender, EventArgs e) => { DialogManager.Instance.CreatePersonDialog(person); });
 			button.Name = $"{person.firstName} {person.lastName}";
 			button.Text = $"{person.firstName} {person.lastName}";
 			container.AddChild(button);

@@ -61,6 +61,7 @@
     <Compile Include="Prefabs\CityDialog.cs" />
     <Compile Include="Prefabs\CustomButton.cs" />
     <Compile Include="Prefabs\PeopleDialog.cs" />
+    <Compile Include="Prefabs\PersonDialog.cs" />
     <Compile Include="Prefabs\Road\Road.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Camera2D.cs" />

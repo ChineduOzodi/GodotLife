@@ -227,6 +227,7 @@ public class City : Node2D
 		building.type = Building.Type.Residential;
 		building.buildingId = "building" + world.Random.Randi().ToString();
 		tile.AddBuilding(building);
+		world.buildings[building.buildingId] = building;
 
 		person1.houseId = building.buildingId;
 
