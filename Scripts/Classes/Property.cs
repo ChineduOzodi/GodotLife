@@ -13,10 +13,12 @@ namespace Life.Scripts.Classes {
         public bool hasRoad;
         public bool hasRiver;
         public bool hasBasin;
-        public Building building;
+        public String buildingId;
         public float value;
         public int treeCount;
         public List<MapResourceData> resources = new List<MapResourceData>();
+
+        public Building Building { get => World.Instance.buildings[buildingId]; }
 
     }
 }

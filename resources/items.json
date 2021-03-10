@@ -1,0 +1,43 @@
+[
+    {
+        "name": "Plank",
+        "categories": [
+            "Industry",
+            "Wood Working"
+        ]
+    },
+    {
+        "name": "Log",
+        "categories": [
+            "Industry",
+            "Wood Working"
+        ]
+    },
+    {
+        "name": "Stone",
+        "categories": [
+            "Industry",
+            "Stone Working"
+        ]
+    },
+    {
+        "name": "Bread",
+        "categories": [
+            "Agriculture",
+            "Food"
+        ]
+    },
+    {
+        "name": "Grain",
+        "categories": [
+            "Agriculture"
+        ]
+    },
+    {
+        "name": "Wheat",
+        "categories": [
+            "Agriculture",
+            "Farming"
+        ]
+    }
+]
