@@ -9,7 +9,7 @@ using RandomNameGen;
 using System.IO;
 using Newtonsoft.Json;
 
-public class World : Node2D
+public partial class World : Node2D
 {
 	public const float HourDuration = 60; // in seconds
 	public const float DayDuration = HourDuration * 24;
@@ -92,10 +92,10 @@ public class World : Node2D
 
 	
 
-	private OpenSimplexNoise moistureNoise = new OpenSimplexNoise();
-	private OpenSimplexNoise elevationNoise = new OpenSimplexNoise();
-	private OpenSimplexNoise ironOreNoise = new OpenSimplexNoise();
-	private OpenSimplexNoise goldOreNoise = new OpenSimplexNoise();
+	private FastNoiseLite moistureNoise = new FastNoiseLite();
+	private FastNoiseLite elevationNoise = new FastNoiseLite();
+	private FastNoiseLite ironOreNoise = new FastNoiseLite();
+	private FastNoiseLite goldOreNoise = new FastNoiseLite();
 
 	// Scenes for instancing
 	private PackedScene cityPrefab;
@@ -141,7 +141,7 @@ public class World : Node2D
 
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(float delta)
+	public override void _Process(double delta)
 	{
 		gDate.AddTime((double) delta);
 
@@ -157,8 +157,8 @@ public class World : Node2D
 
 		// show hovered over Tile
 		Vector2 mousePosition = GetGlobalMousePosition();
-		Coord mouseTileCoord = new Coord( (int) ((mousePosition.x + tileSize * 0.5f) / tileSize - xOffset ), (int) ((mousePosition.y + tileSize * 0.5f) / tileSize - yOffset));
-		if (mouseTileCoord.x >= 0 && mouseTileCoord.y >= 0 && mouseTileCoord.x < width && mouseTileCoord.y < height)
+		Coord mouseTileCoord = new Coord( (int) ((mousePosition.X + tileSize * 0.5f) / tileSize - xOffset ), (int) ((mousePosition.Y + tileSize * 0.5f) / tileSize - yOffset));
+		if (mouseTileCoord.x >= 0 && mouseTileCoord.y >= 0 && mouseTileCoord.x < width && mouseTileCoord.x < height)
 		{
 			hoveredTile = tiles[mouseTileCoord.x][mouseTileCoord.y];
 		} else
@@ -231,7 +231,7 @@ public class World : Node2D
 		goldOreNoise.Seed =(DateTime.Now.TimeOfDay.Milliseconds + "goldOre".GetHashCode());
 		ironOreNoise.Seed =(DateTime.Now.TimeOfDay.Milliseconds + "ironOre".GetHashCode());
 		elevationNoise.Seed =(DateTime.Now.TimeOfDay.Milliseconds + "elevation".GetHashCode());
-		elevationNoise.Octaves = 20;
+		elevationNoise.FractalOctaves = 20;
 		random.Seed = (ulong) DateTime.Now.ToBinary();
 		int negativeMoistureCount = 0;
 		tiles = new Tile[width][];
@@ -245,7 +245,7 @@ public class World : Node2D
 				float elevationPow = 2;
 
 				tile.name = $"${(x + xOffset) * tileSize},{(y + yOffset) * tileSize}";
-				float elevationNoiseNumber = elevationNoise.GetNoise2d((x + xOffset) * elevationNoiseScale, (y + yOffset) * elevationNoiseScale);
+				float elevationNoiseNumber = elevationNoise.GetNoise2D((x + xOffset) * elevationNoiseScale, (y + yOffset) * elevationNoiseScale);
 				tile.elev = ( elevationNoiseNumber + 1) * .5f;
 				float elevAboveSeaLevel = tile.elev - waterLevel;
 				//if (elevAboveSeaLevel < 0)
@@ -256,7 +256,7 @@ public class World : Node2D
 				float alteredElevationAboveSeaLevelNumber = ( elevAboveSeaLevelScaled >= 0) ? Mathf.Pow(elevAboveSeaLevelScaled, elevationPow) :  -Mathf.Pow(-elevAboveSeaLevelScaled, elevationPow);
 				tile.elev = alteredElevationAboveSeaLevelNumber;
 				float moistureNoisePow = 0.75f;
-				float moistureNoiseNumber = moistureNoise.GetNoise2d((x + xOffset) * moistureNoiseScale, (y + yOffset) * moistureNoiseScale);
+				float moistureNoiseNumber = moistureNoise.GetNoise2D((x + xOffset) * moistureNoiseScale, (y + yOffset) * moistureNoiseScale);
 				float alteredMoistureNoiseNumber = (moistureNoiseNumber < 0) ? -Mathf.Pow(-moistureNoiseNumber, moistureNoisePow) : Mathf.Pow(moistureNoiseNumber, moistureNoisePow);
 				tile.moistureNoise = (alteredMoistureNoiseNumber + 1) * .5f;
 				tile.latTemperature = -Mathf.Pow(((float) y + yOffset) / (-yOffset), 2) + 1;
@@ -356,7 +356,7 @@ public class World : Node2D
 				//calculate ores
 				if (tile.biome == TileType.land || tile.biome == TileType.Glacier || tile.biome == TileType.snow)
 				{
-					float goldOreNumber = goldOreNoise.GetNoise2d((x + xOffset) * goldOreNoiseScale, (y + yOffset) * goldOreNoiseScale);
+					float goldOreNumber = goldOreNoise.GetNoise2D((x + xOffset) * goldOreNoiseScale, (y + yOffset) * goldOreNoiseScale);
 					float goldOreProductionRate = (goldOreNumber - goldOreNoiseMin) * goldOreScale;
 
 					if (goldOreProductionRate > 0)
@@ -370,7 +370,7 @@ public class World : Node2D
 						}
 					}
 
-					float ironOreNumber = ironOreNoise.GetNoise2d((x + xOffset) * ironOreNoiseScale, (y + yOffset) * ironOreNoiseScale);
+					float ironOreNumber = ironOreNoise.GetNoise2D((x + xOffset) * ironOreNoiseScale, (y + yOffset) * ironOreNoiseScale);
 					float ironOreProductionRate = (ironOreNumber - ironOreNoiseMin) * ironOreScale;
 
 					if (ironOreProductionRate > 0)
@@ -415,7 +415,7 @@ public class World : Node2D
 			//Console.WriteLine($"randomX:{randomX}, randomY: {randomY}, width:{tiles.Length}, height:{tiles[0].Length}");
 			if (tiles[randomX][randomY].biome != TileType.Water && tiles[randomX][randomY].biome != TileType.SeaIce)
 			{
-				City city = (City) cityPrefab.Instance();
+				City city = cityPrefab.Instantiate<City>();
 				AddChild(city);
 				cities.Add(city);
 				city.Name = "city" + num;
@@ -440,7 +440,7 @@ public class World : Node2D
 
 	private void GeneratePerson(Vector2 position)
 	{
-		Person person = (Person)personPrefab.Instance();
+		Person person = personPrefab.Instantiate<Person>();
 		person.Position = (position);
 		if (person == null)
 		{
@@ -520,11 +520,11 @@ public class World : Node2D
 									}
 									tile.riverCrossingSpeed = (riverCrossingDifficulty <= riverCrossingDifficultyMax) ? riverCrossingDifficultyMax : riverCrossingDifficulty;
 
-									if (riverData.toPosition.x != tile.position.x && riverData.toPosition.y != tile.position.y)
+									if (riverData.toPosition.X != tile.position.X && riverData.toPosition.Y != tile.position.Y)
 									{
 										float newRiverCrossingSpeed = tile.riverCrossingSpeed + (1 - tile.riverCrossingSpeed) * 0.5f;
-										Tile nTile1 = GetTile(new Vector2(riverData.toPosition.x, tile.position.y));
-										Tile nTile2 = GetTile(new Vector2(tile.position.x, riverData.toPosition.y));
+										Tile nTile1 = GetTile(new Vector2(riverData.toPosition.X, tile.position.Y));
+										Tile nTile2 = GetTile(new Vector2(tile.position.X, riverData.toPosition.Y));
 										nTile1.riverCrossingSpeed *= newRiverCrossingSpeed;
 										nTile2.riverCrossingSpeed *= newRiverCrossingSpeed;
 									}
@@ -563,8 +563,8 @@ public class World : Node2D
 										if (nx == 0 && ny == 0)
 											continue;
 
-										float checkX = tile.position.x + nx;
-										float checkY = tile.position.y + ny;
+										float checkX = tile.position.X + nx;
+										float checkY = tile.position.Y + ny;
 
 										if (checkX >= -xLimit && checkX < xLimit && checkY >= -yLimit && checkY < yLimit)
 										{
@@ -608,11 +608,11 @@ public class World : Node2D
 									}
 
 									tile.riverCrossingSpeed = (riverCrossingDifficulty <= riverCrossingDifficultyMax) ? riverCrossingDifficultyMax : riverCrossingDifficulty;
-									if (riverData.toPosition.x != tile.position.x && riverData.toPosition.y != tile.position.y)
+									if (riverData.toPosition.X != tile.position.X && riverData.toPosition.Y != tile.position.Y)
 									{
 										float newRiverCrossingSpeed = tile.riverCrossingSpeed + (1 - tile.riverCrossingSpeed) * 0.5f;
-										Tile nTile1 = GetTile(new Vector2(riverData.toPosition.x, tile.position.y));
-										Tile nTile2 = GetTile(new Vector2(tile.position.x, riverData.toPosition.y));
+										Tile nTile1 = GetTile(new Vector2(riverData.toPosition.X, tile.position.Y));
+										Tile nTile2 = GetTile(new Vector2(tile.position.X, riverData.toPosition.Y));
 										nTile1.riverCrossingSpeed *= newRiverCrossingSpeed;
 										nTile2.riverCrossingSpeed *= newRiverCrossingSpeed;
 									}
@@ -671,7 +671,7 @@ public class World : Node2D
 
 	public Tile GetTile(Vector2 position)
 	{
-		Coord pos = new Coord(Mathf.RoundToInt(position.x / tileSize) * tileSize, Mathf.RoundToInt(position.y / tileSize) * tileSize);
+		Coord pos = new Coord(Mathf.RoundToInt(position.X / tileSize) * tileSize, Mathf.RoundToInt(position.Y / tileSize) * tileSize);
 		int x = pos.x / tileSize - xOffset;
 		int y = pos.y / tileSize - yOffset;
 
@@ -821,8 +821,8 @@ public class World : Node2D
 					if (nx == 0 && ny == 0)
 						continue;
 
-					float checkX = tile.position.x + nx;
-					float checkY = tile.position.y + ny;
+					float checkX = tile.position.X + nx;
+					float checkY = tile.position.Y + ny;
 
 					if (checkX >= -xLimit && checkX < xLimit && checkY >= -yLimit && checkY < yLimit)
 					{
@@ -900,7 +900,7 @@ public class World : Node2D
 	}
 }
 
-public class RiverData
+public partial class RiverData
 {
 	public string name;
 	public Vector2 position;

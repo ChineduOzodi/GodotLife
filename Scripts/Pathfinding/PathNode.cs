@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Life.Scripts.Pathfinding
 {
-    public class PathNode : IHeapItem<PathNode>
+    public partial class PathNode : IHeapItem<PathNode>
     {
         public float moveSpeed;
         public TileType biome;

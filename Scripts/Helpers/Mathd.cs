@@ -8,8 +8,8 @@ namespace GameEngine {
         public const double PI = 3.141593d;
         public const double Infinity = double.PositiveInfinity;
         public const double NegativeInfinity = double.NegativeInfinity;
-        public const double Deg2Rad = 0.01745329d;
-        public const double Rad2Deg = 57.29578d;
+        public const double DegToRad = 0.01745329d;
+        public const double RadToDeg = 57.29578d;
         public const double Epsilon = 1.401298E-45d;
 
         public static double Sin(double d) {

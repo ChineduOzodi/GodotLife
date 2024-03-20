@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class Money
+public partial class Money
 {
     /// <summary>
     /// Key: Update interval, Value[0]: Num intervals, Value[1]: currentTime

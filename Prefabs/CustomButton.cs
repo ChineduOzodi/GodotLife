@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class CustomButton : Button
+public partial class CustomButton : Button
 {
 	public event EventHandler onButtonPressed;
 
@@ -12,7 +12,7 @@ public class CustomButton : Button
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	//  public override void _Process(float delta)
+	//  public override void _Process(double delta)
 	//  {
 	//      
 	//  }

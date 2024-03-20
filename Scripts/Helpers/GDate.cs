@@ -2,7 +2,7 @@ using GameEngine;
 using Godot;
 using System;
 
-public class GDate
+public partial class GDate
 {
     private static int StartYear = 1000;
     private static int Seasons = 4;

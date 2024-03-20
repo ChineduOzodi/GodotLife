@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "Lv5bu2F/qpJro8r8gh5s5ZzWAFcgqxU9U3rYxQlU3IU88lisEiUTBcpCLx006Bj3EK/O29LQkEDR/Ggqn2zCig==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\chin2\\repos\\GodotLife\\Life.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\chin2\\.nuget\\packages\\godot.sourcegenerators\\4.2.1\\godot.sourcegenerators.4.2.1.nupkg.sha512",
+    "C:\\Users\\chin2\\.nuget\\packages\\godotsharp\\4.2.1\\godotsharp.4.2.1.nupkg.sha512",
+    "C:\\Users\\chin2\\.nuget\\packages\\godotsharpeditor\\4.2.1\\godotsharpeditor.4.2.1.nupkg.sha512",
+    "C:\\Users\\chin2\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\chin2\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.28\\microsoft.netcore.app.ref.6.0.28.nupkg.sha512",
+    "C:\\Users\\chin2\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.28\\microsoft.windowsdesktop.app.ref.6.0.28.nupkg.sha512",
+    "C:\\Users\\chin2\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.28\\microsoft.aspnetcore.app.ref.6.0.28.nupkg.sha512"
+  ],
+  "logs": []
+}

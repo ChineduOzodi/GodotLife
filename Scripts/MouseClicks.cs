@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class MouseClicks : Node
+public partial class MouseClicks : Node
 {
 	public static MouseClicks Instance;
 
@@ -13,7 +13,7 @@ public class MouseClicks : Node
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	//  public override void _Process(float delta)
+	//  public override void _Process(double delta)
 	//  {
 	//      
 	//  }
@@ -30,7 +30,7 @@ public class MouseClicks : Node
 	public void MouseClicked(InputEventMouseButton e)
 	{
 		//find location of mouse
-		if (e.ButtonIndex == (int)ButtonList.Left && e.IsPressed())
+		if (e.ButtonIndex == MouseButton.Left && e.IsPressed())
 		{
 			if (World.Instance != null && World.Instance.HoveredTile != null)
 			{

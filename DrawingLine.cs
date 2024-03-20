@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class DrawingLine : Node2D
+public partial class DrawingLine : Node2D
 {
 	private World world;
 
@@ -46,7 +46,7 @@ public class DrawingLine : Node2D
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	//public override void _Process(float delta)
+	//public override void _Process(double delta)
 	//{
 
 	//}

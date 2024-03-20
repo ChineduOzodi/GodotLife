@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Life.Scripts.Classes
 {
-    public class PersonData
+    public partial class PersonData
     {
         public string firstName;
         public string id;
@@ -62,7 +62,7 @@ namespace Life.Scripts.Classes
         }
     }
 
-    public class Professions
+    public partial class Professions
     {
         public string name;
         public bool active;

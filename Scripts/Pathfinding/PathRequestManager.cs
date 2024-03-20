@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Life.Scripts.Pathfinding
 {
 
-    public class PathRequestManager : Node
+    public partial class PathRequestManager : Node
     {
         private World world;
         Queue<PathRequest> pathRequestQueue = new Queue<PathRequest>();
@@ -94,7 +94,7 @@ namespace Life.Scripts.Pathfinding
         }
     }
 
-    public class PathNodeFound
+    public partial class PathNodeFound
     {
         public PathNode[] path;
         public double lastUpdated;

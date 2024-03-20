@@ -12,7 +12,7 @@ using System.Collections;
 using System;
 
 
-public class FSM
+public partial class FSM
 {
 
     private Stack<FSMState> stateStack = new Stack<FSMState>();

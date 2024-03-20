@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-public class Tile
+public partial class Tile
 {
 	public const int subTileWidthHeight = 19;
 

@@ -3,7 +3,7 @@ using Life.Scripts.Classes;
 using System;
 using System.Collections.Generic;
 
-public class DialogManager : Node
+public partial class DialogManager : Node
 {
     public static DialogManager Instance;
     CanvasLayer canvas;
@@ -30,7 +30,7 @@ public class DialogManager : Node
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
+//  public override void _Process(double delta)
 //  {
 //      
 //  }
@@ -50,7 +50,7 @@ public class DialogManager : Node
         }
         if (dialog == null)
         {
-            dialog = (CityDialog)cityDialogPrefab.Instance();
+            dialog = cityDialogPrefab.Instantiate<CityDialog>();
             canvas.AddChild(dialog);
             cityDialogs.Add(dialog);
         }
@@ -72,7 +72,7 @@ public class DialogManager : Node
         }
         if (dialog == null)
         {
-            dialog = (PeopleDialog) peopleDialogPrefab.Instance();
+            dialog = peopleDialogPrefab.Instantiate<PeopleDialog>();
             canvas.AddChild(dialog);
             peopleDialogs.Add(dialog);
         }
@@ -94,7 +94,7 @@ public class DialogManager : Node
         }
         if (dialog == null)
         {
-            dialog = (PersonDialog)personDialogPrefab.Instance();
+            dialog = personDialogPrefab.Instantiate<PersonDialog>();
             canvas.AddChild(dialog);
             personDialogs.Add(dialog);
         }

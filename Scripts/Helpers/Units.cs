@@ -2,7 +2,7 @@ using GameEngine;
 using Godot;
 using System;
 
-public class Units
+public partial class Units
 {
     /// <summary>
     /// Converts base unit to meters

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Life.Scripts.Classes
 {
-    public class MapResource
+    public partial class MapResource
     {
         private string name;
         private List<string> tags = new List<string>();
@@ -36,7 +36,7 @@ namespace Life.Scripts.Classes
         }
     }
 
-    public class MapResourceData
+    public partial class MapResourceData
     {
 
         public string resource;
@@ -74,13 +74,13 @@ namespace Life.Scripts.Classes
 
     }
 
-    public class MapResourceTags
+    public partial class MapResourceTags
     {
         public const string CanBeChopped = "Can be chopped";
         public const string CanBeKilled = "Can be killed";
     }
 
-    public class MapResourceName
+    public partial class MapResourceName
     {
         public const string Rock = "Rock";
         public const string IronOre = "Iron Ore";

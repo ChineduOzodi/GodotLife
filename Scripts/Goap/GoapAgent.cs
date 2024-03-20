@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 
 
-public class GoapAgent {
+public partial class GoapAgent {
 
 	private FSM stateMachine;
 

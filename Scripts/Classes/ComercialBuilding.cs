@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Life.Scripts.Classes
 {
-    public class CommercialBuilding : Building
+    public partial class CommercialBuilding : Building
     {
         public String managerId;
         public float productionTime;

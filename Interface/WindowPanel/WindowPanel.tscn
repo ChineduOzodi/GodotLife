@@ -44,16 +44,16 @@ void light() {
 graph_offset = Vector2( -329, 104 )
 nodes/fragment/2/node = SubResource( 2 )
 nodes/fragment/2/position = Vector2( -200, 160 )
-nodes/fragment/connections = PoolIntArray( 2, 0, 0, 0 )
+nodes/fragment/connections = PackedInt32Array( 2, 0, 0, 0 )
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = SubResource( 3 )
 
 [node name="WindowPanel" type="Panel"]
-margin_left = 252.0
-margin_top = 78.0
-margin_right = 596.0
-margin_bottom = 324.0
+offset_left = 252.0
+offset_top = 78.0
+offset_right = 596.0
+offset_bottom = 324.0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -61,24 +61,24 @@ __meta__ = {
 
 [node name="WindowTitle" parent="." instance=ExtResource( 1 )]
 anchor_right = 1.0
-margin_right = 0.0
-margin_bottom = 30.0
+offset_right = 0.0
+offset_bottom = 30.0
 theme = SubResource( 1 )
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 28.0
+offset_top = 28.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Panel" type="Panel" parent="PanelContainer"]
 material = SubResource( 4 )
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 337.0
-margin_bottom = 211.0
+offset_left = 7.0
+offset_top = 7.0
+offset_right = 337.0
+offset_bottom = 211.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

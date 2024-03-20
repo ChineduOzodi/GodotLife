@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class ActionText : Label
+public partial class ActionText : Label
 {
 	Person person;
 
@@ -12,8 +12,8 @@ public class ActionText : Label
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(float delta)
+	public override void _Process(double delta)
 	{
-		SetText(person.PersonAction.ToString());
+		this.Text = person.PersonAction.ToString();
 	}
 }

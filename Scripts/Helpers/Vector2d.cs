@@ -216,7 +216,7 @@ namespace GameEngine {
 
         public static explicit operator Vector2d(Vector2 v)
         {
-            return new Vector2d(v.x, v.y);
+            return new Vector2d(v.X, v.Y);
         }
 
         public static double Distance(Vector2d a, Vector2d b) {

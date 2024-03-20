@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /**
  * Plans what actions can be completed in order to fulfill a goal state.
  */
-public class GoapPlanner
+public partial class GoapPlanner
 {
 
 	/**

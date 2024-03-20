@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Life.Scripts.Pathfinding
 {
-	public class Pathfinding: Node
+	public partial class Pathfinding: Node
 	{
 
 		public bool displayGizmos = false;
@@ -60,7 +60,7 @@ namespace Life.Scripts.Pathfinding
 			//Console.WriteLine($"Pathfinding: finding path start: ({startPos.x},{startPos.y}) to ({targetPos.x},{targetPos.y})");
 			for(int i = pathVis.Count - 1; i >= 0; i--)
 			{
-				pathVis[i].GetChild<Sprite>(0).SetModulate(new Color(0.0f, 0, 0, 0.0f));
+				pathVis[i].GetChild<Sprite2D>(0).Modulate = new Color(0.0f, 0, 0, 0.0f);
 			}
 			//pathVis = new List<Node2D>();
 
@@ -86,14 +86,14 @@ namespace Life.Scripts.Pathfinding
 				Node2D viz = GetNode<Node2D>(new NodePath($"{startPos.x}, {startPos.y}"));
 				if (viz != null)
 				{
-					viz.GetChild<Sprite>(0).SetModulate(new Color(0, 1, 0, 0.5f));
+					viz.GetChild<Sprite2D>(0).Modulate = new Color(0, 1, 0, 0.5f);
 				} else
 				{
-					viz = (Node2D)pathNodeVisScene.Instance();
+					viz = pathNodeVisScene.Instantiate<Node2D>();
 					AddChild(viz);
-					viz.GetChild<Sprite>(0).SetModulate(new Color(0, 1, 0, 0.5f));
-					viz.SetName($"{startPos.x}, {startPos.y}");
-					viz.SetPosition(startNode.worldPosition);
+					viz.GetChild<Sprite2D>(0).Modulate = new Color(0, 1, 0, 0.5f);
+					viz.Name = $"{startPos.x}, {startPos.y}";
+					viz.Position = startNode.worldPosition;
 					pathVis.Add(viz);
 				}
 
@@ -101,14 +101,14 @@ namespace Life.Scripts.Pathfinding
 				 Node2D targetViz = GetNode<Node2D>(new NodePath($"{targetPos.x}, {targetPos.y}"));
 				if (targetNode != null)
 				{
-					targetViz.GetChild<Sprite>(0).SetModulate(new Color(.5f, 0, 1));
+					targetViz.GetChild<Sprite2D>(0).Modulate = new Color(.5f, 0, 1);
 				}
 				else {
-					targetViz = (Node2D)pathNodeVisScene.Instance();
-					targetViz.GetChild<Sprite>(0).SetModulate(new Color(.5f, 0, 1));
+					targetViz = pathNodeVisScene.Instantiate<Node2D>();
+					targetViz.GetChild<Sprite2D>(0).Modulate = new Color(.5f, 0, 1);
 					AddChild(targetViz);
-					targetViz.SetName($"{targetPos.x}, {targetPos.y}");
-					targetViz.SetPosition(targetNode.worldPosition);
+					targetViz.Name = $"{targetPos.x}, {targetPos.y}";
+					targetViz.Position = targetNode.worldPosition;
 					pathVis.Add(targetViz);
 				}
 			}
@@ -136,7 +136,7 @@ namespace Life.Scripts.Pathfinding
 					{
 						//change node color
 						Node2D viz = GetNode<Node2D>(new NodePath($"{currentNode.coord.x}, {currentNode.coord.y}"));
-						viz.GetChild<Sprite>(0).SetModulate(new Color(0.2f, 0, 0, 0.5f));
+						viz.GetChild<Sprite2D>(0).Modulate = new Color(0.2f, 0, 0, 0.5f);
 					}
 					
 
@@ -282,15 +282,15 @@ namespace Life.Scripts.Pathfinding
 								Node2D viz = GetNode<Node2D>(new NodePath($"{checkX}, {checkY}"));
 								if (viz != null)
 								{
-									viz.GetChild<Sprite>(0).SetModulate(new Color(0, 1, 0, 0.5f));
+									viz.GetChild<Sprite2D>(0).Modulate = new Color(0, 1, 0, 0.5f);
 								}
 								else
 								{
-									viz = (Node2D)pathNodeVisScene.Instance();
+									viz = pathNodeVisScene.Instantiate<Node2D>();
 									AddChild(viz);
-									viz.GetChild<Sprite>(0).SetModulate(new Color(0, 1, 0, 0.5f));
-									viz.SetName($"{checkX}, {checkY}");
-									viz.SetPosition(pathNode.worldPosition);
+									viz.GetChild<Sprite2D>(0).Modulate = new Color(0, 1, 0, 0.5f);
+									viz.Name = $"{checkX}, {checkY}";
+									viz.Position = pathNode.worldPosition;
 									pathVis.Add(viz);
 								}
 							}

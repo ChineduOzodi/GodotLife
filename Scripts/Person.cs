@@ -3,7 +3,7 @@ using Life.Scripts.Classes;
 using Life.Scripts.Pathfinding;
 using System;
 
-public class Person : Node2D
+public partial class Person : Node2D
 {
 	private World world;
 	private PathRequestManager pathRequestManager;
@@ -23,8 +23,8 @@ public class Person : Node2D
 		personData.elev = personData.currentTile.elev;
 	}
 	
-	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(float delta)
+	//  // Called every frame. '(float)delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
 	{
 		switch (personData.personAction)
 		{
@@ -43,11 +43,11 @@ public class Person : Node2D
 				if (personData.pathIndex < path.Length)
 				{
 					Tile tile = world.GetTile(path[personData.pathIndex].worldPosition);
-					float remainingDelta = delta;
+					float remainingDelta = (float)delta;
 
 					while (remainingDelta > 0) {
 						float distanceIndex;
-						float distanceDelta = tile.speedMod * personData.walkSpeed * delta * world.TileSize * tile.riverCrossingSpeed;
+						float distanceDelta = tile.speedMod * personData.walkSpeed * (float)delta * world.TileSize * tile.riverCrossingSpeed;
 						if ((personData.currentTile.biome == TileType.Water || personData.currentTile.biome == TileType.SeaIce) && (tile.biome == TileType.SeaIce || tile.biome == TileType.Water))
 						{
 							distanceIndex = Position.DistanceTo(path[personData.pathIndex].worldPosition);
@@ -62,12 +62,12 @@ public class Person : Node2D
 
 							if ((personData.currentTile.biome == TileType.Water || personData.currentTile.biome == TileType.SeaIce) && (tile.biome == TileType.SeaIce || tile.biome == TileType.Water))
 							{
-								Position =(Position.LinearInterpolate(path[personData.pathIndex].worldPosition, (distanceDelta) / distanceIndex));
+								Position =(Position.Lerp(path[personData.pathIndex].worldPosition, (distanceDelta) / distanceIndex));
 							}
 							else
 							{
 								float interpolation = (distanceDelta) / distanceIndex;
-								Position =(Position.LinearInterpolate(path[personData.pathIndex].worldPosition, interpolation));
+								Position =(Position.Lerp(path[personData.pathIndex].worldPosition, interpolation));
 								personData.elev += (tile.elev - personData.elev) * interpolation;
 								//Console.WriteLine($"Interpolation: {(distanceDelta) / distanceIndex}");
 							}
@@ -91,7 +91,7 @@ public class Person : Node2D
 							personData.currentTile = tile;
 							personData.elev = personData.currentTile.elev;
 							tile = world.GetTile(path[personData.pathIndex].worldPosition);
-							remainingDelta = distanceIndex / ( distanceDelta / delta);
+							remainingDelta = distanceIndex / ( distanceDelta / (float)delta);
 
 							if (tile.speedMod > tile.baseSpeedMod)
 							{

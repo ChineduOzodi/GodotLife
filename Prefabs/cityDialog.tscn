@@ -1,40 +1,42 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://djbhd8t78x7ax"]
 
-[ext_resource path="res://Prefabs/CityDialog.cs" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
-[ext_resource path="res://Interface/WindowPanel/WindowPanel.tscn" type="PackedScene" id=3]
+[ext_resource type="Script" path="res://Prefabs/CityDialog.cs" id="1"]
+[ext_resource type="PackedScene" path="res://Interface/WindowPanel/WindowPanel.tscn" id="3"]
 
 [node name="CityDialog" type="Control"]
+layout_mode = 3
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -132.0
-margin_top = -113.0
-margin_right = 133.0
-margin_bottom = 114.0
-script = ExtResource( 1 )
+offset_left = -132.0
+offset_top = -113.0
+offset_right = 133.0
+offset_bottom = 114.0
+script = ExtResource("1")
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WindowPanel" parent="." instance=ExtResource( 3 )]
+[node name="WindowPanel" parent="." instance=ExtResource("3")]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 0.0
-margin_top = 0.0
-margin_right = 0.0
-margin_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 
 [node name="ItemList" type="ItemList" parent="WindowPanel"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 7.0
-margin_top = 35.0
-margin_right = -6.0
-margin_bottom = -7.0
-items = [ "Example Item", ExtResource( 2 ), false, "Item 1", null, false, "Item 2", null, false, "Item 3", null, false ]
+offset_left = 7.0
+offset_top = 35.0
+offset_right = -6.0
+offset_bottom = -7.0
 auto_height = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+item_count = 2
+item_0/text = "Item 1"
+item_1/text = "Item 2"

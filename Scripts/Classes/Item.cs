@@ -3,19 +3,19 @@ using System;
 
 namespace Life.Scripts.Classes
 {
-    public class Item
+    public partial class Item
     {
         public String name;
         public float amount;
     }
 
-    public class ItemIdentification
+    public partial class ItemIdentification
     {
         public String name;
         public String[] categories;
     }
 
-    public class ItemName
+    public partial class ItemName
     {
         public const string Rock = "Rock";
         public const string IronOre = "Iron Ore";

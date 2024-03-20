@@ -4,7 +4,7 @@ using System;
 
 namespace Life.Scripts.Classes
 {
-	public class Building
+	public partial class Building
 	{
 		public string name;
 		public string buildingId;
@@ -20,7 +20,7 @@ namespace Life.Scripts.Classes
 		}
 	}
 
-	public class BuildingConstructionPlan
+	public partial class BuildingConstructionPlan
 	{
 		public string name;
 		public string[] categories;
@@ -30,14 +30,14 @@ namespace Life.Scripts.Classes
 
 	}
 
-	public class BuildingConstruction
+	public partial class BuildingConstruction
 	{
 		public int duration;
 		public string[] categories;
 		public Material[] materials;
 	}
 
-	public class BuildingProduction
+	public partial class BuildingProduction
 	{
 		public string name;
 		public int amount;
@@ -46,7 +46,7 @@ namespace Life.Scripts.Classes
 		public Material[] materials;
 	}
 
-	public class Material
+	public partial class Material
 	{
 		public String name;
 		public bool natural;

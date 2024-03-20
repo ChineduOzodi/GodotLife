@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class TileInfoLabel : RichTextLabel
+public partial class TileInfoLabel : RichTextLabel
 {
 	// Declare member variables here. Examples:
 	// private int a = 2;
@@ -14,7 +14,7 @@ public class TileInfoLabel : RichTextLabel
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(float delta)
+	public override void _Process(double delta)
 	{
 		if (World.Instance != null && World.Instance.HoveredTile != null)
 		{

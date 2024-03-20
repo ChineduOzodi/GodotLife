@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class CityDialog : Control
+public partial class CityDialog : Control
 {
 	// Declare member variables here. Examples:
 	// private int a = 2;
@@ -17,14 +17,13 @@ public class CityDialog : Control
 		windowPanel = GetNode<WindowPanel>("WindowPanel");
 		title = windowPanel.title;
 		itemList = GetNode<ItemList>("WindowPanel/ItemList");
-		windowPanel.Connect("closeButtonPressed", this, nameof(_on_CloseButton_pressed));
-		windowPanel.Connect("dragPositionSignal", this,nameof(_on_DragPosition_Signal));
-		itemList.Items = new Godot.Collections.Array();
-		itemList.Connect("item_selected", this, nameof(onItemSelected));
+		windowPanel.Connect("closeButtonPressed", new Callable(this, nameof(_on_CloseButton_pressed)));
+		windowPanel.Connect("dragPositionSignal", new Callable(this, nameof(_on_DragPosition_Signal)));
+		itemList.Connect("item_selected", new Callable(this, nameof(onItemSelected)));
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(float delta)
+	public override void _Process(double delta)
 	{
 		if (this.city != null)
 		{
@@ -40,7 +39,7 @@ public class CityDialog : Control
 			InputEventMouseButton e = @event as InputEventMouseButton;
 			if (e.Pressed)
 			{
-				Raise();
+				Console.WriteLine("pressed: {0}", e);
 			}
 
 		}
@@ -48,7 +47,7 @@ public class CityDialog : Control
 
 	public void onItemSelected ( int index)
 	{
-		itemList.Unselect(index);
+		itemList.Deselect(index);
 		if (index == 0 && DialogManager.Instance != null)
 		{
 			DialogManager.Instance.CreatePeopleDialog(city);
@@ -64,17 +63,16 @@ public class CityDialog : Control
 
 	private void _on_DragPosition_Signal(Vector2 dragPosition)
 	{
-		RectGlobalPosition += dragPosition;
+		GlobalPosition += dragPosition;
 	}
 
 	public void ShowCity(City city)
 	{
 		Show();
-		itemList.Items = new Godot.Collections.Array();
 		title.Text = city.name;
 		this.city = city;
-		itemList.AddItem($"Population: {city.Population}");
-		itemList.AddItem($"Buildings: {city.buildings.Count}");
+		itemList.SetItemText(0, $"Population: {city.Population}");
+		itemList.SetItemText(1, $"Buildings: {city.buildings.Count}");
 	}
 
 

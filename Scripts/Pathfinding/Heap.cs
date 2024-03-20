@@ -1,7 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System;
 
-public class Heap<T> where T : IHeapItem<T>
+public partial class Heap<T> where T : IHeapItem<T>
 {
 
     T[] items;

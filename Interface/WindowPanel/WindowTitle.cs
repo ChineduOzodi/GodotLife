@@ -1,15 +1,15 @@
 using Godot;
 using System;
 
-public class WindowTitle : Panel
+public partial class WindowTitle : Panel
 {
 	// Declare member variables here. Examples:
 	public Label title;
 	private Button closeButton;
 	[Signal]
-	public delegate void closeButtonPressed();
+	public delegate void closeButtonPressedEventHandler();
 	[Signal]
-	public delegate void dragPositionSignal();
+	public delegate void dragPositionSignalEventHandler();
 	public Vector2 dragPosition;
 	// private string b = "text";
 
@@ -21,7 +21,7 @@ public class WindowTitle : Panel
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	//  public override void _Process(float delta)
+	//  public override void _Process(double delta)
 	//  {
 	//      
 	//  }
@@ -33,7 +33,7 @@ public class WindowTitle : Panel
 			InputEventMouseButton e = @event as InputEventMouseButton;
 			if(e.Pressed)
 			{
-				dragPosition = GetGlobalMousePosition() - RectGlobalPosition;
+				dragPosition = GetGlobalMousePosition() - GlobalPosition;
 			} else
 			{
 				dragPosition = Vector2.Zero;
@@ -44,13 +44,13 @@ public class WindowTitle : Panel
 		if (@event is InputEventMouseMotion && dragPosition != Vector2.Zero)
 		{
 			InputEventMouseMotion e = @event as InputEventMouseMotion;
-			EmitSignal(nameof(dragPositionSignal), GetGlobalMousePosition() - RectGlobalPosition - dragPosition);
-			dragPosition = GetGlobalMousePosition() - RectGlobalPosition;
+			EmitSignal(nameof(dragPositionSignalEventHandler), GetGlobalMousePosition() - GlobalPosition - dragPosition);
+			dragPosition = GetGlobalMousePosition() - GlobalPosition;
 		}
 	}
 
 	private void _on_CloseButton_pressed()
 	{
-		EmitSignal(nameof(closeButtonPressed));
+		EmitSignal(nameof(closeButtonPressedEventHandler));
 	}
 }

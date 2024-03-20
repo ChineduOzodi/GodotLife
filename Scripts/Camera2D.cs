@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Camera2D : Godot.Camera2D
+public partial class Camera2D : Godot.Camera2D
 {
 	// Declare member variables here. Examples:
 	// private int a = 2;
@@ -56,33 +56,33 @@ public class Camera2D : Godot.Camera2D
 	{
 		camera_zoom = Zoom;
 		_prev_mouse_pos = GetLocalMousePosition();
-		DragMarginHEnabled = false;
-		DragMarginVEnabled = false;
-		SmoothingEnabled = true;
-		SmoothingSpeed = 4;
+		DragHorizontalEnabled = false;
+		DragVerticalEnabled = false;
+		PositionSmoothingEnabled = true;
+		PositionSmoothingSpeed = 4;
 
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(float delta)
+	public override void _Process(double delta)
 	{
 		if(key)
 		{
 			if (__keys[0])
-			{
-				camera_movement.x -= camera_speed * delta;
+            {
+                camera_movement.X -= camera_speed * (float)delta;
 			}
 			if (__keys[1])
 			{
-				camera_movement.y -= camera_speed * delta;
+				camera_movement.Y -= camera_speed * (float)delta;
 			}
 			if (__keys[2])
 			{
-				camera_movement.x += camera_speed * delta;
+				camera_movement.X += camera_speed * (float)delta;
 			}
 			if (__keys[3])
 			{
-				camera_movement.y += camera_speed * delta;
+				camera_movement.Y += camera_speed * (float)delta;
 			}
 		}
 
@@ -93,21 +93,21 @@ public class Camera2D : Godot.Camera2D
 			Rect2 rec = GetViewport().GetVisibleRect();
 			Vector2 v = GetLocalMousePosition() + rec.Size * 0.5f;
 
-			if (rec.Size.x - v.x <= camera_margin)
+			if (rec.Size.X - v.X <= camera_margin)
 			{
-				camera_movement.x += camera_speed * delta;
+				camera_movement.X += camera_speed * (float)delta;
 			}
-			if (v.x <= camera_margin)
+			if (v.X <= camera_margin)
 			{
-				camera_movement.x -= camera_speed * delta;
+				camera_movement.X -= camera_speed * (float)delta;
 			}
-			if (rec.Size.y - v.y <= camera_margin)
+			if (rec.Size.Y - v.Y <= camera_margin)
 			{
-				camera_movement.y += camera_speed * delta;
+				camera_movement.Y += camera_speed * (float)delta;
 			}
-			if (v.y <= camera_margin)
+			if (v.Y <= camera_margin)
 			{
-				camera_movement.y -= camera_speed * delta;
+				camera_movement.Y -= camera_speed * (float)delta;
 			}
 		}
 
@@ -119,21 +119,21 @@ public class Camera2D : Godot.Camera2D
 
 		// Update position of the camera.
 		Position += camera_movement * Zoom;
-		if (Position.y < -worldYLimit)
+		if (Position.Y < -worldYLimit)
 		{
-			Position = new Vector2(Position.x, -worldYLimit);
+			Position = new Vector2(Position.X, -worldYLimit);
 		}
-		if (Position.y > worldYLimit)
+		if (Position.Y > worldYLimit)
 		{
-			Position = new Vector2(Position.x, worldYLimit);
+			Position = new Vector2(Position.X, worldYLimit);
 		}
-		if (Position.x < -worldXLimit)
+		if (Position.X < -worldXLimit)
 		{
-			Position = new Vector2(-worldXLimit, Position.y);
+			Position = new Vector2(-worldXLimit, Position.Y);
 		}
-		if (Position.y > worldXLimit)
+		if (Position.Y > worldXLimit)
 		{
-			Position = new Vector2(worldXLimit, Position.y);
+			Position = new Vector2(worldXLimit, Position.Y);
 		}
 
 		// Set camera movement to zero, update old mouse position.
@@ -146,20 +146,20 @@ public class Camera2D : Godot.Camera2D
 		if (@event is InputEventMouseButton)
 		{
 			InputEventMouseButton e = @event as InputEventMouseButton;
-			if (drag && e.ButtonIndex == (int) ButtonList.Right)
+			if (drag && e.ButtonIndex == MouseButton.Right)
 			{
 				__rmbk = e.IsPressed();
 			}
 
 			if (wheel)
 			{
-				if (e.ButtonIndex == (int) ButtonList.WheelUp && camera_zoom.x + camera_zoom_speed.x > 0 && camera_zoom.y + camera_zoom_speed.y > 0)
+				if (e.ButtonIndex == MouseButton.WheelUp && camera_zoom.X + camera_zoom_speed.X > 0 && camera_zoom.Y + camera_zoom_speed.Y > 0)
 				{
 					camera_zoom -= camera_zoom_speed + Zoom * zoom_speed_mod;
 					Zoom = camera_zoom;
 				}
 
-				if (e.ButtonIndex == (int)ButtonList.WheelDown && camera_zoom.x + camera_zoom_speed.x < zoom_out_limit && camera_zoom.y + camera_zoom_speed.y < zoom_out_limit)
+				if (e.ButtonIndex == MouseButton.WheelDown && camera_zoom.X + camera_zoom_speed.X < zoom_out_limit && camera_zoom.Y + camera_zoom_speed.Y < zoom_out_limit)
 				{
 					camera_zoom += camera_zoom_speed + Zoom * zoom_speed_mod;
 					Zoom = camera_zoom;

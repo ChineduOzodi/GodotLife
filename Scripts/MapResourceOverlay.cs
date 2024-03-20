@@ -2,7 +2,7 @@ using Godot;
 using Life.Scripts.Classes;
 using System;
 
-public class MapResourceOverlay : Node2D
+public partial class MapResourceOverlay : Node2D
 {
 	World world;
 	MapResource mapResource;
@@ -30,7 +30,7 @@ public class MapResourceOverlay : Node2D
 					if (tile.HasMapResource(mapResource.Name))
 					{
 						MapResourceData mapResourceData = tile.GetMapResourceData(mapResource.Name);
-						DrawCircle(tile.position, mapResourceData.amount / mapResource.resourceMax * resourceScale, Color.ColorN("green",0.75f));
+						DrawCircle(tile.position, mapResourceData.amount / mapResource.resourceMax * resourceScale, Color.Color8(0,255,9,(byte)(255 * 0.75)));
 					}
 				}
 			}
@@ -43,12 +43,12 @@ public class MapResourceOverlay : Node2D
 	public void DisplayMapResource(MapResource mapResource)
 	{
 		this.mapResource = mapResource;
-		Update();
-	}
+        QueueRedraw();
+    }
 
 	public void ClearMapResourceDisplay()
 	{
 		mapResource = null;
-		Update();
-	}
+        QueueRedraw();
+    }
 }

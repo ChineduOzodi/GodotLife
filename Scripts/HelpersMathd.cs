@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class HelpersMathd : Node
+public partial class HelpersMathd : Node
 {
     // Declare member variables here. Examples:
     // private int a = 2;
@@ -14,7 +14,7 @@ public class HelpersMathd : Node
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
+//  public override void _Process(double delta)
 //  {
 //      
 //  }

@@ -126,9 +126,9 @@ namespace GameEngine {
         }
 
         public Vector3d(Vector3 v3) {
-            this.x = (double)v3.x;
-            this.y = (double)v3.y;
-            this.z = (double)v3.z;
+            this.x = (double)v3.X;
+            this.y = (double)v3.Y;
+            this.z = (double)v3.Z;
         }
 
         public Vector3d(double x, double y) {
@@ -215,7 +215,7 @@ namespace GameEngine {
 
         public static explicit operator Vector3d(Vector3 v)
         {
-            return new Vector3d(v.x, v.y, v.z);
+            return new Vector3d(v.X, v.Y, v.Z);
         }
 
         public void Set(double new_x, double new_y, double new_z) {

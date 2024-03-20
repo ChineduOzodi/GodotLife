@@ -2,7 +2,7 @@ using Godot;
 using Life.Scripts.Classes;
 using System;
 
-public class DisplayMenu : MenuButton
+public partial class DisplayMenu : MenuButton
 {
 	World world;
 	const string Normal = "Normal";
@@ -25,7 +25,7 @@ public class DisplayMenu : MenuButton
 		GetPopup().AddItem(CellMoisture);
 		GetPopup().AddItem(Moisture);
 
-		GetPopup().Connect("id_pressed", this, "OnItemPressed");
+		GetPopup().Connect("id_pressed", new Callable(this, "OnItemPressed"));
 	}
 
 	public void AddToDisplayMenu(string itemName)
@@ -35,7 +35,7 @@ public class DisplayMenu : MenuButton
 	}
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
+//  public override void _Process(double delta)
 //  {
 //      
 //  }

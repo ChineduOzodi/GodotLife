@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +12,7 @@ namespace Life.Scripts.Pathfinding
         public int x;
         public int y;
 
-        public static Coord zero = new Coord();
+        public  static Coord zero = new();
         //public Coord()
         //{
         //    x = 0;
@@ -31,21 +31,21 @@ namespace Life.Scripts.Pathfinding
         /// <returns></returns>
         public static Coord Vector3ToCoord(Vector3 vect)
         {
-            Coord coord = new Coord((int)vect.x, (int)vect.y);
+            Coord coord = new((int)vect.X, (int)vect.Y);
 
             return coord;
         }
 
         public static Coord Vector2ToCoord(Vector2 vect)
         {
-            Coord coord = new Coord((int)vect.x, (int)vect.y);
+            Coord coord = new((int)vect.X, (int)vect.Y);
 
             return coord;
         }
 
         public static Coord operator +(Coord coordA, Coord coordB)
         {
-            Coord coord = new Coord(coordA.x + coordB.x, coordA.y + coordB.y);
+            Coord coord = new(coordA.x + coordB.x, coordA.y + coordB.y);
 
             return coord;
         }

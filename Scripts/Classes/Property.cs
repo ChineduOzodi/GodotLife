@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 namespace Life.Scripts.Classes {
-    public class Property
+    public partial class Property
     {
         public string name;
         public int x;

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Road : Node2D
+public partial class Road : Node2D
 {
 	public Tile tile;
 
@@ -12,7 +12,7 @@ public class Road : Node2D
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(float delta)
+	public override void _Process(double delta)
 	{
 		if (tile != null)
 		{

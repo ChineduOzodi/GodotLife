@@ -3,7 +3,7 @@ using Life.Scripts.Classes;
 using System;
 using System.Collections.Generic;
 
-public class PeopleDialog : Control
+public partial class PeopleDialog : Control
 {
 	// Declare member variables here. Examples:
 	// private int a = 2;
@@ -19,12 +19,12 @@ public class PeopleDialog : Control
 		windowPanel = GetNode<WindowPanel>("WindowPanel");
 		title = windowPanel.title;
 		container = GetNode<VBoxContainer>("WindowPanel/ScrollContainer/VBoxContainer");
-		windowPanel.Connect("closeButtonPressed", this, nameof(_on_CloseButton_pressed));
-		windowPanel.Connect("dragPositionSignal", this, nameof(_on_DragPosition_Signal));
+		windowPanel.Connect("closeButtonPressed", new Callable(this, nameof(_on_CloseButton_pressed)));
+		windowPanel.Connect("dragPositionSignal", new Callable(this, nameof(_on_DragPosition_Signal)));
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(float delta)
+	public override void _Process(double delta)
 	{
 	}
 
@@ -35,11 +35,11 @@ public class PeopleDialog : Control
 			InputEventMouseButton e = @event as InputEventMouseButton;
 			if (e.Pressed)
 			{
-				Godot.Collections.Array parentChildren = GetParent().GetChildren();
+				Godot.Collections.Array<Node> parentChildren = GetParent().GetChildren();
 				if ( GetIndex() + 1 != parentChildren.Count)
 				{
-					Raise(); 
-				}
+                    Console.WriteLine("pressed: {0}", e);
+                }
 			}
 
 		}
@@ -53,7 +53,7 @@ public class PeopleDialog : Control
 
 	private void _on_DragPosition_Signal(Vector2 dragPosition)
 	{
-		RectGlobalPosition += dragPosition;
+		GlobalPosition += dragPosition;
 	}
 
 	public void ShowPeople(City city)
@@ -65,7 +65,7 @@ public class PeopleDialog : Control
 		people.Sort((a, b) => a.firstName.CompareTo(b.firstName));
 		foreach( PersonData person in people)
 		{
-			CustomButton button = (CustomButton) DialogManager.Instance.buttonPrefab.Instance();
+			CustomButton button = DialogManager.Instance.buttonPrefab.Instantiate<CustomButton>();
 
 			button.SetPressedAction((object sender, EventArgs e) => { DialogManager.Instance.CreatePersonDialog(person); });
 			button.Name = $"{person.firstName} {person.lastName}";

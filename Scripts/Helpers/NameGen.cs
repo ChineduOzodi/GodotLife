@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 [Serializable]
-public class NameGen {
+public partial class NameGen {
 
     private int order = 3;
     public int maxLen = 15;
@@ -268,7 +268,7 @@ Angle Worm
 Amaze
 Chestbeater
 Ghost
-Skeleton
+Skeleton3D
 Mini-Goblin
 Rat Soldier
 Troll
@@ -456,8 +456,8 @@ Zombie
 Ghoul
 Demon
 Arch Demon
-Skeleton
-Gold Skeleton
+Skeleton3D
+Gold Skeleton3D
 Undertaker
 Coffinmaster
 Living Armor

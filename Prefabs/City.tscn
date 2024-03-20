@@ -1,52 +1,45 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://btnw5q4w5b3sm"]
 
-[ext_resource path="res://Scripts/Classes/City.cs" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource type="Script" path="res://Scripts/Classes/City.cs" id="1"]
+[ext_resource type="Texture2D" uid="uid://chr3trhhgtv6q" path="res://icon.png" id="2"]
 
 [node name="City" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource("1")
+metadata/ErrorColor = Color(1, 0, 1, 1)
 
-[node name="icon" type="Sprite" parent="."]
+[node name="icon" type="Sprite2D" parent="."]
 visible = false
-modulate = Color( 1, 1, 1, 0.498039 )
-scale = Vector2( 0.5, 0.5 )
+modulate = Color(1, 1, 1, 0.498039)
 z_index = 1
-texture = ExtResource( 2 )
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2")
 
 [node name="cityNameMedium" type="Label" parent="."]
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -215.515
-margin_top = -148.004
-margin_right = -0.514648
-margin_bottom = -102.004
+offset_left = -215.515
+offset_top = -148.004
+offset_right = -0.514648
+offset_bottom = -102.004
 grow_horizontal = 2
 grow_vertical = 2
-rect_scale = Vector2( 2, 2 )
+scale = Vector2(2, 2)
 text = "City Name Here"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="cityNameLarge" type="Label" parent="."]
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -1072.7
-margin_top = -297.125
-margin_right = -857.704
-margin_bottom = -251.125
+offset_left = -1072.7
+offset_top = -297.125
+offset_right = -857.704
+offset_bottom = -251.125
 grow_horizontal = 2
 grow_vertical = 2
-rect_scale = Vector2( 10, 10 )
+scale = Vector2(10, 10)
 text = "City Name Here"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}

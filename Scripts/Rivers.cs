@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Rivers : Node2D
+public partial class Rivers : Node2D
 {
 	 World world;
 	private float riverAlphaScale = 0.1f;
@@ -15,7 +15,7 @@ public class Rivers : Node2D
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	//  public override void _Process(float delta)
+	//  public override void _Process(double delta)
 	//  {
 	//      
 	//  }
@@ -36,7 +36,7 @@ public class Rivers : Node2D
 					DrawCircle(tile.position, tile.waterBasinSize * waterBasinScale, new Color(0.2f, 0.2f, .6f));
 				} else if (tile.hasRiver)
 				{
-					RiverData river = world.rivers[$"{tile.position.ToString()}"];
+					RiverData river = world.rivers[$"{tile.position}"];
 					if (riverAlpha)
 					{
 						DrawLine(river.position, river.toPosition, new Color(0.2f, 0.2f, .6f,river.size * riverAlphaScale ), river.size * riverWidthScale);
@@ -52,8 +52,8 @@ public class Rivers : Node2D
 
 	public void GenerateRivers()
 	{
-		Update();
-	}
+        QueueRedraw();
+    }
 
 	
 }
