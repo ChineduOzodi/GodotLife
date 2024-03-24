@@ -16,8 +16,8 @@ namespace RandomNameGen
 		/// </summary>
 		struct City
 		{
-            public String country;
-            public String name;
+			public String country;
+			public String name;
 		}
 
 		Random rand;

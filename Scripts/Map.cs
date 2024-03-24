@@ -24,40 +24,40 @@ public partial class Map : Node2D
 		base._Draw();
 		//Console.WriteLine("Updating map");
 
-		for (int x = 0; x < world.Width; x++)
-		{
-			for (int y = 0; y < world.Height; y++)
-			{
-				Tile tile = world.tiles[x][y];
-				switch (world.MapDisplayMode)
-				{
-					case DisplayMode.Normal:
-						DisplayNormal(tile);
-						break;
-					case DisplayMode.Height:
-						DisplayHeight(tile);
-						break;
-					case DisplayMode.MoistureNoise:
-						DisplayMoistureNoise(tile);
-						break;
-					case DisplayMode.LatTemperature:
-						DisplayLatTemperature(tile);
-						break;
-					case DisplayMode.CellMoisture:
-						DisplayCellMoisture(tile);
-						break;
-					case DisplayMode.Moisture:
-						DisplayMoisture(tile);
-						break;
-					case DisplayMode.WalkingSpeed:
-						DisplayWalkingSpeed(tile);
-						break;
-					case DisplayMode.Resource:
-						DisplayResource(tile);
-						break;
-				}
-			}
-		}
+		//for (int x = 0; x < world.Width; x++)
+		//{
+		//	for (int y = 0; y < world.Height; y++)
+		//	{
+		//		FloorTile tile = world.tiles[x][y];
+		//		switch (world.MapDisplayMode)
+		//		{
+		//			case DisplayMode.Normal:
+		//				DisplayNormal(tile);
+		//				break;
+		//			case DisplayMode.Height:
+		//				DisplayHeight(tile);
+		//				break;
+		//			case DisplayMode.MoistureNoise:
+		//				DisplayMoistureNoise(tile);
+		//				break;
+		//			case DisplayMode.LatTemperature:
+		//				DisplayLatTemperature(tile);
+		//				break;
+		//			case DisplayMode.CellMoisture:
+		//				DisplayCellMoisture(tile);
+		//				break;
+		//			case DisplayMode.Moisture:
+		//				DisplayMoisture(tile);
+		//				break;
+		//			case DisplayMode.WalkingSpeed:
+		//				DisplayWalkingSpeed(tile);
+		//				break;
+		//			case DisplayMode.Resource:
+		//				DisplayResource(tile);
+		//				break;
+		//		}
+		//	}
+		//}
 
 		//if (world.MapDisplayMode == DisplayMode.Normal)
 		//{
@@ -71,13 +71,13 @@ public partial class Map : Node2D
 		this.QueueRedraw();
 	}
 
-	private void DisplayNormal(Tile tile)
+	private void DisplayNormal(FloorTile tile)
 	{
 		Color color;
 
 		switch (tile.biome)
 		{
-			case TileType.land:
+			case FloorTileType.land:
 				color = new Color(213f/255, 204f/255,127f/255).Lerp(new Color(57f/255, 118f/255, 40f/255), tile.moisture);
 				color = color.Lerp(Color.FromString("black", errorColor), (tile.elev) * .9f);
 
@@ -101,7 +101,7 @@ public partial class Map : Node2D
 				}
 
 				break;
-			case TileType.Water:
+			case FloorTileType.Water:
 				float deepestWaterElev = -0.1f;
 				Color deepestWaterColor = new Color(0.1f, 0.1f, 0.4f); ;
 				if (tile.elev < deepestWaterElev)
@@ -113,7 +113,7 @@ public partial class Map : Node2D
 					color = new Color(0.2f, 0.2f, .6f).Lerp(deepestWaterColor, (tile.elev) / (deepestWaterElev));
 				}
 				break;
-			case TileType.snow:
+			case FloorTileType.snow:
 				color = new Color(1f, .9f, .9f);
 				color = color.Lerp(Color.FromString("black", errorColor), (1 - (tile.elev)) * 0.5f);
 
@@ -135,10 +135,10 @@ public partial class Map : Node2D
 					color = color.Lerp(new Color(98f / 255, 98f / 255, 98f / 255), mapResourceData.amount / mapResourceData.mapResource.resourceMax * 0.75f);
 				}
 				break;
-			case TileType.SeaIce:
+			case FloorTileType.SeaIce:
 				color = new Color(.77f, .8f, .85f);
 				break;
-			case TileType.Glacier:
+			case FloorTileType.Glacier:
 				color = new Color(.77f, .8f, .85f);
 				color = color.Lerp(Color.FromString("black", errorColor), (1 - (tile.elev)) * 0.05f);
 
@@ -171,13 +171,13 @@ public partial class Map : Node2D
 			color);
 	}
 
-	private void DisplayHeight(Tile tile)
+	private void DisplayHeight(FloorTile tile)
 	{
 		Color color = Color.FromString("black", errorColor);
 
 		switch (tile.biome)
 		{
-			case TileType.Water:
+			case FloorTileType.Water:
 				break;
 			default:
 				color = color.Lerp(new Color(1, 1f, 1), tile.elev);
@@ -189,7 +189,7 @@ public partial class Map : Node2D
 			color);
 	}
 
-	private void DisplayResource(Tile tile)
+	private void DisplayResource(FloorTile tile)
 	{
 		Color color = Color.FromString("black", errorColor);
 
@@ -209,7 +209,7 @@ public partial class Map : Node2D
 		
 	}
 
-	private void DisplayMoistureNoise(Tile tile)
+	private void DisplayMoistureNoise(FloorTile tile)
 	{
 		Color color = Color.FromString("black", errorColor);
 		color = color.Lerp(Color.FromString("blue", errorColor), tile.moistureNoise);
@@ -219,7 +219,7 @@ public partial class Map : Node2D
 			color);
 	}
 
-	private void DisplayLatTemperature(Tile tile)
+	private void DisplayLatTemperature(FloorTile tile)
 	{
 		Color color = Color.FromString("blue", errorColor);
 		color = color.Lerp(Color.FromString("red", errorColor), tile.latTemperature);
@@ -229,7 +229,7 @@ public partial class Map : Node2D
 			color);
 	}
 
-	private void DisplayCellMoisture(Tile tile)
+	private void DisplayCellMoisture(FloorTile tile)
 	{
 		Color color = Color.FromString("black", errorColor);
 		color = color.Lerp(Color.FromString("blue", errorColor), tile.cellMoisture);
@@ -238,7 +238,7 @@ public partial class Map : Node2D
 		DrawRect(new Rect2(rectPosition, world.TileSize, world.TileSize),
 			color);
 	}
-	private void DisplayMoisture(Tile tile)
+	private void DisplayMoisture(FloorTile tile)
 	{
 		Color color = Color.FromString("black", errorColor);
 		color = color.Lerp(Color.FromString("blue", errorColor), tile.moisture);
@@ -247,10 +247,10 @@ public partial class Map : Node2D
 		DrawRect(new Rect2(rectPosition, world.TileSize, world.TileSize),
 			color);
 	}
-	private void DisplayWalkingSpeed(Tile tile)
+	private void DisplayWalkingSpeed(FloorTile tile)
 	{
 		Color color = Color.FromString("red", errorColor);
-		color = color.Lerp(Color.FromString("green", errorColor), tile.speedMod * tile.riverCrossingSpeed);
+		color = color.Lerp(Color.FromString("green", errorColor), tile.speedMod);
 
 		Vector2 rectPosition = new Vector2(tile.position.X - world.TileSize / 2, tile.position.Y - world.TileSize / 2);
 		DrawRect(new Rect2(rectPosition, world.TileSize, world.TileSize),
@@ -263,7 +263,7 @@ public partial class Map : Node2D
 		{
 			for (int y = 0; y < world.Height; y++)
 			{
-				Tile tile = world.tiles[x][y];
+				FloorTile tile = world.floorTiles[x][y];
 
 				if (tile.hasWaterBasin)
 				{

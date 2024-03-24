@@ -3,7 +3,7 @@ using System;
 
 public partial class Road : Node2D
 {
-	public Tile tile;
+	public FloorTile tile;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

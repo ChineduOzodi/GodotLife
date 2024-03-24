@@ -42,13 +42,13 @@ public partial class Person : Node2D
 				
 				if (personData.pathIndex < path.Length)
 				{
-					Tile tile = world.GetTile(path[personData.pathIndex].worldPosition);
+					FloorTile tile = world.GetTile(path[personData.pathIndex].worldPosition);
 					float remainingDelta = (float)delta;
 
 					while (remainingDelta > 0) {
 						float distanceIndex;
-						float distanceDelta = tile.speedMod * personData.walkSpeed * (float)delta * world.TileSize * tile.riverCrossingSpeed;
-						if ((personData.currentTile.biome == TileType.Water || personData.currentTile.biome == TileType.SeaIce) && (tile.biome == TileType.SeaIce || tile.biome == TileType.Water))
+						float distanceDelta = tile.speedMod * personData.walkSpeed * (float)delta * world.TileSize;
+						if ((personData.currentTile.biome == FloorTileType.Water || personData.currentTile.biome == FloorTileType.SeaIce) && (tile.biome == FloorTileType.SeaIce || tile.biome == FloorTileType.Water))
 						{
 							distanceIndex = Position.DistanceTo(path[personData.pathIndex].worldPosition);
 						} else
@@ -60,7 +60,7 @@ public partial class Person : Node2D
 
 						if (distanceDelta <= distanceIndex) {
 
-							if ((personData.currentTile.biome == TileType.Water || personData.currentTile.biome == TileType.SeaIce) && (tile.biome == TileType.SeaIce || tile.biome == TileType.Water))
+							if ((personData.currentTile.biome == FloorTileType.Water || personData.currentTile.biome == FloorTileType.SeaIce) && (tile.biome == FloorTileType.SeaIce || tile.biome == FloorTileType.Water))
 							{
 								Position =(Position.Lerp(path[personData.pathIndex].worldPosition, (distanceDelta) / distanceIndex));
 							}
@@ -74,7 +74,7 @@ public partial class Person : Node2D
 							
 							remainingDelta = 0;
 						} else {
-							if (personData.currentTile.biome != TileType.Water && personData.currentTile.biome != TileType.SeaIce)
+							if (personData.currentTile.biome != FloorTileType.Water && personData.currentTile.biome != FloorTileType.SeaIce)
 							{                                
 								tile.speedMod += .02f * personData.walkSpeed;
 								if (tile.speedMod > tile.maxSpeedMod)

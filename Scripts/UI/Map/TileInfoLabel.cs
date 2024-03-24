@@ -18,7 +18,7 @@ public partial class TileInfoLabel : RichTextLabel
 	{
 		if (World.Instance != null && World.Instance.HoveredTile != null)
 		{
-			Tile tile = World.Instance.HoveredTile;
+			FloorTile tile = World.Instance.HoveredTile;
 			string info = $"{tile.name}\n{tile.biome.ToString()}";
 			if (tile.hasRiver)
 			{

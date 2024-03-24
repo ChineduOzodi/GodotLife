@@ -34,7 +34,7 @@ public partial class MouseClicks : Node
 		{
 			if (World.Instance != null && World.Instance.HoveredTile != null)
 			{
-				Tile tile = World.Instance.HoveredTile;
+				FloorTile tile = World.Instance.HoveredTile;
 				if (tile.cityId != null)
 				{
 					City city = World.Instance.cities.Find(x => x.id == tile.cityId);

@@ -118,7 +118,7 @@ public partial class Camera2D : Godot.Camera2D
 		}
 
 		// Update position of the camera.
-		Position += camera_movement * Zoom;
+		Position += camera_movement / Zoom;
 		if (Position.Y < -worldYLimit)
 		{
 			Position = new Vector2(Position.X, -worldYLimit);

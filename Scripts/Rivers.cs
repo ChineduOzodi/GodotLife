@@ -29,7 +29,7 @@ public partial class Rivers : Node2D
 		{
 			for (int y = 0; y < world.Height; y++)
 			{
-				Tile tile = world.tiles[x][y];
+				FloorTile tile = world.floorTiles[x][y];
 				
 				if (tile.hasWaterBasin)
 				{

@@ -40,6 +40,7 @@ public partial class CityDialog : Control
 			if (e.Pressed)
 			{
 				Console.WriteLine("pressed: {0}", e);
+				AcceptEvent();
 			}
 
 		}

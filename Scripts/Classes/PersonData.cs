@@ -18,7 +18,7 @@ namespace Life.Scripts.Classes
         public PersonAction personAction = PersonAction.Idle;
         public int pathIndex = 0;
         public float walkSpeed = 2;
-        public Tile currentTile;
+        public FloorTile currentTile;
         public string spouseId;
         public string motherId;
         public string fatherId;

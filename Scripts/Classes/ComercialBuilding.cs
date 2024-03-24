@@ -15,7 +15,7 @@ namespace Life.Scripts.Classes
         public List<Item> storage  = new List<Item>();
 
 
-        public static CommercialBuilding CreateWoodShop(PersonData manager, Tile tile)
+        public static CommercialBuilding CreateWoodShop(PersonData manager, FloorTile tile)
         {
             CommercialBuilding comercialBuilding = new CommercialBuilding();
             comercialBuilding.buildingId = "commercialbuilding " + World.Instance.Random.Randi().ToString();

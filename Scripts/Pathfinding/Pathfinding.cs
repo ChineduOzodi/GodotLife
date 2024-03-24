@@ -161,7 +161,7 @@ namespace Life.Scripts.Pathfinding
 
 						float newMovementCostToNeighbor;
 
-						if (currentNode.biome == TileType.Water && neighbor.biome == TileType.Water)
+						if (currentNode.biome == FloorTileType.Water && neighbor.biome == FloorTileType.Water)
 						{
 							newMovementCostToNeighbor = currentNode.gCost + (GetDistance(currentNode, neighbor)) / (currentNode.moveSpeed);
 						}

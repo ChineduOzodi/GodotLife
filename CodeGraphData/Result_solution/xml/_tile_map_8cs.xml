@@ -1,41 +1,41 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
   <compounddef id="_tile_map_8cs" kind="file">
-    <compoundname>TileMap.cs</compoundname>
-    <innerclass refid="class_tile_map" prot="public">TileMap</innerclass>
-      <sectiondef kind="enum">
-      <memberdef kind="enum" id="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1" prot="public" static="no">
-        <name>TileType</name>
-        <enumvalue id="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1ad4e3b74fb352a9f0977f9b86258daddb" prot="public">
-          <name>Grassland</name>
-          <initializer>= 0</initializer>
-          <briefdescription>
-          </briefdescription>
-          <detaileddescription>
-          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1a27634ff8002b12e75d98e07ccd005d18" prot="public">
-          <name>Water</name>
-          <initializer>= 1</initializer>
-          <briefdescription>
-          </briefdescription>
-          <detaileddescription>
-          </detaileddescription>
-        </enumvalue>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="E:/mygitrepos/GodotLife/Scripts/TileMap.cs" line="44" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/TileMap.cs" bodystart="43" bodyend="47"/>
-      </memberdef>
-      </sectiondef>
-    <briefdescription>
-    </briefdescription>
-    <detaileddescription>
-    </detaileddescription>
-    <programlisting>
+	<compoundname>TileMap.cs</compoundname>
+	<innerclass refid="class_tile_map" prot="public">TileMap</innerclass>
+	  <sectiondef kind="enum">
+	  <memberdef kind="enum" id="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1" prot="public" static="no">
+		<name>TileType</name>
+		<enumvalue id="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1ad4e3b74fb352a9f0977f9b86258daddb" prot="public">
+		  <name>Grassland</name>
+		  <initializer>= 0</initializer>
+		  <briefdescription>
+		  </briefdescription>
+		  <detaileddescription>
+		  </detaileddescription>
+		</enumvalue>
+		<enumvalue id="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1a27634ff8002b12e75d98e07ccd005d18" prot="public">
+		  <name>Water</name>
+		  <initializer>= 1</initializer>
+		  <briefdescription>
+		  </briefdescription>
+		  <detaileddescription>
+		  </detaileddescription>
+		</enumvalue>
+		<briefdescription>
+		</briefdescription>
+		<detaileddescription>
+		</detaileddescription>
+		<inbodydescription>
+		</inbodydescription>
+		<location file="E:/mygitrepos/GodotLife/Scripts/TileMap.cs" line="44" column="1" bodyfile="E:/mygitrepos/GodotLife/Scripts/TileMap.cs" bodystart="43" bodyend="47"/>
+	  </memberdef>
+	  </sectiondef>
+	<briefdescription>
+	</briefdescription>
+	<detaileddescription>
+	</detaileddescription>
+	<programlisting>
 <codeline lineno="1"><highlight class="keyword">using</highlight><highlight class="normal"><sp/>Godot;</highlight></codeline>
 <codeline lineno="2"><highlight class="normal"></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/>System;</highlight></codeline>
 <codeline lineno="3"><highlight class="normal"></highlight></codeline>
@@ -83,7 +83,7 @@
 <codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1ad4e3b74fb352a9f0977f9b86258daddb" kindref="member">Grassland</ref><sp/>=<sp/>0,</highlight></codeline>
 <codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_tile_map_8cs_1ac9e486ec80ccfdb28a4f4837d419c9f1a27634ff8002b12e75d98e07ccd005d18" kindref="member">Water</ref><sp/>=<sp/>1</highlight></codeline>
 <codeline lineno="47"><highlight class="normal">}</highlight></codeline>
-    </programlisting>
-    <location file="E:/mygitrepos/GodotLife/Scripts/TileMap.cs"/>
+	</programlisting>
+	<location file="E:/mygitrepos/GodotLife/Scripts/TileMap.cs"/>
   </compounddef>
 </doxygen>

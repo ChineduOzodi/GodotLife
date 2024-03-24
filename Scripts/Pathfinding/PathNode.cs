@@ -10,7 +10,7 @@ namespace Life.Scripts.Pathfinding
     public partial class PathNode : IHeapItem<PathNode>
     {
         public float moveSpeed;
-        public TileType biome;
+        public FloorTileType biome;
         public Vector2 worldPosition;
         public Coord coord;
         public PathNode parent;
@@ -50,8 +50,8 @@ namespace Life.Scripts.Pathfinding
             //Get correct walk speed modification
             int x = pos.x / model.TileSize - model.XOffset;
             int y = pos.y / model.TileSize - model.XOffset;
-            Tile tile = model.tiles[x][y];
-            float speed = tile.speedMod * tile.riverCrossingSpeed;
+            FloorTile tile = model.floorTiles[x][y];
+            float speed = tile.speedMod;
 
 
             Vector2 worldPosition = new Vector2(pos.x,pos.y);

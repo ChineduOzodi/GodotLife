@@ -1,0 +1,16 @@
+﻿using Godot;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Life.Scripts.Classes.Tiles
+{
+    internal class TreeObject : GroundObject
+    {
+        public TreeObject(Vector2I tilePosition, float speedMod, int tileSetSourceId, Vector2I atlasCoords) : base(tilePosition, speedMod, tileSetSourceId, atlasCoords)
+        {
+        }
+    }
+}

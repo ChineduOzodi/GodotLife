@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1f8xd7p4qibt"]
+
+[ext_resource type="Texture2D" uid="uid://qtsj8qlybjfs" path="res://Textures/MiniWorldSprites/Nature/Trees.png" id="1_sad6q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1f27s"]
+atlas = ExtResource("1_sad6q")
+region = Rect2(17, 1, 12, 14)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nbvb2"]
+radius = 6.0
+
+[node name="Tree" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_1f27s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_nbvb2")
