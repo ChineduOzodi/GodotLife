@@ -1320,7 +1320,7 @@ script = ExtResource("12")
 script = ExtResource("5")
 
 [node name="RTS-Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(10, 10)
+zoom = Vector2(100, 100)
 script = ExtResource("6")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

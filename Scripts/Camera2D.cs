@@ -3,18 +3,21 @@ using System;
 
 public partial class Camera2D : Godot.Camera2D
 {
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
-	private float movementStrength = 100f;
-	private float zoomStrength = 0.2f;
+    private World world;
 
-	// Camera control settings:
-	// key - by keyboard
-	//drag - by clicking mouse button, right mouse button by default;
-	// edge - by moving mouse to the window edge
-	// wheel - zoom in/out by mouse wheel
-	public bool key = true;
+    private float movementStrength = 100f;
+	private float zoomStrength = 0.2f;
+	private float minZoom = 3f;
+	private float maxZoom = 0.25f;
+    private float cameraZoomSpeed = 0.06f;
+
+
+    // Camera control settings:
+    // key - by keyboard
+    //drag - by clicking mouse button, right mouse button by default;
+    // edge - by moving mouse to the window edge
+    // wheel - zoom in/out by mouse wheel
+    public bool key = true;
 	public bool drag = true;
 	public bool edge = false;
 	public bool wheel = true;
@@ -24,17 +27,10 @@ public partial class Camera2D : Godot.Camera2D
 	// Camera speed in px/s.
 	public int camera_speed = 450;
 
-	// Initial zoom value taken from Editor.
-	Vector2 camera_zoom;
-
 	// Value meaning how near to the window edge (in px) the mouse must be,
 	// to move a view.
 	public int camera_margin = 50;
 
-	// It changes a camera zoom value in units... (?, but it works... it probably
-	// multiplies camera size by 1+camera_zoom_speed)
-	Vector2 camera_zoom_speed = new Vector2(0.05f, 0.05f);
-	const float zoom_speed_mod = 0.05f;
 	const int worldXLimit = 100 * 150;
 	const int worldYLimit = 100 * 100;
 
@@ -54,8 +50,11 @@ public partial class Camera2D : Godot.Camera2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		camera_zoom = Zoom;
-		_prev_mouse_pos = GetLocalMousePosition();
+        world = GetParent<World>();
+        Zoom = new(maxZoom, maxZoom);
+		GlobalPosition = new(world.Width * world.TileSize * 0.5f, world.Height * world.TileSize * 0.5f);
+
+        _prev_mouse_pos = GetLocalMousePosition();
 		DragHorizontalEnabled = false;
 		DragVerticalEnabled = false;
 		PositionSmoothingEnabled = true;
@@ -153,16 +152,14 @@ public partial class Camera2D : Godot.Camera2D
 
 			if (wheel)
 			{
-				if (e.ButtonIndex == MouseButton.WheelUp && camera_zoom.X + camera_zoom_speed.X > 0 && camera_zoom.Y + camera_zoom_speed.Y > 0)
+				if (e.ButtonIndex == MouseButton.WheelUp)
 				{
-					camera_zoom -= camera_zoom_speed + Zoom * zoom_speed_mod;
-					Zoom = camera_zoom;
+					Zoom = new(Math.Max(Zoom.X - cameraZoomSpeed, maxZoom), Math.Max(Zoom.Y - cameraZoomSpeed, maxZoom));
 				}
 
-				if (e.ButtonIndex == MouseButton.WheelDown && camera_zoom.X + camera_zoom_speed.X < zoom_out_limit && camera_zoom.Y + camera_zoom_speed.Y < zoom_out_limit)
+				if (e.ButtonIndex == MouseButton.WheelDown)
 				{
-					camera_zoom += camera_zoom_speed + Zoom * zoom_speed_mod;
-					Zoom = camera_zoom;
+					Zoom = new(Math.Min(Zoom.X + cameraZoomSpeed, minZoom), Math.Min(Zoom.Y + cameraZoomSpeed, minZoom));
 				}
 			}
 		}

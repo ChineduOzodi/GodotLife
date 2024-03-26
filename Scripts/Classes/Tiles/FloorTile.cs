@@ -1,10 +1,11 @@
 using Godot;
 using Life.Scripts.Classes;
+using Life.Scripts.Classes.Tiles;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-public partial class FloorTile
+public partial class FloorTile(int X, int Y) : Tile(X, Y)
 {
 	public const int subTileWidthHeight = 19;
 
@@ -17,7 +18,6 @@ public partial class FloorTile
 	public float latTemperature;
 	public float cellMoisture;
 	public float moisture;
-	public Coord coord;
 	public City City { get => World.Instance.cities.Find(x => x.id == cityId); }
 
 	// movement
@@ -31,14 +31,15 @@ public partial class FloorTile
 	public bool hasWaterBasin;
 	public float waterBasinSize = 0;
 	public Vector2 position;
-	public Dictionary<String, float> distanceToLoctaion = new Dictionary<string, float>();
+	public Dictionary<String, float> distanceToLoctaion = [];
 	public double lastUpdated;
 
 	public Property[][] properties;
-	public List<String> buildings = new List<string>();
+	public List<String> buildings = [];
 	// resources
 	public List<MapResourceData> resources = new List<MapResourceData>();
-	public bool HasMapResource(string resource)
+
+    public bool HasMapResource(string resource)
 	{
 		return resources.Exists(x => x.resource == resource);
 	}

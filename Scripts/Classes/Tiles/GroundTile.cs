@@ -21,13 +21,13 @@ namespace Life.Scripts.Classes.Tiles
 
         public void AddTree()
         {
-            obj = new TreeObject(this.tilePosition, 0.5f, 0, new(1,15));
+            obj = new TreeObject(this.coord, 0.5f, 0, new(1,15));
             type = GroundTileType.Vegetation;
         }
 
         public void AddRock()
         {
-            obj = new RockObject(this.tilePosition, 0, 0, new(5, 11));
+            obj = new RockObject(this.coord, 0, 0, new(5, 11));
         }
 
         public bool HasObject()

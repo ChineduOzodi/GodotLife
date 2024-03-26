@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using static System.Net.WebRequestMethods;
+using System.Linq;
 
 public partial class World : Node2D
 {
@@ -18,6 +18,7 @@ public partial class World : Node2D
 	public const float TileArea = TileScale * TileScale; //in km^2
 	public static World Instance;
 	public int idGen = 1;
+	public const int PEOPLE_COUNT = 200;
 
 	public RandomName peopleNames;
 	public CityNames cityNames;
@@ -50,8 +51,6 @@ public partial class World : Node2D
 	private Rivers riverDisplay;
 	private MapResourceOverlay mapResourceOverlay;
 	private DisplayMode mapDisplayMode = DisplayMode.Normal;
-	private int xOffset;
-	private int yOffset;
 	private RandomNumberGenerator random = new RandomNumberGenerator();
 	private Person nearestPerson;
 	float nearestPersonDistanceSquared;
@@ -60,7 +59,7 @@ public partial class World : Node2D
 
 
 	//Map Generation Variables
-	private int tileSize = 1;
+	private int tileSize = 16; // in pixels
 	private int width = 300 * 2;
 	private int height = 200 * 2;
 	private float waterLevel = 0.5f;
@@ -99,8 +98,6 @@ public partial class World : Node2D
 	private PackedScene cityPrefab;
 	private PackedScene personPrefab;
 
-	public int XOffset { get => xOffset; }
-	public int YOffset { get => yOffset; }
 	public int Width { get => width; }
 	public int Height { get => height; }
 	public int TileSize { get => tileSize; }
@@ -156,7 +153,7 @@ public partial class World : Node2D
 
 		// show hovered over FloorTile
 		Vector2 mousePosition = GetGlobalMousePosition();
-		Coord mouseTileCoord = new Coord((int)((mousePosition.X + tileSize * 0.5f) / tileSize - xOffset), (int)((mousePosition.Y + tileSize * 0.5f) / tileSize - yOffset));
+		Coord mouseTileCoord = new Coord((int)((mousePosition.X + tileSize * 0.5f) / tileSize), (int)((mousePosition.Y + tileSize * 0.5f) / tileSize));
 		if (mouseTileCoord.x >= 0 && mouseTileCoord.y >= 0 && mouseTileCoord.x < width && mouseTileCoord.x < height)
 		{
 			hoveredTile = floorTiles[mouseTileCoord.x][mouseTileCoord.y];
@@ -223,10 +220,8 @@ public partial class World : Node2D
 
 	public void GenerateWorld(int width, int height)
 	{
-		xOffset = -width / 2;
-		yOffset = -height / 2;
-		xLimit = (width + xOffset) * tileSize;
-		yLimit = (height + yOffset) * tileSize;
+		xLimit = width * tileSize;
+		yLimit = height * tileSize;
 		moistureNoise.Seed = (DateTime.Now.TimeOfDay.Milliseconds + "moisture".GetHashCode());
 		goldOreNoise.Seed = (DateTime.Now.TimeOfDay.Milliseconds + "goldOre".GetHashCode());
 		ironOreNoise.Seed = (DateTime.Now.TimeOfDay.Milliseconds + "ironOre".GetHashCode());
@@ -236,6 +231,11 @@ public partial class World : Node2D
 		int negativeMoistureCount = 0;
 		floorTiles = new FloorTile[width][];
 		groundTiles = new GroundTile[width][];
+
+        Random r = new((int)(DateTime.Now.ToBinary() + Random.Randi()));
+        peopleNames = new RandomName(r);
+        cityNames = new CityNames(r);
+        
 		for (int x = 0; x < width; x++)
 		{
 			floorTiles[x] = new FloorTile[height];
@@ -243,13 +243,14 @@ public partial class World : Node2D
 
 			for (int y = 0; y < height; y++)
 			{
-				FloorTile tile = new FloorTile();
-				
-				tile.coord = new Coord(x, y);
-				float elevationPow = 2;
+                FloorTile tile = new(x,y)
+                {
+                    name = $"${x * tileSize},{y * tileSize}",
+                    position = new Vector2(x * tileSize, y * tileSize)
+                };
 
-				tile.name = $"${(x + xOffset) * tileSize},{(y + yOffset) * tileSize}";
-				float elevationNoiseNumber = elevationNoise.GetNoise2D((x + xOffset) * elevationNoiseScale, (y + yOffset) * elevationNoiseScale);
+                float elevationPow = 2;
+				float elevationNoiseNumber = elevationNoise.GetNoise2D(x * elevationNoiseScale, y * elevationNoiseScale);
 				tile.elev = (elevationNoiseNumber + 1) * .5f;
 				float elevAboveSeaLevel = tile.elev - waterLevel;
 				//if (elevAboveSeaLevel < 0)
@@ -260,11 +261,11 @@ public partial class World : Node2D
 				float alteredElevationAboveSeaLevelNumber = (elevAboveSeaLevelScaled >= 0) ? Mathf.Pow(elevAboveSeaLevelScaled, elevationPow) : -Mathf.Pow(-elevAboveSeaLevelScaled, elevationPow);
 				tile.elev = alteredElevationAboveSeaLevelNumber;
 				float moistureNoisePow = 0.75f;
-				float moistureNoiseNumber = moistureNoise.GetNoise2D((x + xOffset) * moistureNoiseScale, (y + yOffset) * moistureNoiseScale);
+				float moistureNoiseNumber = moistureNoise.GetNoise2D((x) * moistureNoiseScale, y * moistureNoiseScale);
 				float alteredMoistureNoiseNumber = (moistureNoiseNumber < 0) ? -Mathf.Pow(-moistureNoiseNumber, moistureNoisePow) : Mathf.Pow(moistureNoiseNumber, moistureNoisePow);
 				tile.moistureNoise = (alteredMoistureNoiseNumber + 1) * .5f;
-				tile.latTemperature = -Mathf.Pow(((float)y + yOffset) / (-yOffset), 2) + 1;
-				tile.cellMoisture = (Mathf.Cos((((float)y + yOffset) / (-yOffset)) * Mathf.Pi * 3) + 1) * 0.5f;
+				tile.latTemperature = -Mathf.Pow((y - height * .5f) / (height * .5f), 2) + 1;
+				tile.cellMoisture = (Mathf.Cos((y - height * .5f) / (height * .5f) * Mathf.Pi * 3) + 1) * 0.5f;
 
 				//calculate moisture
 				float elevMoisture = (tile.elev >= 0) ? 1 - tile.elev : 1;
@@ -280,7 +281,6 @@ public partial class World : Node2D
 				{
 					tile.moisture *= Mathf.Pow(elevMoisture, elevMoistureScale);
 				}
-				tile.position = new Vector2((x + xOffset) * tileSize, (y + yOffset) * tileSize);
 
 				if (tile.moisture < 0)
 				{
@@ -328,7 +328,6 @@ public partial class World : Node2D
 						tile.baseSpeedMod = 0.3f;
 						tile.recoveryRate = 0.002f;
 						tile.maxSpeedMod = 1;
-						//Console.WriteLine("tile biome set to ice");
 					}
 				}
 				else
@@ -363,7 +362,7 @@ public partial class World : Node2D
 				//calculate ores
 				if (tile.biome == FloorTileType.land || tile.biome == FloorTileType.Glacier || tile.biome == FloorTileType.snow)
 				{
-					float goldOreNumber = goldOreNoise.GetNoise2D((x + xOffset) * goldOreNoiseScale, (y + yOffset) * goldOreNoiseScale);
+					float goldOreNumber = goldOreNoise.GetNoise2D((x) * goldOreNoiseScale, y * goldOreNoiseScale);
 					float goldOreProductionRate = (goldOreNumber - goldOreNoiseMin) * goldOreScale;
 
 					if (goldOreProductionRate > 0)
@@ -377,7 +376,7 @@ public partial class World : Node2D
 						}
 					}
 
-					float ironOreNumber = ironOreNoise.GetNoise2D((x + xOffset) * ironOreNoiseScale, (y + yOffset) * ironOreNoiseScale);
+					float ironOreNumber = ironOreNoise.GetNoise2D((x) * ironOreNoiseScale, y * ironOreNoiseScale);
 					float ironOreProductionRate = (ironOreNumber - ironOreNoiseMin) * ironOreScale;
 
 					if (ironOreProductionRate > 0)
@@ -401,19 +400,52 @@ public partial class World : Node2D
 		GenerateGroundObjects();
 		GenerateResources();
 		//GenerateCities(cityCount);
+		GeneratePeople();
 		map.GenerateMap();
 		worldMap.GenerateMap();
 		mapResources.ForEach(x => Console.WriteLine($"{x.Name}: {x.resourceMax}"));
 	}
 
+	private void GeneratePeople()
+	{
+		for (int i = 0; i < PEOPLE_COUNT; i++)
+		{
+			Vector2? position = GetRandomPositionOnMap([FloorTileType.land]);
+			if (position.HasValue)
+			{
+				GeneratePerson(position.Value);
+			}
+		}
+	}
 
+	private Vector2? GetRandomPositionOnMap(List<FloorTileType> floorTileTypes, bool onRiverTile = false)
+	{
+		const int RANDOM_CHECK_LIMIT = 1000;
+
+		int count = 0;
+		while (count < RANDOM_CHECK_LIMIT)
+		{
+			count++;
+
+			float randomX = random.Randf() * width * tileSize;
+			float randomY = random.Randf() * height * tileSize;
+
+			Vector2 position = new(randomX, randomY);
+
+			FloorTile tile = GetTile(position);
+
+			if (floorTileTypes.Contains(tile.biome) && tile.hasRiver == onRiverTile)
+			{
+				return position;
+			}
+
+		}
+		return null;
+	}
 
 	private void GenerateCities(int num)
 	{
 		DeleteCities();
-		Random r = new Random((int)(DateTime.Now.ToBinary() + Random.Randi()));
-		peopleNames = new RandomName(r);
-		cityNames = new CityNames(r);
 
 		cities = new List<City>();
 		int tries = 0;
@@ -429,29 +461,27 @@ public partial class World : Node2D
 				cities.Add(city);
 				city.Name = "city" + num;
 				city.name = city.Name;
-				Vector2 pos = new Vector2((randomX + xOffset) * tileSize, (randomY + yOffset) * tileSize);
+				Vector2 pos = new Vector2((randomX) * tileSize, (randomY) * tileSize);
 				city.Position = (pos);
 				city.GenerateCity(this, floorTiles[randomX][randomY], 5);
 				tries = 0;
 				num--;
 				//Console.WriteLine($"Created {city.name}");
-				for (int i = 0; i < peopleCount; i++)
-				{
-					//GeneratePerson(pos);
-				}
 			}
 			else
 			{
 				tries++;
-				//Console.WriteLine($"tries: {tries}");
 			}
 		}
 	}
 
 	private void GeneratePerson(Vector2 position)
 	{
+		PersonData personData = GeneratePersonData(position);
 		Person person = personPrefab.Instantiate<Person>();
 		person.Position = (position);
+		person.personData = personData;
+
 		if (person == null)
 		{
 			Debug.WriteLine("person is null");
@@ -459,9 +489,31 @@ public partial class World : Node2D
 		else
 		{
 			AddChild(person);
-			//people.Add(person);
 		}
 	}
+
+	private PersonData GeneratePersonData(Vector2 position)
+	{
+        PersonData person = new PersonData();
+        person.id = Random.Randi().ToString();
+        people[person.id] = person;
+		person.position = position;
+
+        if (Random.Randf() < 0.5f)
+        {
+            person.gender = Gender.male;
+            person.firstName = peopleNames.GenerateFirstName(Sex.Male);
+        }
+        else
+        {
+            person.gender = Gender.female;
+            person.firstName = peopleNames.GenerateFirstName(Sex.Female);
+        }
+        person.lastName = peopleNames.GenerateLastName();
+        int age = Random.RandiRange(18, 50);
+        person.birthDate = Time - GDate.Year * age;
+		return person;
+    }
 
 	public void GenerateRivers()
 	{
@@ -551,31 +603,15 @@ public partial class World : Node2D
 
 					FloorTile toTile = null;
 					float distanceDiff = 0;
-
-					for (int nx = -tileSize; nx <= tileSize; nx += TileSize)
+					foreach (FloorTile neighbor in GetNeighbors(tile, floorTiles, noDiagonals: true))
 					{
-						for (int ny = -tileSize; ny <= tileSize; ny += tileSize)
-						{
-							if ((nx == -1 && ny == 1) || nx == ny || (nx == 1 && ny == -1))
-								continue;
-
-							float checkX = tile.position.X + nx;
-							float checkY = tile.position.Y + ny;
-
-							if (checkX >= -xLimit && checkX < xLimit && checkY >= -yLimit && checkY < yLimit)
-							{
-								FloorTile neighborTile = GetTile(new Vector2(checkX, checkY));
-								float neighborDiff = neighborTile.elev - tile.elev;
-								if (neighborDiff < distanceDiff)
-								{
-									distanceDiff = neighborDiff;
-									toTile = neighborTile;
-								}
-							}
-
-
-						}
-					}
+                        float neighborDiff = neighbor.elev - tile.elev;
+                        if (neighborDiff < distanceDiff)
+                        {
+                            distanceDiff = neighborDiff;
+                            toTile = neighbor;
+                        }
+                    }
 
 					if (toTile != null)
 					{
@@ -639,9 +675,8 @@ public partial class World : Node2D
 
 	public FloorTile GetTile(Vector2 position)
 	{
-		Coord pos = new Coord(Mathf.RoundToInt(position.X / tileSize) * tileSize, Mathf.RoundToInt(position.Y / tileSize) * tileSize);
-		int x = pos.x / tileSize - xOffset;
-		int y = pos.y / tileSize - yOffset;
+		int x = Mathf.FloorToInt(position.X / tileSize);
+		int y = Mathf.FloorToInt(position.Y / tileSize);
 
 		return floorTiles[x][y];
 	}
@@ -849,33 +884,50 @@ public partial class World : Node2D
 
 	private float GetAverageElevationDiff(FloorTile tile)
 	{
-		int neighbors = 0;
 		float averageElevDiff = 0;
+		List<FloorTile> neighbors = GetNeighbors(tile, floorTiles);
 
-		for (int nx = -tileSize; nx <= tileSize; nx += tileSize)
+
+
+        foreach (FloorTile neighbor in neighbors)
 		{
-			for (int ny = -tileSize; ny <= tileSize; ny += tileSize)
-			{
-				if (nx == 0 && ny == 0)
-					continue;
+            averageElevDiff += Mathf.Abs(neighbor.elev - tile.elev);
+        }
 
-				float checkX = tile.position.X + nx;
-				float checkY = tile.position.Y + ny;
-
-				if (checkX >= -xLimit && checkX < xLimit && checkY >= -yLimit && checkY < yLimit)
-				{
-					FloorTile neighborTile = GetTile(new Vector2(checkX, checkY));
-					averageElevDiff += Mathf.Abs(neighborTile.elev - tile.elev);
-					neighbors++;
-				}
-			}
-		}
-
-		averageElevDiff /= neighbors;
+		averageElevDiff /= neighbors.Count;
 		return averageElevDiff;
 	}
 
-	private static void GenerateTree(GroundTile tile)
+    private List<T> GetNeighbors<T>(T tile, T[][] tiles, bool noDiagonals = false) where T : Tile
+    {
+        List<T> neighbors = [];
+
+        for (int nx = -1; nx <= 1; nx += 1)
+        {
+            for (int ny = -1; ny <= 1; ny += 1)
+            {
+                if (nx == 0 && ny == 0)
+                    continue;
+
+				if (noDiagonals && ((nx == -1 && ny == 1) || nx == ny || (nx == 1 && ny == -1)))
+				{
+					continue;
+				}
+
+                int checkX = tile.coord.X + nx;
+                int checkY = tile.coord.Y + ny;
+
+                if (checkX >= 0 && checkX < width && checkY >= 0 && checkY < height)
+                {
+                    neighbors.Add(tiles[checkX][checkY]);
+                }
+            }
+        }
+
+        return neighbors;
+    }
+
+    private static void GenerateTree(GroundTile tile)
 	{
 		tile.AddTree();
 	}

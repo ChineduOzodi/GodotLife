@@ -19,102 +19,102 @@ public partial class Person : Node2D
 	{
 		world = GetParent<World>();
 		pathRequestManager = GetNode<PathRequestManager>(new NodePath("../PathRequestManager"));
-		personData.currentTile = world.GetTile(Position);
-		personData.elev = personData.currentTile.elev;
+		//personData.currentTile = world.GetTile(Position);
+		//personData.elev = personData.currentTile.elev;
 	}
 	
 	//  // Called every frame. '(float)delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		switch (personData.personAction)
-		{
-			case PersonAction.Idle:
-				personData.personAction = PersonAction.Waiting;
-				PathRequestManager.RequestPath(personData.currentTile.position, GotoCity(), FoundPath);
-				break;
-			//case PersonAction.Waiting:
-			//    if (path != null)
-			//    {
-			//        personAction = PersonAction.Moving;
-			//    }
-			//    break;
-			case PersonAction.Moving:
+		//switch (personData.personAction)
+		//{
+		//	case PersonAction.Idle:
+		//		//personData.personAction = PersonAction.Waiting;
+		//		//PathRequestManager.RequestPath(personData.currentTile.position, GotoCity(), FoundPath);
+		//		break;
+		//	//case PersonAction.Waiting:
+		//	//    if (path != null)
+		//	//    {
+		//	//        personAction = PersonAction.Moving;
+		//	//    }
+		//	//    break;
+		//	case PersonAction.Moving:
 				
-				if (personData.pathIndex < path.Length)
-				{
-					FloorTile tile = world.GetTile(path[personData.pathIndex].worldPosition);
-					float remainingDelta = (float)delta;
+		//		if (personData.pathIndex < path.Length)
+		//		{
+		//			FloorTile tile = world.GetTile(path[personData.pathIndex].worldPosition);
+		//			float remainingDelta = (float)delta;
 
-					while (remainingDelta > 0) {
-						float distanceIndex;
-						float distanceDelta = tile.speedMod * personData.walkSpeed * (float)delta * world.TileSize;
-						if ((personData.currentTile.biome == FloorTileType.Water || personData.currentTile.biome == FloorTileType.SeaIce) && (tile.biome == FloorTileType.SeaIce || tile.biome == FloorTileType.Water))
-						{
-							distanceIndex = Position.DistanceTo(path[personData.pathIndex].worldPosition);
-						} else
-						{
-							distanceIndex = Position.DistanceTo(path[personData.pathIndex].worldPosition)  + (Mathf.Abs(personData.elev - tile.elev) * world.ElevChangeCost * world.TileSize);
-							//Console.WriteLine($"distanceIndex: {distanceIndex}");
-							//Console.WriteLine($"deltatIndex: {distanceDelta}");
-						}
+		//			while (remainingDelta > 0) {
+		//				float distanceIndex;
+		//				float distanceDelta = tile.speedMod * personData.walkSpeed * (float)delta * world.TileSize;
+		//				if ((personData.currentTile.biome == FloorTileType.Water || personData.currentTile.biome == FloorTileType.SeaIce) && (tile.biome == FloorTileType.SeaIce || tile.biome == FloorTileType.Water))
+		//				{
+		//					distanceIndex = Position.DistanceTo(path[personData.pathIndex].worldPosition);
+		//				} else
+		//				{
+		//					distanceIndex = Position.DistanceTo(path[personData.pathIndex].worldPosition)  + (Mathf.Abs(personData.elev - tile.elev) * world.ElevChangeCost * world.TileSize);
+		//					//Console.WriteLine($"distanceIndex: {distanceIndex}");
+		//					//Console.WriteLine($"deltatIndex: {distanceDelta}");
+		//				}
 
-						if (distanceDelta <= distanceIndex) {
+		//				if (distanceDelta <= distanceIndex) {
 
-							if ((personData.currentTile.biome == FloorTileType.Water || personData.currentTile.biome == FloorTileType.SeaIce) && (tile.biome == FloorTileType.SeaIce || tile.biome == FloorTileType.Water))
-							{
-								Position =(Position.Lerp(path[personData.pathIndex].worldPosition, (distanceDelta) / distanceIndex));
-							}
-							else
-							{
-								float interpolation = (distanceDelta) / distanceIndex;
-								Position =(Position.Lerp(path[personData.pathIndex].worldPosition, interpolation));
-								personData.elev += (tile.elev - personData.elev) * interpolation;
-								//Console.WriteLine($"Interpolation: {(distanceDelta) / distanceIndex}");
-							}
+		//					if ((personData.currentTile.biome == FloorTileType.Water || personData.currentTile.biome == FloorTileType.SeaIce) && (tile.biome == FloorTileType.SeaIce || tile.biome == FloorTileType.Water))
+		//					{
+		//						Position =(Position.Lerp(path[personData.pathIndex].worldPosition, (distanceDelta) / distanceIndex));
+		//					}
+		//					else
+		//					{
+		//						float interpolation = (distanceDelta) / distanceIndex;
+		//						Position =(Position.Lerp(path[personData.pathIndex].worldPosition, interpolation));
+		//						personData.elev += (tile.elev - personData.elev) * interpolation;
+		//						//Console.WriteLine($"Interpolation: {(distanceDelta) / distanceIndex}");
+		//					}
 							
-							remainingDelta = 0;
-						} else {
-							if (personData.currentTile.biome != FloorTileType.Water && personData.currentTile.biome != FloorTileType.SeaIce)
-							{                                
-								tile.speedMod += .02f * personData.walkSpeed;
-								if (tile.speedMod > tile.maxSpeedMod)
-								{
-									tile.speedMod = tile.maxSpeedMod;
-								}
-							}
-							personData.pathIndex++;
-							if (personData.pathIndex >= path.Length) {
-								Position =(tile.position);
-								remainingDelta = 0;
-								break;
-							}
-							personData.currentTile = tile;
-							personData.elev = personData.currentTile.elev;
-							tile = world.GetTile(path[personData.pathIndex].worldPosition);
-							remainingDelta = distanceIndex / ( distanceDelta / (float)delta);
+		//					remainingDelta = 0;
+		//				} else {
+		//					if (personData.currentTile.biome != FloorTileType.Water && personData.currentTile.biome != FloorTileType.SeaIce)
+		//					{                                
+		//						tile.speedMod += .02f * personData.walkSpeed;
+		//						if (tile.speedMod > tile.maxSpeedMod)
+		//						{
+		//							tile.speedMod = tile.maxSpeedMod;
+		//						}
+		//					}
+		//					personData.pathIndex++;
+		//					if (personData.pathIndex >= path.Length) {
+		//						Position =(tile.position);
+		//						remainingDelta = 0;
+		//						break;
+		//					}
+		//					personData.currentTile = tile;
+		//					personData.elev = personData.currentTile.elev;
+		//					tile = world.GetTile(path[personData.pathIndex].worldPosition);
+		//					remainingDelta = distanceIndex / ( distanceDelta / (float)delta);
 
-							if (tile.speedMod > tile.baseSpeedMod)
-							{
-								tile.speedMod -= (float) (world.Time - tile.lastUpdated) * tile.recoveryRate;
-								if (tile.speedMod < tile.baseSpeedMod)
-									tile.speedMod = tile.baseSpeedMod;
-								float mod = (tile.speedMod - tile.baseSpeedMod) / (tile.maxSpeedMod - tile.baseSpeedMod);
-								tile.lastUpdated = world.Time;
+		//					if (tile.speedMod > tile.baseSpeedMod)
+		//					{
+		//						tile.speedMod -= (float) (world.Time - tile.lastUpdated) * tile.recoveryRate;
+		//						if (tile.speedMod < tile.baseSpeedMod)
+		//							tile.speedMod = tile.baseSpeedMod;
+		//						float mod = (tile.speedMod - tile.baseSpeedMod) / (tile.maxSpeedMod - tile.baseSpeedMod);
+		//						tile.lastUpdated = world.Time;
 
-							}
+		//					}
 
-						}
-					}
-				} else
-				{
-					//reached goal
-					personData.pathIndex = 0;
-					path = null;
-					//Console.WriteLine("reached goal");
-					personData.personAction = PersonAction.Idle;
-				}
-				break;
-		}
+		//				}
+		//			}
+		//		} else
+		//		{
+		//			//reached goal
+		//			personData.pathIndex = 0;
+		//			path = null;
+		//			//Console.WriteLine("reached goal");
+		//			personData.personAction = PersonAction.Idle;
+		//		}
+		//		break;
+		//}
 	}
 
 	private Vector2 GotoCity()

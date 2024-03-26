@@ -29,3 +29,4 @@ res://Scripts/World.cs
 res://8bit.tres
 res://CodeGraphData/Result_solution/xml/_tile_map_8cs.xml
 res://tree.tscn
+res://Prefabs/Person.tscn

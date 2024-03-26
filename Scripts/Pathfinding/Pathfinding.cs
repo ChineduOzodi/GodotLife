@@ -199,8 +199,8 @@ namespace Life.Scripts.Pathfinding
 
 			if (pathSuccess)
 			{
-				world.GetTile(targetNode.worldPosition).distanceToLoctaion[$"{startNode.worldPosition.ToString()}"] = targetNode.fCost;
-				world.GetTile(startNode.worldPosition).distanceToLoctaion[$"{targetNode.worldPosition.ToString()}"] = targetNode.fCost;
+				world.GetTile(targetNode.worldPosition).distanceToLoctaion[$"{startNode.worldPosition}"] = targetNode.fCost;
+				world.GetTile(startNode.worldPosition).distanceToLoctaion[$"{targetNode.worldPosition}"] = targetNode.fCost;
 				waypoints = RetracePath(grid[$"{startPos.x}, {startPos.y}"], grid[$"{targetPos.x}, {targetPos.y}"]);
 			}
 			return waypoints;

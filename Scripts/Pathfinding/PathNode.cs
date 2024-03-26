@@ -48,8 +48,8 @@ namespace Life.Scripts.Pathfinding
             //Console.WriteLine($"Pos. ({pos.x},{pos.y})");
 
             //Get correct walk speed modification
-            int x = pos.x / model.TileSize - model.XOffset;
-            int y = pos.y / model.TileSize - model.XOffset;
+            int x = pos.x / model.TileSize;
+            int y = pos.y / model.TileSize;
             FloorTile tile = model.floorTiles[x][y];
             float speed = tile.speedMod;
 

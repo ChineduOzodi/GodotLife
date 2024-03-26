@@ -26,7 +26,7 @@ public partial class City : Node2D
 	public string name;
 	public string id;
 	public List<String> buildings = new List<string>();
-	public List<Coord> tileCoords = new List<Coord>();
+	public List<Vector2I> tileCoords = new List<Vector2I>();
 	public List<String> peopleIds = new List<string>();
 	public int Population { get => peopleIds.Count; }
 	
@@ -283,7 +283,7 @@ public partial class City : Node2D
 		base._Draw();
 		//Console.WriteLine("Updating City Map");
 		float squareWidthHeight = (float) world.TileSize / FloorTile.subTileWidthHeight;
-		FloorTile tile = world.floorTiles[tileCoords[0].x][tileCoords[0].y];
+		FloorTile tile = world.floorTiles[tileCoords[0].X][tileCoords[0].Y];
 		//Color roadColor = new Color(213f / 255, 204f / 255, 127f / 255);
 		Color errorColor = GetMeta("ErrorColor").AsColor();
 		Color roadColor = Color.FromString("brown", errorColor);

@@ -7,13 +7,8 @@ using System.Threading.Tasks;
 
 namespace Life.Scripts.Classes.Tiles
 {
-    public abstract class Tile
+    public abstract class Tile(int X, int Y)
     {
-        public readonly Vector2I tilePosition;
-
-        public Tile(int X, int Y)
-        {
-            tilePosition = new Vector2I(X, Y);
-        }
+        public readonly Vector2I coord = new(X, Y);
     }
 }
