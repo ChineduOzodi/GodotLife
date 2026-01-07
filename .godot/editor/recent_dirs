@@ -1,4 +1,8 @@
 res://
-res://CodeGraphData/MiniWorldSprites/Ground
-res://CodeGraphData/MiniWorldSprites
-C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE
+res://Life/World/Assets/Characters/KenneyRoguelikeCharacters/Spritesheet
+res://Life/World/Ground/Tree
+res://Life/World/Terrain
+res://Life/World/Ground
+res://Libraries/WorldGen/Terrain
+res://Libraries/WorldGen
+res://Libraries/WorldGen/Ground

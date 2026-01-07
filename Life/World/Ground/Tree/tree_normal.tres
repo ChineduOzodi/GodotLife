@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://3g1xcjtf2j4d"]
+
+[ext_resource type="Texture2D" uid="uid://ctt5422ovaf82" path="res://WorldGen/Assets/WorldAtlas.tres" id="1_5klcg"]
+
+[resource]
+atlas = ExtResource("1_5klcg")
+region = Rect2(221, 170, 16, 33)

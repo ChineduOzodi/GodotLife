@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="GroundObjectSettings" load_steps=5 format=3 uid="uid://ct277n317gvfb"]
+
+[ext_resource type="Script" path="res://WorldGen/Ground/TreeGroundGen.cs" id="1_hv3rj"]
+[ext_resource type="Script" path="res://WorldGen/Ground/GroundObjectSettings.cs" id="1_s5bpc"]
+[ext_resource type="PackedScene" uid="uid://dcktb5wdkfgc" path="res://WorldGen/Ground/Tree/Tree.tscn" id="2_4kpff"]
+
+[sub_resource type="Resource" id="Resource_uq4pm"]
+script = ExtResource("1_hv3rj")
+MinElevation = 0.1
+MaxElevation = 1.0
+SpawnChance = 0.1
+
+[resource]
+script = ExtResource("1_s5bpc")
+Generator = SubResource("Resource_uq4pm")
+PackedScene = ExtResource("2_4kpff")
+PatternIndex = 0

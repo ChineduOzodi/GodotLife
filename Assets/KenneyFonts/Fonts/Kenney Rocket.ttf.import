@@ -1,0 +1,34 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://bk2j3220mnes7"
+path="res://.godot/imported/Kenney Rocket.ttf-cba8c9e00a059380b7fe052017db4e9f.fontdata"
+
+[deps]
+
+source_file="res://Assets/KenneyFonts/Fonts/Kenney Rocket.ttf"
+dest_files=["res://.godot/imported/Kenney Rocket.ttf-cba8c9e00a059380b7fe052017db4e9f.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+disable_embedded_bitmaps=true
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+hinting=1
+subpixel_positioning=1
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[]
+language_support={}
+script_support={}
+opentype_features={}

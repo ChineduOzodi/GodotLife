@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://dcktb5wdkfgc"]
+
+[ext_resource type="Script" path="res://Life/World/Ground/Tree/Tree.cs" id="1_evrtp"]
+[ext_resource type="Texture2D" uid="uid://3g1xcjtf2j4d" path="res://Life/World/Ground/Tree/tree_normal.tres" id="1_gh3oi"]
+[ext_resource type="Texture2D" uid="uid://bfjfmk2vscrqw" path="res://Life/World/Ground/Tree/tree_fruit.tres" id="2_utd0a"]
+[ext_resource type="Script" path="res://Life/World/Ground/Tree/TreeData.cs" id="4_f4byk"]
+
+[sub_resource type="Resource" id="Resource_rr4ah"]
+resource_local_to_scene = true
+script = ExtResource("4_f4byk")
+NormalTexture = ExtResource("1_gh3oi")
+FruitTexture = ExtResource("2_utd0a")
+SpawnWithFruitChance = 0.1
+FruitMax = 15
+FruitGrowthMin = 1
+FruitGrowthMax = 5
+FruitGrowthSeconds = 120.0
+FruitGrowthVarianceSeconds = 5.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5bm1c"]
+size = Vector2(6, 8)
+
+[node name="Tree" type="StaticBody2D" node_paths=PackedStringArray("Sprite", "FruitTimer")]
+script = ExtResource("1_evrtp")
+TreeData = SubResource("Resource_rr4ah")
+Sprite = NodePath("Sprite2D")
+FruitTimer = NodePath("FruitTimer")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+texture = ExtResource("1_gh3oi")
+offset = Vector2(0, -16)
+
+[node name="FruitTimer" type="Timer" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_5bm1c")

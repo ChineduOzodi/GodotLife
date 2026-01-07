@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://dwg3rehnafd68"]
+
+[ext_resource type="Script" path="res://Life/World/Ground/Person/Person.cs" id="1_r2swk"]
+[ext_resource type="Texture2D" uid="uid://cbnycardnotuk" path="res://Life/World/Assets/Characters/KenneyRoguelikeCharacters/Spritesheet/roguelikeChar_transparent.png" id="2_4cbth"]
+[ext_resource type="Script" path="res://Life/Pathfinding/LifePathfindingAgent.cs" id="3_qhd1y"]
+[ext_resource type="Script" path="res://Libraries/Inventory/Inventory.cs" id="4_n1jmo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtvq8"]
+atlas = ExtResource("2_4cbth")
+region = Rect2(0, 136, 16, 17)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xl3jr"]
+size = Vector2(10, 6)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_117qe"]
+radius = 191.846
+
+[node name="Person" type="CharacterBody2D" node_paths=PackedStringArray("NavigationAgent")]
+script = ExtResource("1_r2swk")
+NavigationAgent = NodePath("LifePathfindingAgent")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_rtvq8")
+offset = Vector2(0, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_xl3jr")
+
+[node name="LifePathfindingAgent" type="Node" parent="."]
+script = ExtResource("3_qhd1y")
+ShowPath = true
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("4_n1jmo")
+
+[node name="Vision" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+shape = SubResource("CircleShape2D_117qe")

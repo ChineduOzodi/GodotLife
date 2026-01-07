@@ -1,0 +1,6 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://ctt5422ovaf82"]
+
+[ext_resource type="Texture2D" uid="uid://v8v2lcv7tovx" path="res://WorldGen/Assets/KenneyRoguelikeRPGPack/Spritesheet/roguelikeSheet_transparent.png" id="1_ks8sb"]
+
+[resource]
+atlas = ExtResource("1_ks8sb")

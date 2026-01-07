@@ -1,0 +1,338 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\chin2\\repos\\GodotLife\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\life\\world\\ground\\person\\person.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:life\\world\\ground\\person\\person.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\inventory\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\inventory\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\goap\\goapplanner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\goap\\goapplanner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\goap\\goapagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\goap\\goapagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\life\\world\\ground\\tree\\goap\\picktreeaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:life\\world\\ground\\tree\\goap\\picktreeaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\goap\\igoapactionholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\goap\\igoapactionholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\goap\\igoap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\goap\\igoap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\life\\world\\ground\\tree\\tree.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:life\\world\\ground\\tree\\tree.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\pathfinding\\pathfinder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\pathfinding\\pathfinder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\goap\\goapaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\goap\\goapaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\inventory\\inventoryitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\inventory\\inventoryitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\pathfinding\\pathrequestmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\pathfinding\\pathrequestmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\worldgen\\world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\worldgen\\world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\pathfinding\\pathfindingagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\pathfinding\\pathfindingagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\pathfinding\\pathnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\pathfinding\\pathnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\pathfinding\\movespeed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\pathfinding\\movespeed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\life\\pathfinding\\lifepathfindingagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:life\\pathfinding\\lifepathfindingagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|c:\\users\\chin2\\repos\\godotlife\\libraries\\worldgen\\worldpathfinding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{370C923F-C2E2-491F-AB20-2DC5996B4306}|Life.csproj|solutionrelative:libraries\\worldgen\\worldpathfinding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 225,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PickTreeAction.cs",
+              "DocumentMoniker": "C:\\USERS\\CHIN2\\REPOS\\GODOTLIFE\\Life\\World\\Ground\\Tree\\GOAP\\PickTreeAction.cs",
+              "RelativeDocumentMoniker": "Life\\World\\Ground\\Tree\\GOAP\\PickTreeAction.cs",
+              "ToolTip": "C:\\USERS\\CHIN2\\REPOS\\GODOTLIFE\\Life\\World\\Ground\\Tree\\GOAP\\PickTreeAction.cs",
+              "RelativeToolTip": "Life\\World\\Ground\\Tree\\GOAP\\PickTreeAction.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-21T04:50:38.302Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Tree.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Life\\World\\Ground\\Tree\\Tree.cs",
+              "RelativeDocumentMoniker": "Life\\World\\Ground\\Tree\\Tree.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Life\\World\\Ground\\Tree\\Tree.cs",
+              "RelativeToolTip": "Life\\World\\Ground\\Tree\\Tree.cs",
+              "ViewState": "AQIAACUAAAAAAAAAAAAowEMAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-21T04:49:10.365Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IGoap.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Goap\\IGoap.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goap\\IGoap.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Goap\\IGoap.cs",
+              "RelativeToolTip": "Libraries\\Goap\\IGoap.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-21T04:47:08.009Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IGoapActionHolder.cs",
+              "DocumentMoniker": "C:\\USERS\\CHIN2\\REPOS\\GODOTLIFE\\Libraries\\Goap\\IGoapActionHolder.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goap\\IGoapActionHolder.cs",
+              "ToolTip": "C:\\USERS\\CHIN2\\REPOS\\GODOTLIFE\\Libraries\\Goap\\IGoapActionHolder.cs",
+              "RelativeToolTip": "Libraries\\Goap\\IGoapActionHolder.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAsAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-21T04:47:53.294Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GoapAgent.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Goap\\GoapAgent.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goap\\GoapAgent.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Goap\\GoapAgent.cs",
+              "RelativeToolTip": "Libraries\\Goap\\GoapAgent.cs",
+              "ViewState": "AQIAAF0AAAAAAAAAAAAAAK8AAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-20T22:42:34.059Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GoapPlanner.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Goap\\GoapPlanner.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goap\\GoapPlanner.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Goap\\GoapPlanner.cs",
+              "RelativeToolTip": "Libraries\\Goap\\GoapPlanner.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-20T22:56:04.509Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GoapAction.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Goap\\GoapAction.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goap\\GoapAction.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Goap\\GoapAction.cs",
+              "RelativeToolTip": "Libraries\\Goap\\GoapAction.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-20T22:37:27.876Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Inventory.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Inventory\\Inventory.cs",
+              "RelativeDocumentMoniker": "Libraries\\Inventory\\Inventory.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Inventory\\Inventory.cs",
+              "RelativeToolTip": "Libraries\\Inventory\\Inventory.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-20T22:30:48.259Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Person.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Life\\World\\Ground\\Person\\Person.cs",
+              "RelativeDocumentMoniker": "Life\\World\\Ground\\Person\\Person.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Life\\World\\Ground\\Person\\Person.cs",
+              "RelativeToolTip": "Life\\World\\Ground\\Person\\Person.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAAAEMAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T21:44:17.303Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "InventoryItem.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Inventory\\InventoryItem.cs",
+              "RelativeDocumentMoniker": "Libraries\\Inventory\\InventoryItem.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Inventory\\InventoryItem.cs",
+              "RelativeToolTip": "Libraries\\Inventory\\InventoryItem.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwA4AAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-20T22:33:10.274Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Pathfinder.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Pathfinding\\Pathfinder.cs",
+              "RelativeDocumentMoniker": "Libraries\\Pathfinding\\Pathfinder.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Pathfinding\\Pathfinder.cs",
+              "RelativeToolTip": "Libraries\\Pathfinding\\Pathfinder.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAiwCIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-20T03:32:18.481Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "PathRequestManager.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Pathfinding\\PathRequestManager.cs",
+              "RelativeDocumentMoniker": "Libraries\\Pathfinding\\PathRequestManager.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Pathfinding\\PathRequestManager.cs",
+              "RelativeToolTip": "Libraries\\Pathfinding\\PathRequestManager.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEIAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-20T06:28:05.893Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "PathNode.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Pathfinding\\PathNode.cs",
+              "RelativeDocumentMoniker": "Libraries\\Pathfinding\\PathNode.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Pathfinding\\PathNode.cs",
+              "RelativeToolTip": "Libraries\\Pathfinding\\PathNode.cs",
+              "ViewState": "AQIAACAAAAAAAAAAAAAgwCIAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-20T05:12:20.21Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "WorldPathfinding.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\WorldGen\\WorldPathfinding.cs",
+              "RelativeDocumentMoniker": "Libraries\\WorldGen\\WorldPathfinding.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\WorldGen\\WorldPathfinding.cs",
+              "RelativeToolTip": "Libraries\\WorldGen\\WorldPathfinding.cs",
+              "ViewState": "AQIAACQAAAAAAAAAAAAYwDwAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T21:53:32.413Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "World.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\WorldGen\\World.cs",
+              "RelativeDocumentMoniker": "Libraries\\WorldGen\\World.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\WorldGen\\World.cs",
+              "RelativeToolTip": "Libraries\\WorldGen\\World.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAmwBwAAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T21:51:30.585Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Main.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Main.cs",
+              "RelativeDocumentMoniker": "Main.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Main.cs",
+              "RelativeToolTip": "Main.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T21:51:07.68Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "MoveSpeed.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Pathfinding\\MoveSpeed.cs",
+              "RelativeDocumentMoniker": "Libraries\\Pathfinding\\MoveSpeed.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Pathfinding\\MoveSpeed.cs",
+              "RelativeToolTip": "Libraries\\Pathfinding\\MoveSpeed.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACEAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T21:48:09.349Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "PathfindingAgent.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Pathfinding\\PathfindingAgent.cs",
+              "RelativeDocumentMoniker": "Libraries\\Pathfinding\\PathfindingAgent.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Libraries\\Pathfinding\\PathfindingAgent.cs",
+              "RelativeToolTip": "Libraries\\Pathfinding\\PathfindingAgent.cs",
+              "ViewState": "AQIAAFkAAAAAAAAAAAAAAG4AAABIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T21:46:25.25Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "LifePathfindingAgent.cs",
+              "DocumentMoniker": "C:\\Users\\chin2\\repos\\GodotLife\\Life\\Pathfinding\\LifePathfindingAgent.cs",
+              "RelativeDocumentMoniker": "Life\\Pathfinding\\LifePathfindingAgent.cs",
+              "ToolTip": "C:\\Users\\chin2\\repos\\GodotLife\\Life\\Pathfinding\\LifePathfindingAgent.cs",
+              "RelativeToolTip": "Life\\Pathfinding\\LifePathfindingAgent.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T21:46:18.951Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
